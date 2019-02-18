@@ -32,7 +32,9 @@ const model = {
     getData(data) {
         return data;
     }
-
+    /**
+     *
+     */
 
 }
 
