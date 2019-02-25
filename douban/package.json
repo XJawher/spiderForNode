@@ -12,7 +12,10 @@
     "async": "^2.6.1",
     "cheerio": "^1.0.0-rc.2",
     "eventproxy": "^1.0.0",
-    "express": "^4.16.4",
+    "koa": "^2.4.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.3.0",
+    "koa-socket-2": "^1.0.17",
     "mongoose": "^5.4.11",
     "superagent": "^4.1.0"
   }
