@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 (async () => {
     try {
-        await mongoose.connect(`mongodb://localhost:27017/admin`, { useNewUrlParser: true }, (err, db) => {
+        await mongoose.connect(`mongodb://localhost:27017/lianjia`, { useNewUrlParser: true }, (err, db) => {
             if (err) {
                 throw err;
             }

@@ -13,14 +13,12 @@ const model = {
                 // 访问成功，请求http://news.baidu.com/页面所返回的数据会包含在res
                 // 抓取热点新闻数据
                 try {
-                    news = await service.test(res)
-                    await database.addNews({ title: 'test', href: 'this is a test url' })
+                    return news = await service.test(res)
                 } catch (error) {
                     console.log({ code: 1, message: error });
                 }
             }
         });
-        return news;
     }
 }
 
