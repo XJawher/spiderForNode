@@ -1,8 +1,6 @@
-const requestMessa = require('../service/requestMessa')
 const lianjia = require('../service/lianjia')
 const model = {
     '/api/testapi': async ctx => {
-        let res = await requestMessa.baiduHot()
         ctx.body = res;
     },
     '/api/lianjia': async ctx => {
