@@ -29,7 +29,14 @@ const model = {
             (function () {
                 setTimeout(async () => {
                     await superagent.get(`https://xa.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
-                        let $ = await cheerio.load(res.text);
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`解析出错,错误的页码是 ${i + 1}`);
+
+                        }
                         if (err) {
                             console.log(`the function is take error  ${err}`)
                         } else {
@@ -108,10 +115,11 @@ const model = {
                                     }
                                 );
                             });
-                            if (data.length === 3000) {
+                            if (i === 99) {
+                                console.log(`开始写入数据,数据量为 ${data.length}`);
                                 await database.xianLianjia(data)
                             }
-                            console.log({ 'total': total.trim(), 'data': data.length });
+                            console.log({ 'total': total.trim(), 'data': data.length, 'i': i });
                         }
                     });
                 }, 2000 * i)
