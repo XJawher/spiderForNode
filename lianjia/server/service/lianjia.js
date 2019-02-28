@@ -122,6 +122,8 @@ const model = {
                                 console.log(`开始写入数据,数据量为: ${total.trim()},插入数据库数据为: ${data.length}`);
                                 await database.xianLianjia(data)
                             }
+                            console.log('test git rebase');
+
                         }
                     });
                 }, 2000 * i)
