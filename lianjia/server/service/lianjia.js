@@ -130,5 +130,4 @@ const model = {
         console.log(`the function is take success`)
     }
 }
-
 module.exports = model;
