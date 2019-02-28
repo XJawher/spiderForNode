@@ -115,11 +115,13 @@ const model = {
                                     }
                                 );
                             });
+                            if (i === 0) {
+                                console.log(`开始请求数据,预计耗时 2*99 === 200s`);
+                            }
                             if (i === 99) {
-                                console.log(`开始写入数据,数据量为 ${data.length}`);
+                                console.log(`开始写入数据,数据量为: ${total.trim()},插入数据库数据为: ${data.length}`);
                                 await database.xianLianjia(data)
                             }
-                            console.log({ 'total': total.trim(), 'data': data.length, 'i': i });
                         }
                     });
                 }, 2000 * i)
