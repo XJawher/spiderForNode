@@ -1,25 +1,8 @@
 const superagent = require('superagent');
 const database = require('./database');
-// const waitRandom = require('../util/common')
 const cheerio = require('cheerio');
 
 const model = {
-    async waitRandom(start, end) {
-        return new Promise(resolve => {
-            let time = start + Math.random() * (end - start)
-            setTimeout(() => {
-                resolve();
-            }, time.toFixed(0) * 1000 || 3000);
-        });
-    },
-
-    async waitSecond(time) {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve();
-            }, time * 1000 || 3000);
-        });
-    },
 
     async lianjia() {
         let total = '';
@@ -28,7 +11,7 @@ const model = {
         for (let i = 0; i < 100; i++) {
             (function () {
                 setTimeout(async () => {
-                    await superagent.get(`https://xa.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                    await superagent.get(`https://cd.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
                         let $ = null;
                         try {
                             $ = await cheerio.load(res.text);
@@ -119,15 +102,15 @@ const model = {
                                 console.log(`开始请求数据,预计耗时 2*99 === 200s`);
                             }
                             if (i === 99) {
-                                console.log(`开始写入数据,数据量为: ${total.trim()},插入数据库数据为: ${data.length}`);
-                                await database.xianLianjia(data)
+                                console.log(`开始写入成都数据,数据量为: ${total.trim()},插入数据库数据为: ${data.length}`);
+                                await database.chengduLianjia(data)
                             }
                         }
                     });
                 }, 2000 * i)
             })()
         }
-        console.log(`the function is take success`)
+        console.log(`the chengduLianjia function is take success`)
     }
 }
 module.exports = model;
