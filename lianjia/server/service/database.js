@@ -15,6 +15,14 @@ const model = {
     async chengduLianjia(param) {
         return await dao.createOne(chengdu, param);
     },
+
+    async chengduAll(param) {
+        return await dao.findAll(chengdu, param);
+    },
+
+    async xianAll(param) {
+        return await dao.findAll(xian, param);
+    },
 }
 
 module.exports = model;

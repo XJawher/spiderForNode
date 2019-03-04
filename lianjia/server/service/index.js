@@ -1,20 +1,21 @@
+const database = require('./database');
+
 const model = {
 
-    async waitSecond(time) {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve();
-            }, time * 1000 || 3000);
-        });
+    /**
+     * xi an second-hand house data
+     */
+    xian() {
+
     },
 
-    async test(res) {
-        for (let i = 0; i < 2999; i++) {
-            (function () {
-                setTimeout(() => console.log(i), 1000 * i)
-            })()
-        }
-    }
+    /**
+     * cheng du second-hand house data
+     */
+    chengdu() {
+
+    },
+
 
 };
 module.exports = model;
