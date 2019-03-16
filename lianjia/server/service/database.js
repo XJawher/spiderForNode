@@ -1,5 +1,7 @@
 const news = require('../model/news');
 const xian = require('../model/xian');
+const city = require('../model/city');
+const xianData = require('../model/xianData');
 const chengdu = require('../model/chengdu');
 const dao = require('../module/dao');
 
@@ -21,7 +23,11 @@ const model = {
     },
 
     async xianAll(param) {
-        return await dao.findAll(xian, param);
+        return await dao.findAll(xianData, param);
+    },
+
+    async city(param) {
+        return await dao.createOne(city, param);
     },
 }
 

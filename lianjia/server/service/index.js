@@ -6,7 +6,7 @@ const model = {
      * xi an second-hand house data
      */
     xian() {
-
+        return database.xianAll()
     },
 
     /**
@@ -14,6 +14,13 @@ const model = {
      */
     chengdu() {
 
+    },
+
+    /**
+     * get total city data from dataBase
+     */
+    city() {
+        return database.city()
     },
 
 
