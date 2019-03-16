@@ -28,7 +28,7 @@
         "react/display-name": 0,
         "react/no-string-refs": 0,
         "no-case-declarations": 0,
-        "generator-star-spacing": 2,
+        "generator-star-spacing": 0,
         "object-curly-spacing": [
             "warn",
             "never"
@@ -63,7 +63,7 @@
             "smart"
         ],
         "init-declarations": [
-            0,
+            2,
             "smart"
         ]
     }
