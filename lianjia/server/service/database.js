@@ -2,6 +2,7 @@ const news = require('../model/news');
 const xian = require('../model/xian');
 const city = require('../model/city');
 const xianData = require('../model/xianData');
+const chengduData = require('../model/chengduData');
 const chengdu = require('../model/chengdu');
 const dao = require('../module/dao');
 
@@ -12,6 +13,14 @@ const model = {
 
     async xianLianjia(param) {
         return await dao.createOne(xian, param);
+    },
+
+    async xianData(param) {
+        return await dao.createOne(xianData, param);
+    },
+
+    async chengduData(param) {
+        return await dao.createOne(chengduData, param);
     },
 
     async chengduLianjia(param) {

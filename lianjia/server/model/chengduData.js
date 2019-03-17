@@ -1,5 +1,5 @@
 const mongoose = require('../module/mongoose');
-module.exports = mongoose.model(`xiandata`,
+module.exports = mongoose.model(`chengdudata`,
     new mongoose.Schema({
         title: String,
         address: String,

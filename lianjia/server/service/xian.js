@@ -6,7 +6,6 @@ const model = {
     async lianjia() {
         let total = '';
         let data = [];
-        // let $ = await cheerio.load(res.text);
         for (let i = 0; i < 100; i++) {
             (function () {
                 setTimeout(async () => {

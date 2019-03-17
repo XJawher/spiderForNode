@@ -2,7 +2,7 @@ const Koa = require('koa');
 const app = new Koa();
 const router = require('./router/router');
 const bodyParser = require('koa-bodyparser');
-
+require('./schedule/index');
 app.use(bodyParser());
 app.use(router.routes());
 app.use(router.allowedMethods());
