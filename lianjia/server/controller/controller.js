@@ -6,37 +6,12 @@ const model = {
     '/api/testapi': async ctx => {
         ctx.body = res;
     },
-    '/api/lianjia/xian': async ctx => {
-        await xian.lianjia();
-        ctx.body = { code: 1, message: ' start the xian er shou fang shuju ' }
-    },
-    '/api/lianjia/chengdu': async ctx => {
-        await chengdu.lianjia();
-        ctx.body = { code: 1, message: ' start the chengdu er shou fang ' }
-    },
-    '/api/getxian': async ctx => {
-        let data = await service.xian();
-        if (data) {
-            ctx.body = {
-                code: 0,
-                data: {
-                    total: data.length
-                }
-            }
-        } else {
-            ctx.body = { code: 1, data: 'get xian data failed' }
-        }
-    },
-    '/api/getchengdu': async ctx => {
-        await chengdu.lianjia();
-        ctx.body = { code: 1, message: ' start the chengdu er shou fang ' }
-    },
-    '/api/lianjia/city': async ctx => {
-        let res = await city.lianjia();
-        ctx.body = { code: 1, message: ' start the data for total city', res: res }
-    },
+
+    /**
+     * 获取数据库中存入的省份二手房数据二手房数据
+     */
     '/api/city': async ctx => {
-        let data = await service.city();
+        let data = await service.cityAll();
         if (data.length > 0) {
             ctx.body = {
                 code: 0, data: data

@@ -38,6 +38,11 @@ const model = {
     async city(param) {
         return await dao.createOne(city, param);
     },
+
+    async cityAll(param) {
+        return await dao.findAll(city, param);
+    },
+
 }
 
 module.exports = model;
