@@ -18,20 +18,20 @@ const xian = require('../service/xian');
 /**
  * 每天定时去请求数据,11:01:01 去请求所有的二手房数据
  */
-new cron.CronJob('01 10 11 * * *', async () => {
+new cron.CronJob('01 10 20 * * *', async () => {
     city.lianjia();
 }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求西安二手房数据
  */
-new cron.CronJob('01 42 11 * * *', async () => {
+new cron.CronJob('01 42 20 * * *', async () => {
     city.xian();
 }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求成都二手房数据
  */
-new cron.CronJob('01 45 11 * * *', async () => {
+new cron.CronJob('01 45 20 * * *', async () => {
     city.chengdu();
 }, null, true);
