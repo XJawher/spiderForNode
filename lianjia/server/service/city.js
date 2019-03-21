@@ -108,11 +108,11 @@ const model = {
                             $ = await cheerio.load(res.text);
 
                         } catch (error) {
-                            console.log(`解析出错,错误的位置数据源为${cityTotal[i].province}省,${cityTotal[i].cityCH}市的数据`);
+                            console.log(`全国解析出错,错误的位置数据源为${cityTotal[i].province}省,${cityTotal[i].cityCH}市的数据`);
                             errorCity.push(cityTotal[i])
                         }
                         if (err) {
-                            console.log(`the function is take error  ${err}`);
+                            console.log(`全国  ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -141,7 +141,7 @@ const model = {
                               console.log(`第二次解析出错,错误的位置数据源为${errorCity[i].province}省,${errorCity[i].cityCH}市的数据`);
                           }
                           if (err) {
-                              console.log(`the function is take error  ${err}`);
+                              console.log( `  ====>>>>>  ${err}`);
                           } else {
                               $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
                                   total = element.children[0].data;
@@ -173,11 +173,11 @@ const model = {
                             $ = await cheerio.load(res.text);
 
                         } catch (error) {
-                            console.log(`解析出错,错误的页码是 ${i + 1}`);
+                            console.log(`西安解析出错,错误的页码是 ${i + 1}`);
 
                         }
                         if (err) {
-                            console.log(`the function is take error  ${err}`)
+                            console.log(` 西安 ====>>>>>  ${err}`)
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -255,9 +255,6 @@ const model = {
                                     }
                                 );
                             });
-                            if (i === 0) {
-                                console.log(`开始西安数据写入,今日的总量数据为 ${total}`);
-                            }
                             if (i === 99) {
                                 console.log(`结束西安数据写入,今日的总量数据为 ${total}`);
                             }
@@ -267,7 +264,6 @@ const model = {
                 }, 2000 * i)
             })()
         }
-        console.log(`the function of xi'an is take success`)
     },
     chengdu() {
         let total = '';
@@ -280,11 +276,11 @@ const model = {
                             $ = await cheerio.load(res.text);
 
                         } catch (error) {
-                            console.log(`解析出错,错误的页码是 ${i + 1}`);
+                            console.log(`成都解析出错,错误的页码是 ${i + 1}`);
 
                         }
                         if (err) {
-                            console.log(`the function is take error  ${err}`)
+                            console.log(` 成都 ====>>>>>  ${err}`)
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -362,9 +358,6 @@ const model = {
                                     }
                                 );
                             });
-                            if (i === 0) {
-                                console.log(`开始成都数据写入,今日的总量数据为 ${total}`);
-                            }
                             if (i === 99) {
                                 console.log(`结束成都数据写入,今日的总量数据为 ${total}`);
                             }
@@ -374,7 +367,2813 @@ const model = {
                 }, 2000 * i)
             })()
         }
-        console.log(`the function of xi'an is take success`)
-    }
+    },
+    hf() {
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://hf.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`合肥解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 合肥 ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`合肥数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.hf(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    bj() {
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://bj.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`北京解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(`北京  ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`北京bj数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.bj(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    cq() { //重庆cq
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://cq.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`重庆解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(`重庆  ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`重庆cq数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.cq(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    fz() { // 福州fz
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://fz.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`福州解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 福州 ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`福州fz数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.fz(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    gz() { // 广州 gz深圳sz 珠海zh
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://gz.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`广州解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(`广州  ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`广州gz数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.gz(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    sz() { // 广州 sz深圳sz 珠海zh
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://sz.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`深圳解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(`深圳 ===>>>>${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`深圳sz数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.sz(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    gy() { // 贵阳gy
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://gy.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`贵阳解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(`贵阳解析出错 ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`贵阳gy数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.gy(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    nn() { // 南宁nn
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://nn.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`南宁解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 南宁 ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`南宁nn数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.nn(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    lz() { // 兰州lz
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://lz.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(`  ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`兰州lz数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.lz(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    wh() { // 武汉wh
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://wh.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`武汉解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 武汉 ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`武汉wh数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.wh(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    cs() { // 长沙cs
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://cs.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`长沙解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 长沙 ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`长沙cs数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.cs(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    sjz() { // 石家庄sjz
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://sjz.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`石家庄解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 石家庄 ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`石家庄sjz数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.sjz(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    hk() { // 海口hk
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://hk.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`海口解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 海口 ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`海口hk数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.hk(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    zz() { // 郑州 zz
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://zz.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`郑州解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 郑州 ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`郑州zz数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.zz(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    hrb() { //哈尔滨hrb
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://hrb.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`哈尔滨解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 哈尔滨 ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`哈尔滨hrb数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.hrb(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    nj() { //南京nj
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://nj.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`南京nj解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 南京nj ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`南京njnj数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.nj(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    cc() { //长春cc
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://cc.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`长春cc解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 长春cc ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`长春cc数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.cc(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    nc() { //南昌nc
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://nc.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`南昌nc解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 南昌nc ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`南昌nc数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.nc(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    sy() { // 沈阳sy
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://sy.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`沈阳sy数据解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 沈阳sy ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`沈阳sy数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.sy(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    hhht() { // 呼和浩特hhht
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://hhht.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`呼和浩特hhht解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 呼和浩特hhht ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`呼和浩特hhht数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.hhht(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    jn() { // 济南jn
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://jn.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`济南jn解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 济南jn ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`济南jn数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.jn(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    ty() { //  太原ty
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://ty.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`太原ty解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 太原ty ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`太原ty数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.ty(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    tj() { // 天津tj
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://tj.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`天津tj解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 天津tj ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`天津tj数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.tj(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    km() { // 昆明km
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://km.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`昆明km解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 昆明km ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`昆明km数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.km(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    yinchuan() { // 银川yinchuan
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://yinchuan.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`银川yinchuan解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 银川yinchuan ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`银川yinchuan数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.yinchuan(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    hz() { // 杭州hz
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://hz.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`杭州hz解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 杭州hz ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`杭州hz数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.hz(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
+
+    sh() { // 上海sh
+        let total = '';
+        for (let i = 0; i < 100; i++) {
+            (function () {
+                setTimeout(async () => {
+                    await superagent.get(`https://sh.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+                        let $ = null;
+                        try {
+                            $ = await cheerio.load(res.text);
+
+                        } catch (error) {
+                            console.log(`上海sh解析出错,错误的页码是 ${i + 1}`);
+
+                        }
+                        if (err) {
+                            console.log(` 上海sh ====>>>>>  ${err}`)
+                        } else {
+                            let data = [];
+                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+                                total = element.children[0].data;
+                            });
+                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
+                                let title = ''; // 标题
+                                let address = ''; // 地址
+                                let addressSupplement = ''; // 地址补充
+                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+                                let flood = ''; // 楼层以及实际的楼层位置
+                                let followInfo = ''; // 关注,带看,发布时间
+                                let tag = []; // 标签
+                                let price = ''; // 总价
+                                let priceSign = ''; // 单价
+                                // element.children[0].children[0].children[0].data.trim();
+                                element.children.forEach((item, index) => {
+                                    switch (index) {
+                                        case 0:
+                                            title = item.children[0].children[0].data.trim();
+                                            break;
+
+                                        case 1:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    address = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    addressSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 2:
+                                            item.children[0].children.forEach(item => {
+                                                if (item.name === 'a') {
+                                                    flood = item.children[0].data.trim();
+                                                }
+                                                if (item.type === 'text') {
+                                                    floodSupplement = item.data.trim();
+                                                }
+                                            })
+                                            break;
+
+                                        case 3:
+                                            followInfo = item.children[1].data.trim();
+                                            break;
+
+                                        case 4:
+                                            item.children.forEach(element => {
+                                                tag.push(element.children[0].data.trim());
+                                            })
+                                            // console.log('tag', item.children[0].children);
+                                            break;
+
+                                        case 5:
+                                            item.children.forEach((element, number) => {
+                                                if (number === 0) {
+                                                    price = element.children[0].children[0].data.trim(); // 总价
+                                                } else {
+                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
+                                                }
+                                            })
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+                                data.push(
+                                    {
+                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+                                    }
+                                );
+                            });
+                            if (i === 99) {
+                                console.log(`上海sh数据写入成功数据为 ${total}!!!`);
+                            }
+                            await database.sh(data)
+                        }
+                    });
+                }, 2000 * i)
+            })()
+        }
+    },
 }
 module.exports = model;
