@@ -29,13 +29,7 @@ const model = {
     '/api/city/sort': async ctx => {
         let data = await service.cityAll();
         if (data.length > 0) {
-            let sortNumber = (property) => {
-                return function (a, b) {
-                    var value1 = a[property];
-                    var value2 = b[property];
-                    return value2 - value1;
-                };
-            };
+            let sortNumber = (property) => (a, b) => b[property] - a[property];
             ctx.body = {
                 code: 0, data: data.sort(sortNumber('total'))
             }
