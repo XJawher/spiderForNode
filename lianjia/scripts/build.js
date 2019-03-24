@@ -1,11 +1,3 @@
-// @remove-on-eject-begin
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-// @remove-on-eject-end
 'use strict';
 
 // Do this as the first thing so that any code reading it knows the right env.
@@ -21,22 +13,12 @@ process.on('unhandledRejection', err => {
 
 // Ensure environment variables are read.
 require('../config/env');
-// @remove-on-eject-begin
-// Do the preflight checks (only happens before eject).
-const verifyPackageTree = require('./utils/verifyPackageTree');
-if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
-    verifyPackageTree();
-}
-const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
-verifyTypeScriptSetup();
-// @remove-on-eject-end
 
 const path = require('path');
-const chalk = require('react-dev-utils/chalk');
+const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
-const bfj = require('bfj');
-const configFactory = require('../config/webpack.config');
+const config = require('../config/webpack.config.prod');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
@@ -53,42 +35,27 @@ const useYarn = fs.existsSync(paths.yarnLockFile);
 const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024;
 const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
 
-const isInteractive = process.stdout.isTTY;
-
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
     process.exit(1);
 }
 
-// Process CLI arguments
-const argv = process.argv.slice(2);
-const writeStatsJson = argv.indexOf('--stats') !== -1;
-
-// Generate configuration
-const config = configFactory('production');
-
-// We require that you explicitly set browsers and do not fall back to
-// browserslist defaults.
-const { checkBrowsers } = require('react-dev-utils/browsersHelper');
-checkBrowsers(paths.appPath, isInteractive)
-    .then(() => {
-        // First, read the current file sizes in build directory.
-        // This lets us display how much they changed later.
-        return measureFileSizesBeforeBuild(paths.appBuild);
-    })
+// First, read the current file sizes in build directory.
+// This lets us display how much they changed later.
+measureFileSizesBeforeBuild(paths.appBuild)
     .then(previousFileSizes => {
         // Remove all content but keep the directory so that
         // if you're in it, you don't end up in Trash
         fs.emptyDirSync(paths.appBuild);
         // Merge with the public folder
         copyPublicFolder();
-        // Start the webpack build
+        console.time('Time spent');
         return build(previousFileSizes);
     })
     .then(
-        ({ stats, previousFileSizes, warnings }) => {
+        ({stats, previousFileSizes, warnings}) => {
             if (warnings.length) {
-                console.log(chalk.yellow('Compiled with warnings.\n'));
+                console.log(chalk.yellow('\nCompiled with warnings.\n'));
                 console.log(warnings.join('\n\n'));
                 console.log(
                     '\nSearch for the ' +
@@ -101,10 +68,11 @@ checkBrowsers(paths.appPath, isInteractive)
                     ' to the line before.\n'
                 );
             } else {
-                console.log(chalk.green('Compiled successfully.\n'));
+                console.log(chalk.green('\nCompiled successfully.\n'));
+                console.timeEnd('Time spent');
             }
 
-            console.log('File sizes after gzip:\n');
+            console.log('\nFile sizes after gzip:\n');
             printFileSizesAfterBuild(
                 stats,
                 previousFileSizes,
@@ -112,7 +80,6 @@ checkBrowsers(paths.appPath, isInteractive)
                 WARN_AFTER_BUNDLE_GZIP_SIZE,
                 WARN_AFTER_CHUNK_GZIP_SIZE
             );
-            console.log();
 
             const appPackage = require(paths.appPackageJson);
             const publicUrl = paths.publicUrl;
@@ -131,35 +98,20 @@ checkBrowsers(paths.appPath, isInteractive)
             printBuildError(err);
             process.exit(1);
         }
-    )
-    .catch(err => {
-        if (err && err.message) {
-            console.log(err.message);
-        }
-        process.exit(1);
-    });
+    );
 
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
-    console.log('Creating an optimized production build...');
+    console.log('Will start compiling in multi-thread mode.\n');
+    console.log('Creating an optimized production build...\n');
 
     let compiler = webpack(config);
     return new Promise((resolve, reject) => {
         compiler.run((err, stats) => {
-            let messages;
             if (err) {
-                if (!err.message) {
-                    return reject(err);
-                }
-                messages = formatWebpackMessages({
-                    errors: [err.message],
-                    warnings: [],
-                });
-            } else {
-                messages = formatWebpackMessages(
-                    stats.toJson({ all: false, warnings: true, errors: true })
-                );
+                return reject(err);
             }
+            const messages = formatWebpackMessages(stats.toJson({}, true));
             if (messages.errors.length) {
                 // Only keep the first error. Others are often indicative
                 // of the same problem, but confuse the reader with noise.
@@ -182,25 +134,23 @@ function build(previousFileSizes) {
                 );
                 return reject(new Error(messages.warnings.join('\n\n')));
             }
-
-            const resolveArgs = {
+            return resolve({
                 stats,
                 previousFileSizes,
                 warnings: messages.warnings,
-            };
-            if (writeStatsJson) {
-                return bfj
-                    .write(paths.appBuild + '/bundle-stats.json', stats.toJson())
-                    .then(() => resolve(resolveArgs))
-                    .catch(error => reject(new Error(error)));
-            }
-
-            return resolve(resolveArgs);
+            });
         });
     });
 }
 
 function copyPublicFolder() {
+    /*
+    fs.copySync(paths.appSrc + '/images', paths.appPublic + '/images', {
+        dereference: true,
+        filter: file => file !== paths.appHtml,
+    });
+    */
+
     fs.copySync(paths.appPublic, paths.appBuild, {
         dereference: true,
         filter: file => file !== paths.appHtml,

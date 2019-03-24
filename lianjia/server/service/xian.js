@@ -109,6 +109,42 @@ const model = {
             })()
         }
         console.log(`the function of xi'an is take success`)
+    },
+    async bj() {
+        await superagent.get(`https://bj.lianjia.com/ershoufang/pg2}/`).end(async (err, res) => {
+            let $ = null;
+            try {
+                $ = await cheerio.load(res.text);
+
+            } catch (error) {
+                console.log(`北京解析出错,错误的页码是 2}`);
+
+            }
+            if (err) {
+                console.log(` 北京 ====>>>>>  ${err}`)
+            } else {
+                let data = [];
+                console.log($(`#content`).text());
+                // Object.keys($('div#content div.leftContent div.resultDes h2.total span'))
+            }
+        });
+        // await superagent.get(`https://xa.lianjia.com/ershoufang/pg2}/`).end(async (err, res) => {
+        //     let $ = null;
+        //     try {
+        //         $ = await cheerio.load(res.text);
+
+        //     } catch (error) {
+        //         console.log(`北京解析出错,错误的页码是 2}`);
+
+        //     }
+        //     if (err) {
+        //         console.log(` 北京 ====>>>>>  ${err}`)
+        //     } else {
+        //         let data = [];
+        //         console.log(` 西安 ====>>>>> `)
+        //         console.log($('div#content div.leftContent div.resultDes h2.total span'));
+        //     }
+        // });
     }
 }
 module.exports = model;

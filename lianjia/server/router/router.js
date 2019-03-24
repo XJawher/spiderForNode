@@ -8,6 +8,7 @@ router.all('/api/testapi', controller['/api/testapi']);
 // router.all('/api/getxian', controller['/api/getxian']);
 // router.all('/api/getchengdu', controller['/api/getchengdu']);
 // router.all('/api/lianjia/city', controller['/api/lianjia/city']);
+router.all('/api/city/bj', controller['/api/city/bj']);
 router.all('/api/city', controller['/api/city']);
 router.all('/api/city/sort', controller['/api/city/sort']);
 

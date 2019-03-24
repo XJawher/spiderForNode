@@ -39,5 +39,15 @@ const model = {
             }
         }
     },
+
+    /**
+     * 获取数据库中存入的省份二手房数据二手房数据
+     */
+    '/api/city/bj': async ctx => {
+        xian.bj();
+        ctx.body = {
+            code: 1, data: 'start bj'
+        }
+    },
 };
 module.exports = model;

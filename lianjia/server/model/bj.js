@@ -1,5 +1,5 @@
 const mongoose = require('../module/mongoose');
-module.exports = mongoose.model(`bj`,
+module.exports = mongoose.model(`beijing`,
     new mongoose.Schema({
         title: String,
         address: String,
