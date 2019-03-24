@@ -1,0 +1,42 @@
+import React, { Component } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import routerPath from '../routerPath';
+
+// bar
+import TopBar from '../Bar/TopBar';
+import SideBar from '../Bar/SideBar';
+
+// dashboard
+import Dashboard from '../Dashboard/Dashboard';
+
+// Daily growth
+import DailyGrowth from '../DailyGrowth/DailyGrowth';
+
+export default class Main extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        };
+    }
+
+    render() {
+        const { Main } = routerPath;
+        return (
+            <div className="fs-body-wrapper">
+                <SideBar history={this.props.history} />
+                <div className="fs-main-wrapper">
+                    <TopBar />
+                    <main className='fs-content-wrapper'>
+                        <Switch>
+                            <Route path={`${Main}${routerPath.Dashboard}`} component={Dashboard} />
+
+                            <Route path={`${Main}${routerPath.DailyGrowth}`} component={DailyGrowth} />
+
+                            <Redirect from={routerPath.Root} to={`${Main}${routerPath.Dashboard}`} />
+                        </Switch>
+                    </main>
+                </div>
+            </div>
+        );
+    }
+}

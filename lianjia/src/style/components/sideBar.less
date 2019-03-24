@@ -1,0 +1,56 @@
+.fs-sidebar-wrapper {
+    width: 200px;
+    min-width: 200px;
+    max-height: 100%;
+    font-size: 30px;
+    overflow: hidden;
+    background-color: @light-black;
+    transition: all .3s ease-in;
+    user-select: none;
+    &.un-expand {
+        width: 46px;
+        min-width: 46px;
+        .ant-menu-submenu-arrow {
+            opacity: 0 !important;
+        }
+        .ant-menu-item {
+            padding-left: 16px !important;
+        }
+        .ant-menu-submenu {
+            .ant-menu-submenu-title {
+                padding-right: 30px;
+            }
+        }
+    }
+    .fs-sidebar-logo-wrapper {
+        padding: 5px 0;
+        height: 50px;
+        text-align: center;
+        border-bottom: 1px solid #424242;
+        .fs-sidebar-logo-link {
+            opacity: 0;
+            display: inline-block;
+            transition: opacity .5s ease-in;
+            &.expand {
+                width: 120px;
+                height: 40px;
+                background-size: 100% 100%;
+                animation: .3s fs-scale-small-fade-out-in ease-in-out forwards;
+            }
+            &.un-expand {
+                width: 30px;
+                height: 30px;
+                background-size: 100% 100%;
+                animation: .3s fs-scale-small-fade-out-in ease-in-out forwards;
+            }
+        }
+    }
+    .fs-sidebar-menu-list {
+        position: relative;
+        height: ~"calc(100% - 50px)";
+    }
+    .ant-menu-submenu-arrow {
+        opacity: 1 !important;
+        transition: opacity .4s ease !important;
+    }
+}

@@ -72,6 +72,37 @@ Node Schedule 及其强大的一点就是这个,可以通过 * 号位置的不�
 * [ ] TS 能玩一下最好不过了
 * [ ] 数据的可视化使用自己封装的 echart 来做
 
+#### app.js
+
+     <HashRouter>
+        <Switch>
+            <Route path={routerPath.Main} component={Main} />
+
+            <Redirect from={routerPath.Root} to={this.state.defaultPath} />
+        </Switch>
+    </HashRouter>
+
+前端的 App.js 结构基本如下,首先使用 HashRouter 来做路由的分发,前端将路由控制在自己的手里.然后接下来一层就是语言层,当然需要的话就做,我感觉这里是不需要的,因此我这里没有多做这一层.用 Switch 来做路由的切换,路由在切换的时候分为基础路由和组件路由,这里的基础路由为空,因为这里是用不到基础路由的,都是写到组件路由中去.数据的管理暂时不用 redux ,先用自己的数据控制来做
+
+#### routerPath
+
+路由的文件位置,这里的路由是要给后续的左边栏点击的时候高亮做准备的地方,分为 index 和 pathToMenu 两部分,index 是基础的路由,而 pathToMenu 是后期在侧边栏的时候导航高亮等需要的东西基础的结构如下:
+
+    const index = {
+        Root: '/',
+
+        Main: '/main',
+
+        Dashboard: '/dashboard',
+    };
+
+    export default index;
+
+    export const pathToMenu = {
+        Dashboard: [index.Dashboard],
+    };
+
+
 #### 数据的展示
 
 在这里数据的展示基本上就是以省为主,以城市的相互比对,经济的比对,以及房产的数据比对为主
@@ -90,8 +121,72 @@ Node Schedule 及其强大的一点就是这个,可以通过 * 号位置的不�
 * [ ] 城市 GDP 下的对比
 * [ ] 将主要的省会城市的二手房所有的房间除以面积得到平均的房价
 
-
 #### 前端的请求库 fetch
 
 首先是需要明白的地方就是 fetch 是不能直接被使用,要做个封装才可以,做成两个封装,一个是 post 和 get ,后续了看要不要加上 delete ,其实我个人是很不喜欢 delete ,这和用的不是很多有关系????具体的原因么可能和舒适区有关系,不喜欢用自己没怎么用的东西,今天把 fetch 先给做好,其余的先不说.
 这里的 fetch.js 会导出两个对象,一个是 POST 一个是 GET,通过这两个对象进行后端数据的查询和传输.对 JS 的导出有点生疏了,这里再复习一下.具体的 fetch 的详细使用指南可以看下下面的这篇文章 [fetch使用指南](https://segmentfault.com/a/1190000007019545),这里采用的是第三种解决方案也是我司目前采用的解决方案,使用 Promise 来做.
+这里的 fetch 结构是这样的
+
+    import { stringify } from 'querystring';
+
+    let httpServer = (url, options) => {
+        return new Promise(async (resolve, reject) => {
+            options.credentials = 'same-origin';
+            options.headers = { 'Content-Type': 'application/json; charset=utf-8' };
+            try {
+                let response = await fetch(url, options);
+                if (response.ok) {
+                    let { code, data, message } = await response.json();
+                    if (code === 0) {
+                        resolve({ code, data });
+                    } else {
+                        resolve({ code, message });
+                    }
+                } else {
+                    reject({ msg: response.statusText });
+                }
+            } catch (error) {
+                reject(error);
+            }
+        });
+    };
+
+    let initSearchUrl = (url, param) => (param ? url + '?' + stringify(param) : url);
+
+    export let fetchGet = (url, param) => (httpServer(initSearchUrl(url, param), { method: 'GET' }));
+
+    export let fetchPost = (url, param) => (httpServer(url, { method: 'POST', body: JSON.stringify(param) }));
+
+    export let fetchMock = (data) => new Promise(resolve => setTimeout(() => resolve(data || true), 500));
+
+基本上就是一个很简单的 fetch 的结构,这里只做了 post 和 get,至于说 delete 之类的暂时用不到就没再做了.fetchMock 是为了之后的 UT 所做的准备,看后续的时间吧,有时间了就继续做
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
