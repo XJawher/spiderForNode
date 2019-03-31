@@ -23,18 +23,18 @@ export default class SideBar extends Component {
         }
     }
 
+    componentWillMount() {
+        this.changeActivePageAndMenu();
+    }
+
     changeActivePageAndMenu() {
         let { Main } = routerPath;
+        let selectedMenu = [];
         let { pathname } = this.props.history.location;
         let key = pathname.replace(Main, '');
-        this.props.changeActivePage(this.menuKeyCorrect(key));
-        this.getSubMenuByPath(key);
+        selectedMenu.push(key);
+        this.setState({ selectedMenu });
     }
-
-    openMenu(openKeys) {
-        this.props.changeActiveMenu(openKeys);
-    }
-
 
     menuIconPopoverVisibleChange(type) {
         return value => {
@@ -62,25 +62,24 @@ export default class SideBar extends Component {
 
     render() {
         return (
-            <aside className={`fs-sidebar-wrapper expand  `}>
-                <div className="fs-sidebar-logo-wrapper">
-                    logo
+            <aside className={`xc-sidebar-wrapper un-expand  `}>
+                <div className="xc-sidebar-logo-wrapper un-expand ">
+                    xc
                 </div>
                 <Menu
-                    className="fs-sidebar-menu-list"
+                    className="xc-sidebar-menu-list"
                     inlineIndent={16}
                     mode="inline"
                     defaultSelectedKeys={[`${routerPath.Dashboard}`]}
                     theme="dark"
                     selectedKeys={this.state.selectedMenu}
                     onClick={this.forwardPage.bind(this)}
-                    onOpenChange={this.openMenu.bind(this)}
                 >
                     <Menu.Item key={routerPath.Dashboard}>
                         {this.getPopoverIcon('dashboard', 'dashboard', '仪表盘')}
                     </Menu.Item>
                     <Menu.Item key={routerPath.DailyGrowth}>
-                        {this.getPopoverIcon('dashboard', 'dashboard', '日增长率')}
+                        {this.getPopoverIcon('arrow-up', 'rase', '日增长率')}
                     </Menu.Item>
                 </Menu>
             </aside>

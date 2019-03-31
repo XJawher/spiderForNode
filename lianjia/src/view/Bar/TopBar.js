@@ -5,16 +5,16 @@ export default class TopBar extends Component {
     render() {
         return (
             <Affix /*style={{minWidth: 1168}}*/>
-                <header className={`fs-top-bar-wrapper`}>
-                    <section className="fs-copy-right-wrapper">
+                <header className={`xc-top-bar-wrapper`}>
+                    <section className="xc-copy-right-wrapper">
                         © 2019
                     </section>
-                    <section className="fs-top-info-wrapper">
+                    <section className="xc-top-info-wrapper">
 
-                        <span className="fs-login-user-wrapper">
+                        <span className="xc-login-user-wrapper">
                             hello
                             <span
-                                className="fs-login-user"
+                                className="xc-login-user"
                             >
                                 {` lipc`}
                             </span>

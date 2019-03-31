@@ -1,18 +1,18 @@
-.fs-top-bar-wrapper {
+.xc-top-bar-wrapper {
     width: 100%;
     height: 50px;
     font-size: 12px;
     transition: transform .35s ease;
     background-color: @white;
     border-bottom: 1px solid @light-border;
-    .fs-menu-expand-button-wrapper {
+    .xc-menu-expand-button-wrapper {
         float: left;
         padding-top: 2px;
         padding-left: 10px;
         height: 50px;
         line-height: 50px;
         text-align: right;
-        .fs-menu-expand-button {
+        .xc-menu-expand-button {
             width: 24px;
             height: 24px;
             font-size: 16px;
@@ -23,18 +23,18 @@
             }
         }
     }
-    .fs-copy-right-wrapper {
+    .xc-copy-right-wrapper {
         float: left;
         padding-left: 15px;
         height: 50px;
         line-height: 50px;
     }
-    .fs-top-info-wrapper {
+    .xc-top-info-wrapper {
         float: right;
         padding-right: 20px;
         height: 50px;
         line-height: 50px;
-        .fs-task-history-wrapper {
+        .xc-task-history-wrapper {
             display: inline-block;
             margin-right: 20px;
             font-size: 13px;
@@ -43,12 +43,12 @@
                 color: @light-blue;
             }
         }
-        .fs-task-progress-wrapper {
+        .xc-task-progress-wrapper {
             display: inline-block;
             margin-right: 20px;
             width: 80px;
             cursor: pointer;
-            .fs-task-progress {
+            .xc-task-progress {
                 position: relative;
                 height: 8px;
                 border: 1px solid @dark-blue;
@@ -56,7 +56,7 @@
                 background-color: @dark-blue;
                 background-size: 36px 36px;
                 background-image: linear-gradient(-45deg, transparent 0px, transparent 9.6px, @light-blue 10.8px, @light-blue 25.2px, transparent 25.2px, transparent 34.8px, @light-blue 37.2px);
-                animation: fs-task-progress .75s infinite linear;
+                animation: xc-task-progress .75s infinite linear;
                 &:before {
                     content: '';
                     position: absolute;
@@ -70,25 +70,25 @@
                 }
             }
         }
-        .fs-login-user-wrapper {
+        .xc-login-user-wrapper {
             margin-right: 20px;
             user-select: none;
-            .fs-login-user:hover {
+            .xc-login-user:hover {
                 cursor: pointer;
                 color: #1890ff;
             }
         }
-        .fs-alarm-wrapper {
+        .xc-alarm-wrapper {
             cursor: pointer;
             margin-right: 30px;
-            .fs-alarm-bell-icon {
+            .xc-alarm-bell-icon {
                 font-size: 20px;
                 color: #777777;
             }
         }
     }
     @media screen and (max-width: 550px){
-        .fs-top-info-wrapper {
+        .xc-top-info-wrapper {
             display: none;
         }
     }

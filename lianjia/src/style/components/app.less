@@ -7,10 +7,10 @@
  *                 |
  *               #root (the div dom that the App mount on)
  *                 |
- *             .fs-body (only user login)
+ *             .xc-body (only user login)
  *                 |
  *        +-----------------+
- *   .fs-side-bar       .fs-main
+ *   .xc-side-bar       .xc-main
  *        |                 |
  *   +----------------------------------+
  *   |         |         top bar        |
@@ -36,18 +36,18 @@ body {
     #root {
         position: relative;
         height: 100%;
-        .fs-body-wrapper {
+        .xc-body-wrapper {
             display: flex;
             flex-direction: row;
             height:100%;
-            .fs-main-wrapper {
+            .xc-main-wrapper {
                 flex: 1;
                 height: 100%;
                 // Prohibit the appearance of native scrollbar.
                 overflow: hidden;
                 border-top: 1px solid @light-border;
                 background-color: @page-bg;
-                .fs-content-wrapper {
+                .xc-content-wrapper {
                     position: relative;
                     padding: 10px;
                     height: ~"calc(100vh - 52px)";
@@ -55,8 +55,8 @@ body {
                     // a native scrollbar, but have no idea about why it appears till now.
                     overflow-y: hidden;
                     background-color: @page-bg;
-                    .fs-page-content {
-                        .fs-table-operation-wrapper {
+                    .xc-page-content {
+                        .xc-table-operation-wrapper {
                             margin-bottom: 10px;
                             padding: 0 15px;
                             // height: 60px;
@@ -65,14 +65,14 @@ body {
                             &.no-bottom-margin {
                                 margin-bottom: 0;
                             }
-                            .fs-box-shadow();
+                            .xc-box-shadow();
                             .ant-input-search {
                                 width: 150px;
                             }
                             .ant-select-selection {
                                 width: 200px;
                             }
-                            .fs-table-operation-button-box {
+                            .xc-table-operation-button-box {
                                 float: right;
                                 .ant-btn {
                                     margin-left: 12px;
@@ -82,17 +82,17 @@ body {
                                 }
                             }
                             @media screen and (max-width: 600px){
-                                .fs-table-operation-button-box {
+                                .xc-table-operation-button-box {
                                     display: none;
                                 }
                             }
                         }
-                        .fs-main-content-wrapper {
+                        .xc-main-content-wrapper {
 							position: relative;
                             height: ~"calc(100vh - 145px)";
                             background-color: @white;
-                            .fs-box-shadow();
-                            .fs-table-title {
+                            .xc-box-shadow();
+                            .xc-table-title {
                                 color: @title;
                                 .anticon {
                                     padding-right: 10px;

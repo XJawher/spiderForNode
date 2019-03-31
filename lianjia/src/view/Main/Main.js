@@ -22,11 +22,11 @@ export default class Main extends Component {
     render() {
         const { Main } = routerPath;
         return (
-            <div className="fs-body-wrapper">
+            <div className="xc-body-wrapper">
                 <SideBar history={this.props.history} />
-                <div className="fs-main-wrapper">
+                <div className="xc-main-wrapper">
                     <TopBar />
-                    <main className='fs-content-wrapper'>
+                    <main className='xc-content-wrapper'>
                         <Switch>
                             <Route path={`${Main}${routerPath.Dashboard}`} component={Dashboard} />
 

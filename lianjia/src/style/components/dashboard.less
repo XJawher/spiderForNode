@@ -1,25 +1,25 @@
 // Less codes for both Dashboard and NodeDetail page.
-.fs-dashboard-wrapper {
+.xc-dashboard-wrapper {
     max-width: 100%;
-    .fs-table-operation-wrapper {
-        .fs-operation-text {
+    .xc-table-operation-wrapper {
+        .xc-operation-text {
             display: inline-block;
             padding-right: 10px;
             height: 30px;
             line-height: 30px;
             color: @title;
         }
-        .fs-operation-info-box {
+        .xc-operation-info-box {
             float: right;
             margin-top: 15px;
             display: flex;
             flex-direction: row;
-            .fs-operation-info-item {
+            .xc-operation-info-item {
                 height: 30px;
                 &:nth-child(1) {
                     margin-right: 30px;
                 }
-                .fs-operation-info-item-value {
+                .xc-operation-info-item-value {
                     height: @bigFont;
                     line-height: @bigFont;
                     font-size: @bigFont;
@@ -31,7 +31,7 @@
                         color: @orange;
                     }
                 }
-                .fs-operation-info-item-label {
+                .xc-operation-info-item-label {
                     margin-top: 3px;
                     height: @smallFont;
                     line-height: @smallFont;
@@ -41,19 +41,19 @@
             }
         }
     }
-    .fs-dashboard-row {
+    .xc-dashboard-row {
         display: flex;
         flex-direction: row; // The total min-width of the two section of dashboard's
         // first row is 1120px(includes 10 margin-left).
         min-width: 1120px; // max-width: 100%;
         // common
-        .fs-cluster-information-wrapper,
-        .fs-cluster-capacity-wrapper,
-        .fs-target-ranking-wrapper,
-        .fs-statistics-chart-wrapper,
-        .fs-physical-node-wrapper {
+        .xc-cluster-information-wrapper,
+        .xc-cluster-capacity-wrapper,
+        .xc-target-ranking-wrapper,
+        .xc-statistics-chart-wrapper,
+        .xc-physical-node-wrapper {
             background-color: @white;
-            .fs-box-shadow();
+            .xc-box-shadow();
             &>header {
                 padding: 9px 15px;
                 font-size: @normalFont;
@@ -62,35 +62,35 @@
                 i {
                     margin-right: 12px;
                 }
-                .fs-header-button-box {
+                .xc-header-button-box {
                     float: right;
                 }
             }
         }
-        .fs-cluster-information-wrapper {
+        .xc-cluster-information-wrapper {
             height: 250px;
             min-width: 480px;
             max-width: 640px;
         }
-        .fs-cluster-capacity-wrapper {
+        .xc-cluster-capacity-wrapper {
             min-width: 540px;
             max-width: 640px;
         }
-        .fs-cluster-information-wrapper,
-        .fs-cluster-capacity-wrapper {
+        .xc-cluster-information-wrapper,
+        .xc-cluster-capacity-wrapper {
             flex: 1;
-            .fs-cluster-information-content {
+            .xc-cluster-information-content {
                 padding: 25px 10px 25px 40px;
             }
-            .fs-cluster-capacity-content {
+            .xc-cluster-capacity-content {
                 padding: 41.5px 30px;
             }
-            .fs-cluster-information-content,
-            .fs-cluster-capacity-content {
+            .xc-cluster-information-content,
+            .xc-cluster-capacity-content {
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
-                .fs-cluster-machine-image-wrapper {
+                .xc-cluster-machine-image-wrapper {
                     width: 130px;
                     height: 160px;
                     text-align: center;
@@ -99,9 +99,9 @@
                         height: 160px;
                     }
                 }
-                .fs-cluster-basic-information-wrapper,
-                .fs-cluster-storage-wrapper {
-                    .fs-cluster-info-item {
+                .xc-cluster-basic-information-wrapper,
+                .xc-cluster-storage-wrapper {
+                    .xc-cluster-info-item {
                         margin-top: 33px;
                         padding: 5px 0;
                         width: 150px;
@@ -139,36 +139,36 @@
                                 }
                             }
                         }
-                        .fs-cluster-info-label {
+                        .xc-cluster-info-label {
                             display: inline-block;
                             width: 80px;
                             &.narrower {
                                 width: 70px;
                             }
                         }
-                        .fs-cluster-info-value {
-                            .fs-normal-node-value {
+                        .xc-cluster-info-value {
+                            .xc-normal-node-value {
                                 color: @green;
                             }
-                            .fs-error-node-value {
+                            .xc-error-node-value {
                                 color: @red;
                             }
                         }
                     }
                 }
-                .fs-cluster-basic-information-wrapper {
+                .xc-cluster-basic-information-wrapper {
                     &:nth-child(2) {
                         margin-left: 65px;
                     }
                     margin-left: 15px;
                 }
-                .fs-cluster-storage-wrapper {
+                .xc-cluster-storage-wrapper {
                     margin-left: 50px;
                 }
-                .fs-cluster-chart-wrapper {
+                .xc-cluster-chart-wrapper {
                     width: 174px;
                     height: 174px;
-                    .fs-chart-bottom-title {
+                    .xc-chart-bottom-title {
                         padding: 8px 0;
                         font-size: @smallFont;
                         line-height: @smallFont;
@@ -178,21 +178,21 @@
                 }
             }
         }
-        .fs-cluster-node-and-disk-wrapper {
+        .xc-cluster-node-and-disk-wrapper {
             flex: 1;
             margin-left: 10px;
             min-width: 630px;
-            .fs-node-and-disk-management-wrapper {
+            .xc-node-and-disk-management-wrapper {
                 padding: 33px 0;
                 display: flex;
                 flex-direction: row;
                 height: 120px;
                 background-color: @white;
-                .fs-box-shadow();
+                .xc-box-shadow();
                 &:nth-child(2) {
                     margin-top: 10px;
                 }
-                .fs-node-and-disk-item {
+                .xc-node-and-disk-item {
                     flex: 1;
                     min-width: 150px;
                     &:nth-child(1) {
@@ -213,14 +213,14 @@
                     }
                     display: flex;
                     flex-direction: row;
-                    .fs-node-and-disk-item-img {
+                    .xc-node-and-disk-item-img {
                         margin-right: 20px;
                         width: 54px;
                         height: 54px;
                         background-size: 100% 100%;
                     }
-                    .fs-node-and-disk-item-status-content {
-                        .fs-node-and-disk-item-content-status-text {
+                    .xc-node-and-disk-item-status-content {
+                        .xc-node-and-disk-item-content-status-text {
                             font-size: @largeFont;
                             font-weight: bold;
                             color: @title;
@@ -231,27 +231,27 @@
                                 color: @red;
                             }
                         }
-                        .fs-node-and-disk-item-content-status-type {
+                        .xc-node-and-disk-item-content-status-type {
                             font-size: @smallFont;
                         }
                     }
                 }
             }
         }
-        .fs-cluster-capacity-wrapper {
+        .xc-cluster-capacity-wrapper {
             margin-top: 10px;
             height: 295px;
         }
-        .fs-target-ranking-wrapper {
+        .xc-target-ranking-wrapper {
             flex: 1;
             margin-top: 10px;
             margin-left: 10px;
             min-width: 325px;
             height: 295px;
         }
-        .fs-target-ranking-wrapper,
-        .fs-physical-node-wrapper {
-            .fs-view-all {
+        .xc-target-ranking-wrapper,
+        .xc-physical-node-wrapper {
+            .xc-view-all {
                 float: right;
                 margin-top: 5px;
                 font-size: @smallFont;
@@ -262,7 +262,7 @@
                 }
             }
         }
-        .fs-statistics-chart-wrapper {
+        .xc-statistics-chart-wrapper {
             flex: 1;
             margin-top: 10px;
             min-width: 300px;
@@ -270,23 +270,23 @@
             &:nth-child(3) {
                 margin-left: 10px;
             }
-            .fs-statistics-chart-content-wrapper {
+            .xc-statistics-chart-content-wrapper {
                 padding: 15px 0; // 40px is the height of head title
                 height: ~"calc(100% - 40px)";
             }
         }
-        .fs-physical-node-wrapper {
+        .xc-physical-node-wrapper {
             flex: 1;
             margin-top: 10px;
             min-width: 1148px;
             min-height: 220px;
-            .fs-physical-node-capacity {
+            .xc-physical-node-capacity {
                 display: inline-block;
                 vertical-align: middle;
             }
         }
         &.adaptive-height {
-            .fs-statistics-chart-wrapper {
+            .xc-statistics-chart-wrapper {
                 // The height value is determined by the sum value of height and margin of
                 // all the components layout above the statistics chart row.
                 height: ~"calc(100vh - 640px)";
@@ -294,9 +294,9 @@
             }
         }
         @media screen and (max-width: 1700px) {
-            .fs-cluster-node-and-disk-wrapper {
-                .fs-node-and-disk-management-wrapper {
-                    .fs-node-and-disk-item {
+            .xc-cluster-node-and-disk-wrapper {
+                .xc-node-and-disk-management-wrapper {
+                    .xc-node-and-disk-item {
                         &:nth-child(2),
                         &:nth-child(3) {
                             position: relative;
@@ -309,19 +309,19 @@
             }
         }
         @media screen and (max-width: 1650px) {
-            .fs-cluster-information-wrapper {
-                .fs-cluster-information-content {
+            .xc-cluster-information-wrapper {
+                .xc-cluster-information-content {
                     padding-left: 20px;
-                    .fs-cluster-basic-information-wrapper {
+                    .xc-cluster-basic-information-wrapper {
                         &:nth-child(2) {
                             margin-left: 25px;
                         }
                     }
                 }
             }
-            .fs-cluster-node-and-disk-wrapper {
-                .fs-node-and-disk-management-wrapper {
-                    .fs-node-and-disk-item {
+            .xc-cluster-node-and-disk-wrapper {
+                .xc-node-and-disk-management-wrapper {
+                    .xc-node-and-disk-item {
                         &:nth-child(1) {
                             margin-left: 25px;
                         }
@@ -330,10 +330,10 @@
             }
         }
         @media screen and (max-width: 1580px) {
-            .fs-cluster-node-and-disk-wrapper {
-                .fs-node-and-disk-management-wrapper {
-                    .fs-node-and-disk-item {
-                        .fs-node-and-disk-item-img {
+            .xc-cluster-node-and-disk-wrapper {
+                .xc-node-and-disk-management-wrapper {
+                    .xc-node-and-disk-item {
+                        .xc-node-and-disk-item-img {
                             display: none;
                         }
                     }
@@ -341,12 +341,12 @@
             }
         }
     }
-    &.fs-node-detail-wrapper {
-        .fs-table-operation-wrapper {
+    &.xc-node-detail-wrapper {
+        .xc-table-operation-wrapper {
             // The min-width of node-detail's second row is 1148px.
             min-width: 1148px;
         }
-        .fs-dashboard-row {
+        .xc-dashboard-row {
             min-width: 1148px;
         }
     }
