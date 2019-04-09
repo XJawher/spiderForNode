@@ -1,8 +1,10 @@
 const Koa = require('koa');
 const app = new Koa();
 const router = require('./router/router');
+const middleware = require('./middleware/middleware');
 const bodyParser = require('koa-bodyparser');
 require('./schedule/index');
+app.use(middleware.initRequest());
 app.use(bodyParser());
 app.use(router.routes());
 app.use(router.allowedMethods());

@@ -161,9 +161,77 @@ Node Schedule 及其强大的一点就是这个,可以通过 * 号位置的不�
 
 基本上就是一个很简单的 fetch 的结构,这里只做了 post 和 get,至于说 delete 之类的暂时用不到就没再做了.fetchMock 是为了之后的 UT 所做的准备,看后续的时间吧,有时间了就继续做
 
+### 获取指定城市的数据
 
+明明在前端传递的数据是 POST 但是后端在获取的时候却得到的是 GET,不知道这是啥原因,
 
+    {
+        request: {
+            method: "GET",
+            url: "/api/city/condition",
+            header: {
+                host: "localhost:3456",
+                connection: "keep-alive",
+                cache-control: "max-age=0",
+                upgrade-insecure-requests: "1",
+                user-agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36",
+                accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
+                accept-encoding: "gzip, deflate, br",
+                accept-language: "zh-CN,zh;q=0.9,en;q=0.8",
+            }
+        },
+        response: {
+            status: 200,
+            message: "OK",
+            header: {
+                content-type: "application/json; charset=utf-8"
+            }
+        },
+        app: {
+            subdomainOffset: 2,
+            proxy: false,
+            env: "development"
+        },
+        originalUrl: "/api/city/condition",
+        req: "<original node req>",
+        res: "<original node res>",
+        socket: "<original node socket>"
+    }
 
+具体的请求返回数据如上,原因暂时未知
+
+错误的原因有可能是我没有对前端传递的 HTTP 请求做二次封装,做了二次封装以后才能和正常的一样进行数据的获取.现在需要做一次新的数据封装,在路由之前在 index.js 中进行请求的拦截,然后把请求做一次封装,对于 POST 和 GET 请求要分开做封装.
+
+错误原因:是没有做中间件的封装,做完中间件的封装以后,就可以用基础的 parma 来做数据的获取.
+
+    const modal = {
+        initRequest() {
+            return async (ctx, next) => {
+                ctx.parma = ctx.request.method.toLowerCase() === 'post' ? ctx.request.body : ctx.query;
+                await next();
+            };
+        }
+    };
+
+    export default modal;
+在中间件中我们可以做很多的事情,比如检测用户的状态,检测指定的一个请求等等,可以对指定的需求进行完美的开发
+
+现在有个问题,就是在后端的 index.js 中
+
+    const Koa = require('koa');
+    const app = new Koa();
+    const router = require('./router/router');
+    const middleware = require('./middleware/middleware');
+    const bodyParser = require('koa-bodyparser');
+    require('./schedule/index');
+    app.use(bodyParser());
+    app.use(middleware.initRequest());
+    app.use(router.routes());
+    app.use(router.allowedMethods());
+    app.listen(3456);
+    console.log('server is running on 3456');
+
+app.use() 他的执行顺序是怎么设定的,将 **app.use(middleware.initRequest());** 移动到路由的下部分的时候就会出现中间件的不起作用现象,说明该执行的顺序是按照 promise 链式调用进行执行的,如果将其移动到 **app.use(bodyParser());** 之前的话中间件的执行也是不起作用的,因为在数据 JSON 化之前就去取值的话是取不到这个值的,再次说明了 koa 的执行是链式的,是按照 promise 的要求进行的
 
 
 
