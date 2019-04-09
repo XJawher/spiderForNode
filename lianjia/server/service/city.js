@@ -96,9 +96,9 @@ const model = {
         { province: '浙江', cityEN: 'nb', cityCH: '宁波' },
         { province: '浙江', cityEN: 'sx', cityCH: '绍兴' },
         { province: '浙江', cityEN: 'taizhou', cityCH: '台州' },
-        { province: '浙江', cityEN: 'wz', cityCH: '温州' }]
+        { province: '浙江', cityEN: 'wz', cityCH: '温州' }];
         let errorCity = [];
-        let errorDataInsert = [];
+        // let errorDataInsert = [];
         for (let i = 0; i < cityTotal.length; i++) {
             (function () {
                 setTimeout(async () => {
@@ -109,7 +109,7 @@ const model = {
 
                         } catch (error) {
                             console.log(`全国解析出错,错误的位置数据源为${cityTotal[i].province}省,${cityTotal[i].cityCH}市的数据`);
-                            errorCity.push(cityTotal[i])
+                            errorCity.push(cityTotal[i]);
                         }
                         if (err) {
                             console.log(`全国  ====>>>>>  ${err}`);
@@ -123,11 +123,11 @@ const model = {
                                 total: total, time: new Date()
                             });
                             console.log(`第${i}次请求,数据源为${cityTotal[i].province}省,${cityTotal[i].cityCH}市的数据,总量为:${total},总共有${cityTotal.length}个城市`);
-                            await database.city(data)
+                            await database.city(data);
                         }
                     });
-                }, 4000 * i)
-            })()
+                }, 4000 * i);
+            })();
         }
 
         /*   if (errorCity.length > 0) {
@@ -177,7 +177,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 西安 ====>>>>>  ${err}`)
+                            console.log(` 西安 ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -208,7 +208,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -219,7 +219,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -229,7 +229,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -240,7 +240,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -258,11 +258,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`结束西安数据写入,今日的总量数据为 ${total}`);
                             }
-                            await database.xianData(data)
+                            await database.xianData(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
     chengdu() {
@@ -280,7 +280,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 成都 ====>>>>>  ${err}`)
+                            console.log(` 成都 ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -311,7 +311,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -322,7 +322,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -332,7 +332,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -343,7 +343,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -361,11 +361,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`结束成都数据写入,今日的总量数据为 ${total}`);
                             }
-                            await database.chengduData(data)
+                            await database.chengduData(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
     hf() {
@@ -383,7 +383,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 合肥 ====>>>>>  ${err}`)
+                            console.log(` 合肥 ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -414,7 +414,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -425,7 +425,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -435,7 +435,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -446,7 +446,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -464,11 +464,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`合肥数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.hf(data)
+                            await database.hf(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -487,7 +487,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(`北京  ====>>>>>  ${err}`)
+                            console.log(`北京  ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -518,7 +518,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -529,7 +529,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -539,7 +539,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -550,7 +550,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -568,11 +568,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`北京bj数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.bj(data)
+                            await database.bj(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -591,7 +591,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(`重庆  ====>>>>>  ${err}`)
+                            console.log(`重庆  ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -622,7 +622,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -633,7 +633,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -643,7 +643,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -654,7 +654,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -672,11 +672,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`重庆cq数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.cq(data)
+                            await database.cq(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -695,7 +695,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 福州 ====>>>>>  ${err}`)
+                            console.log(` 福州 ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -726,7 +726,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -737,7 +737,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -747,7 +747,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -758,7 +758,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -776,11 +776,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`福州fz数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.fz(data)
+                            await database.fz(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -799,7 +799,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(`广州  ====>>>>>  ${err}`)
+                            console.log(`广州  ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -830,7 +830,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -841,7 +841,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -851,7 +851,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -862,7 +862,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -880,11 +880,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`广州gz数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.gz(data)
+                            await database.gz(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -903,7 +903,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(`深圳 ===>>>>${err}`)
+                            console.log(`深圳 ===>>>>${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -934,7 +934,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -945,7 +945,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -955,7 +955,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -966,7 +966,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -984,11 +984,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`深圳sz数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.sz(data)
+                            await database.sz(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -1007,7 +1007,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(`贵阳解析出错 ${err}`)
+                            console.log(`贵阳解析出错 ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -1038,7 +1038,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -1049,7 +1049,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -1059,7 +1059,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -1070,7 +1070,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -1088,11 +1088,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`贵阳gy数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.gy(data)
+                            await database.gy(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -1111,7 +1111,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 南宁 ====>>>>>  ${err}`)
+                            console.log(` 南宁 ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -1142,7 +1142,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -1153,7 +1153,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -1163,7 +1163,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -1174,7 +1174,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -1192,11 +1192,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`南宁nn数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.nn(data)
+                            await database.nn(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -1215,7 +1215,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(`  ====>>>>>  ${err}`)
+                            console.log(`  ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -1246,7 +1246,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -1257,7 +1257,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -1267,7 +1267,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -1278,7 +1278,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -1296,11 +1296,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`兰州lz数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.lz(data)
+                            await database.lz(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -1319,7 +1319,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 武汉 ====>>>>>  ${err}`)
+                            console.log(` 武汉 ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -1350,7 +1350,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -1361,7 +1361,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -1371,7 +1371,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -1382,7 +1382,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -1400,11 +1400,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`武汉wh数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.wh(data)
+                            await database.wh(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -1423,7 +1423,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 长沙 ====>>>>>  ${err}`)
+                            console.log(` 长沙 ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -1454,7 +1454,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -1465,7 +1465,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -1475,7 +1475,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -1486,7 +1486,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -1504,11 +1504,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`长沙cs数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.cs(data)
+                            await database.cs(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -1527,7 +1527,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 石家庄 ====>>>>>  ${err}`)
+                            console.log(` 石家庄 ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -1558,7 +1558,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -1569,7 +1569,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -1579,7 +1579,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -1590,7 +1590,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -1608,11 +1608,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`石家庄sjz数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.sjz(data)
+                            await database.sjz(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -1631,7 +1631,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 海口 ====>>>>>  ${err}`)
+                            console.log(` 海口 ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -1662,7 +1662,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -1673,7 +1673,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -1683,7 +1683,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -1694,7 +1694,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -1712,11 +1712,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`海口hk数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.hk(data)
+                            await database.hk(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -1735,7 +1735,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 郑州 ====>>>>>  ${err}`)
+                            console.log(` 郑州 ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -1766,7 +1766,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -1777,7 +1777,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -1787,7 +1787,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -1798,7 +1798,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -1816,11 +1816,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`郑州zz数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.zz(data)
+                            await database.zz(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -1839,7 +1839,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 哈尔滨 ====>>>>>  ${err}`)
+                            console.log(` 哈尔滨 ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -1870,7 +1870,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -1881,7 +1881,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -1891,7 +1891,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -1902,7 +1902,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -1920,11 +1920,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`哈尔滨hrb数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.hrb(data)
+                            await database.hrb(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -1943,7 +1943,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 南京nj ====>>>>>  ${err}`)
+                            console.log(` 南京nj ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -1974,7 +1974,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -1985,7 +1985,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -1995,7 +1995,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -2006,7 +2006,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -2024,11 +2024,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`南京njnj数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.nj(data)
+                            await database.nj(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -2047,7 +2047,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 长春cc ====>>>>>  ${err}`)
+                            console.log(` 长春cc ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -2078,7 +2078,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -2089,7 +2089,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -2099,7 +2099,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -2110,7 +2110,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -2128,11 +2128,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`长春cc数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.cc(data)
+                            await database.cc(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -2151,7 +2151,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 南昌nc ====>>>>>  ${err}`)
+                            console.log(` 南昌nc ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -2182,7 +2182,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -2193,7 +2193,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -2203,7 +2203,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -2214,7 +2214,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -2232,11 +2232,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`南昌nc数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.nc(data)
+                            await database.nc(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -2255,7 +2255,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 沈阳sy ====>>>>>  ${err}`)
+                            console.log(` 沈阳sy ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -2286,7 +2286,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -2297,7 +2297,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -2307,7 +2307,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -2318,7 +2318,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -2336,11 +2336,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`沈阳sy数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.sy(data)
+                            await database.sy(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -2359,7 +2359,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 呼和浩特hhht ====>>>>>  ${err}`)
+                            console.log(` 呼和浩特hhht ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -2390,7 +2390,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -2401,7 +2401,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -2411,7 +2411,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -2422,7 +2422,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -2440,11 +2440,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`呼和浩特hhht数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.hhht(data)
+                            await database.hhht(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -2463,7 +2463,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 济南jn ====>>>>>  ${err}`)
+                            console.log(` 济南jn ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -2494,7 +2494,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -2505,7 +2505,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -2515,7 +2515,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -2526,7 +2526,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -2544,11 +2544,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`济南jn数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.jn(data)
+                            await database.jn(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -2567,7 +2567,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 太原ty ====>>>>>  ${err}`)
+                            console.log(` 太原ty ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -2598,7 +2598,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -2609,7 +2609,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -2619,7 +2619,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -2630,7 +2630,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -2648,11 +2648,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`太原ty数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.ty(data)
+                            await database.ty(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -2671,7 +2671,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 天津tj ====>>>>>  ${err}`)
+                            console.log(` 天津tj ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -2702,7 +2702,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -2713,7 +2713,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -2723,7 +2723,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -2734,7 +2734,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -2752,11 +2752,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`天津tj数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.tj(data)
+                            await database.tj(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -2775,7 +2775,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 昆明km ====>>>>>  ${err}`)
+                            console.log(` 昆明km ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -2806,7 +2806,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -2817,7 +2817,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -2827,7 +2827,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -2838,7 +2838,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -2856,11 +2856,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`昆明km数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.km(data)
+                            await database.km(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -2879,7 +2879,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 银川yinchuan ====>>>>>  ${err}`)
+                            console.log(` 银川yinchuan ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -2910,7 +2910,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -2921,7 +2921,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -2931,7 +2931,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -2942,7 +2942,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -2960,11 +2960,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`银川yinchuan数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.yinchuan(data)
+                            await database.yinchuan(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -2983,7 +2983,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 杭州hz ====>>>>>  ${err}`)
+                            console.log(` 杭州hz ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -3014,7 +3014,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -3025,7 +3025,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -3035,7 +3035,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -3046,7 +3046,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -3064,11 +3064,11 @@ const model = {
                             if (i === 99) {
                                 console.log(`杭州hz数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.hz(data)
+                            await database.hz(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
 
@@ -3087,7 +3087,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(` 上海sh ====>>>>>  ${err}`)
+                            console.log(` 上海sh ====>>>>>  ${err}`);
                         } else {
                             let data = [];
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
@@ -3118,7 +3118,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -3129,7 +3129,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -3139,7 +3139,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data.trim());
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -3150,7 +3150,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data.trim(); // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -3168,12 +3168,12 @@ const model = {
                             if (i === 99) {
                                 console.log(`上海sh数据写入成功数据为 ${total}!!!`);
                             }
-                            await database.sh(data)
+                            await database.sh(data);
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
     },
-}
+};
 module.exports = model;
