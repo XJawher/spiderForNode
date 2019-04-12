@@ -13,5 +13,6 @@ router.all('/api/city', controller['/api/city']);
 router.all('/api/city/sort', controller['/api/city/sort']);
 router.all('/api/city/condition', controller['/api/city/condition']);
 router.all('/api/city/get', controller['/api/city/get']);
+router.all('/api/city/rankings', controller['/api/city/rankings']);
 
 module.exports = router;

@@ -177,6 +177,6 @@ const model = {
     async hz(param) {
         return await dao.createOne(hz, param);
     },
-}
+};
 
 module.exports = model;

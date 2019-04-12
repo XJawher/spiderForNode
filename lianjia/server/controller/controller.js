@@ -72,5 +72,16 @@ const model = {
             code: 0, data: ctx.parma
         };
     },
+    /**
+     * 获取数据库中存入的指定城市数据
+     * @param {name 城市的名字}
+     * @param {time 指定日期的城市名字,日期必须要有,不能为空,日期接收 unit 然后再自己转换}
+     */
+    '/api/city/rankings': async ctx => {
+        console.log(ctx.parma);
+        ctx.body = {
+            code: 0, data: ctx.parma
+        };
+    },
 };
 module.exports = model;
