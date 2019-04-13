@@ -32,14 +32,18 @@
 body {
     width: 100%;
     height: 100%;
-    color: @text !important;
+    color: @text  !important;
+
     #root {
         position: relative;
         height: 100%;
+
         .xc-body-wrapper {
             display: flex;
             flex-direction: row;
-            height:100%;
+            height: 100%;
+            background-color: #ffffff;
+
             .xc-main-wrapper {
                 flex: 1;
                 height: 100%;
@@ -47,6 +51,7 @@ body {
                 overflow: hidden;
                 border-top: 1px solid @light-border;
                 background-color: @page-bg;
+
                 .xc-content-wrapper {
                     position: relative;
                     padding: 10px;
@@ -55,6 +60,7 @@ body {
                     // a native scrollbar, but have no idea about why it appears till now.
                     overflow-y: hidden;
                     background-color: @page-bg;
+
                     .xc-page-content {
                         .xc-table-operation-wrapper {
                             margin-bottom: 10px;
@@ -62,42 +68,54 @@ body {
                             // height: 60px;
                             line-height: 60px;
                             background-color: @white;
+
                             &.no-bottom-margin {
                                 margin-bottom: 0;
                             }
+
                             .xc-box-shadow();
+
                             .ant-input-search {
                                 width: 150px;
                             }
+
                             .ant-select-selection {
                                 width: 200px;
                             }
+
                             .xc-table-operation-button-box {
                                 float: right;
+
                                 .ant-btn {
                                     margin-left: 12px;
+
                                     &:nth-child(1) {
                                         margin-left: 0;
                                     }
                                 }
                             }
-                            @media screen and (max-width: 600px){
+
+                            @media screen and (max-width: 600px) {
                                 .xc-table-operation-button-box {
                                     display: none;
                                 }
                             }
                         }
+
                         .xc-main-content-wrapper {
-							position: relative;
+                            position: relative;
                             height: ~"calc(100vh - 145px)";
                             background-color: @white;
                             .xc-box-shadow();
+
                             .xc-table-title {
                                 color: @title;
+
                                 .anticon {
                                     padding-right: 10px;
                                 }
                             }
+
                             .ant-table-wrapper {
                                 min-width: 1000px;
                             }

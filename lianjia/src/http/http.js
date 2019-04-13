@@ -14,6 +14,10 @@ const modal = {
         let data = await fetchGet('/api/city/get', { name, time });
         console.log(data);
     },
+
+    async cityRankings(name = 'test', time = 123, ) {
+        return await fetchPost('/api/city/rankings');
+    },
 };
 
 export default modal;

@@ -18,7 +18,7 @@ const model = {
      * db.cities.find({"time" : {"$gte":ISODate("2019-03-18"),"$lte":ISODate("2019-03-20")},cityEN:'xa'}) 这是选择西安的数据,从 3-18 号开始, 3-19 结束
      */
     cityRankings(city, date) {
-
+        return database.cityAll();
     },
 
     /**
