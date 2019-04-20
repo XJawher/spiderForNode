@@ -35,7 +35,6 @@ export default class DailyGrowth extends Component {
         });
         // console.log([... new Set(data[0].time.map(item => item.split('T')[0]))]);
         let time = data[0].time.map(item => item.split('T')[0]);
-        console.log(time);
         this.setState({ series, time: time, legend: legend });
     }
 
@@ -46,7 +45,7 @@ export default class DailyGrowth extends Component {
     render() {
         let option = {
             title: {
-                text: '折线图堆叠'
+                text: '中心城市每日数据'
             },
             tooltip: {
                 trigger: 'axis'
@@ -78,9 +77,13 @@ export default class DailyGrowth extends Component {
 
 
         return (
-            <div className="xc-body-wrapper">
-                <div>
+            <div className="xc-daily-growth-main">
+                <div className='daily-growth'>
                     <LineChart option={option} />
+                </div>
+
+                <div className='month-to-month'>
+                    环比数据:
                 </div>
             </div>
         );

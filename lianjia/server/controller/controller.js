@@ -214,7 +214,7 @@ const model = {
         //         }
         //     });
         // });
-        data.forEach(item => {
+        data.sort().forEach(item => {
             cityTotal.forEach(cityTotal => {
                 if (cityTotal.cityEN === item.cityEN) {
                     cityTotal.total.push(item.total);

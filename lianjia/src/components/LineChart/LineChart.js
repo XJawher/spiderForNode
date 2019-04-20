@@ -31,7 +31,6 @@ class LineChart extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
         this._chartInstance.setOption(this.generateOption(nextProps));
     }
 
