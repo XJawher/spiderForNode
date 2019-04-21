@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import http from '../../http/http';
 import LineChart from '../../components/LineChart/LineChart';
-
+import MonthToMonth from './MonthToMonth';
 export default class DailyGrowth extends Component {
 
     constructor(props) {
@@ -13,12 +13,9 @@ export default class DailyGrowth extends Component {
             },
             series: [],
             time: [],
+            city: [],
             legend: [],
         };
-    }
-
-    getCityByConditions() {
-        http.getCityByCondition();
     }
 
     componentWillMount() {
@@ -35,11 +32,13 @@ export default class DailyGrowth extends Component {
         });
         // console.log([... new Set(data[0].time.map(item => item.split('T')[0]))]);
         let time = data[0].time.map(item => item.split('T')[0]);
-        this.setState({ series, time: time, legend: legend });
+        this.setState({ series, time: time, legend: legend, city: data });
     }
 
-    getTest() {
-        http.testGet();
+    yAxis(value) {
+        console.log(value);
+
+        return value;
     }
 
     render() {
@@ -70,7 +69,19 @@ export default class DailyGrowth extends Component {
                 data: this.state.time
             },
             yAxis: {
-                type: 'value'
+                type: 'value',
+                min: '25000',
+                max: '85000',
+                axisTick: {
+                    show: false
+                },
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#e5e5e5'
+                    }
+                },
+                splitArea: { show: false }
             },
             series: this.state.series
         };
@@ -84,6 +95,7 @@ export default class DailyGrowth extends Component {
 
                 <div className='month-to-month'>
                     环比数据:
+                    <MonthToMonth city={this.state.city} />
                 </div>
             </div>
         );
