@@ -5,9 +5,8 @@ const modal = {
         console.log(data);
     },
 
-    async getCityByCondition(name = '222', time = 123, ) {
-        let data = await fetchPost('/api/city/condition', { name, time });
-        console.log(data);
+    async getCityByCondition(name = '222', time = '123', ) {
+        return await fetchPost('/api/city/condition', { name, time });
     },
 
     async testGet(name = 'test', time = 123, ) {
@@ -21,6 +20,10 @@ const modal = {
 
     async insertXian(name = 'test', time = 123, ) {
         return await fetchGet('/api/city/xian');
+    },
+
+    async xianNewTotal() {
+        return await fetchGet('api/city/xianNewTotal');
     },
 };
 

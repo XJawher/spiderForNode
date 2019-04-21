@@ -17,7 +17,7 @@ exports.createOne = (model, doc) => {
  * {projection: the conditions of you want find from this database}
  * {options: the conditions of you want find from this database}
  */
-exports.findAll = (model, conditions = {}, projection = {}, options = {}) => {
+exports.findAll = (model, conditions, projection = {}, options = {}) => {
     return new Promise((resolve, reject) => {
         model.find(conditions, projection, options, (error, doc) => {
             error ? reject(error) : resolve(doc);

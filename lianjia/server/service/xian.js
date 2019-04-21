@@ -1,7 +1,6 @@
 const superagent = require('superagent');
 const database = require('./database');
 const cheerio = require('cheerio');
-const waitSeconds = require('../util/common');
 
 const model = {
     async lianjia() {
@@ -53,7 +52,7 @@ const model = {
             console.log(`total === ${total}`);
 
         });
-        await waitSeconds(2);
+        await model.waitSeconds(2);
         for (let [key, value] of Object.entries(xianRegion)) {
             if (value.length === 0) {
                 for (let i = 0; i < 100; i++) {
@@ -66,9 +65,6 @@ const model = {
 
                                 } catch (error) {
                                     console.log(`解析出错位置:${key}/${i + 1}`);
-                                }
-                                if (i === 0) {
-                                    console.log(`i === 0 位置:${key}/`);
                                 }
                                 if (i === 99) {
                                     console.log(`i === 99 位置:${key}/`);
@@ -166,9 +162,6 @@ const model = {
                                         console.log(`解析出错位置:${key}/${item}/${i + 1}`);
 
                                     }
-                                    if (i === 0) {
-                                        console.log(`i === 0 位置:${key}/${item}`);
-                                    }
                                     if (i === 99) {
                                         console.log(`i === 99 位置:${key}/${item}`);
                                     }
@@ -246,7 +239,7 @@ const model = {
                                                 'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
                                             });
                                         });
-                                        await database.xianData(data);
+                                        await database.xianLianjia(data);
                                     }
                                 });
                             });
@@ -256,6 +249,14 @@ const model = {
             }
         }
         console.log(`the function of xi'an is take success`);
+    },
+
+    waitSeconds(time) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve();
+            }, time * 1000 || 3000);
+        });
     }
 };
 module.exports = model;

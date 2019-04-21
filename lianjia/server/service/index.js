@@ -8,6 +8,12 @@ const model = {
     xian() {
         return database.xianAll();
     },
+    /**
+     * xi an second-hand house data
+     */
+    xianNewTotal() {
+        return database.xianNewTotal();
+    },
 
     /**
      * @param {city 要获取数据的城市}

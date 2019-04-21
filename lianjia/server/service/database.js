@@ -42,6 +42,10 @@ const model = {
         return await dao.createOne(xian, param);
     },
 
+    async xianNewTotal(param) {
+        return await dao.findAll(xian, param);
+    },
+
     async xianData(param) {
         return await dao.createOne(xianData, param);
     },

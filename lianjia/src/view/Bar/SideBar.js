@@ -81,6 +81,9 @@ export default class SideBar extends Component {
                     <Menu.Item key={routerPath.DailyGrowth}>
                         {this.getPopoverIcon('arrow-up', 'rase', '日增长率')}
                     </Menu.Item>
+                    <Menu.Item key={routerPath.Xian}>
+                        {this.getPopoverIcon('arrow-down', 'xian', '西安')}
+                    </Menu.Item>
                 </Menu>
             </aside>
         );

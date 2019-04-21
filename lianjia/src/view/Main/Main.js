@@ -12,6 +12,9 @@ import Dashboard from '../Dashboard/Dashboard';
 // Daily growth
 import DailyGrowth from '../DailyGrowth/DailyGrowth';
 
+// Daily growth
+import Xian from '../City/Xian';
+
 export default class Main extends Component {
     constructor(props) {
         super(props);
@@ -31,6 +34,8 @@ export default class Main extends Component {
                             <Route path={`${Main}${routerPath.Dashboard}`} component={Dashboard} />
 
                             <Route path={`${Main}${routerPath.DailyGrowth}`} component={DailyGrowth} />
+
+                            <Route path={`${Main}${routerPath.Xian}`} component={Xian} />
 
                             <Redirect from={routerPath.Root} to={`${Main}${routerPath.Dashboard}`} />
                         </Switch>

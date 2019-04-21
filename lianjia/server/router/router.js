@@ -15,5 +15,6 @@ router.all('/api/city/sort', controller['/api/city/sort']);
 router.all('/api/city/condition', controller['/api/city/condition']);
 router.all('/api/city/get', controller['/api/city/get']);
 router.all('/api/city/rankings', controller['/api/city/rankings']);
+router.all('/api/city/xianNewTotal', controller['/api/city/xianNewTotal']);
 
 module.exports = router;
