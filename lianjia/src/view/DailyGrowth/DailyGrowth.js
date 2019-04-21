@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import http from '../../http/http';
 import LineChart from '../../components/LineChart/LineChart';
 import MonthToMonth from './MonthToMonth';
+import { Button } from 'antd';
 export default class DailyGrowth extends Component {
 
     constructor(props) {
@@ -39,6 +40,10 @@ export default class DailyGrowth extends Component {
         console.log(value);
 
         return value;
+    }
+
+    insertXian() {
+        http.insertXian();
     }
 
     render() {
@@ -97,6 +102,7 @@ export default class DailyGrowth extends Component {
                     环比数据:
                     <MonthToMonth city={this.state.city} />
                 </div>
+                <div><Button onClick={this.insertXian.bind(this)}>西安</Button></div>
             </div>
         );
     }

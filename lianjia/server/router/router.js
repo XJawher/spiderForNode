@@ -9,6 +9,7 @@ router.all('/api/testapi', controller['/api/testapi']);
 // router.all('/api/getchengdu', controller['/api/getchengdu']);
 // router.all('/api/lianjia/city', controller['/api/lianjia/city']);
 router.all('/api/city/bj', controller['/api/city/bj']);
+router.all('/api/city/xian', controller['/api/city/xian']);
 router.all('/api/city', controller['/api/city']);
 router.all('/api/city/sort', controller['/api/city/sort']);
 router.all('/api/city/condition', controller['/api/city/condition']);

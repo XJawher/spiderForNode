@@ -18,6 +18,10 @@ const modal = {
     async cityRankings(name = 'test', time = 123, ) {
         return await fetchPost('/api/city/rankings');
     },
+
+    async insertXian(name = 'test', time = 123, ) {
+        return await fetchGet('/api/city/xian');
+    },
 };
 
 export default modal;

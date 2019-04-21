@@ -18,7 +18,7 @@ exports.waitSeconds = time => {
  */
 exports.waitRandom = (start, end) => {
     return new Promise(resolve => {
-        let time = start + Math.random() * (end - start)
+        let time = start + Math.random() * (end - start);
         setTimeout(() => {
             resolve();
         }, time.toFixed(0) * 1000 || 3000);

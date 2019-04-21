@@ -162,109 +162,109 @@ const model = {
           }
           return { okData: data.length, errorData: errorCity.length } */
     },
-    xian() {
-        let total = '';
-        for (let i = 0; i < 100; i++) {
-            (function () {
-                setTimeout(async () => {
-                    await superagent.get(`https://xa.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
-                        let $ = null;
-                        try {
-                            $ = await cheerio.load(res.text);
+    // xian() {
+    //     let total = '';
+    //     for (let i = 0; i < 100; i++) {
+    //         (function () {
+    //             setTimeout(async () => {
+    //                 await superagent.get(`https://xa.lianjia.com/ershoufang/pg${i + 1}/`).end(async (err, res) => {
+    //                     let $ = null;
+    //                     try {
+    //                         $ = await cheerio.load(res.text);
 
-                        } catch (error) {
-                            console.log(`西安解析出错,错误的页码是 ${i + 1}`);
+    //                     } catch (error) {
+    //                         console.log(`西安解析出错,错误的页码是 ${i + 1}`);
 
-                        }
-                        if (err) {
-                            console.log(` 西安 ====>>>>>  ${err}`);
-                        } else {
-                            let data = [];
-                            $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
-                                total = element.children[0].data;
-                            });
-                            await $('div#content ul.sellListContent li div.info').each((index, element) => {
-                                let title = ''; // 标题
-                                let address = ''; // 地址
-                                let addressSupplement = ''; // 地址补充
-                                let floodSupplement = ''; // 楼层以及实际的楼层位置补充
-                                let flood = ''; // 楼层以及实际的楼层位置
-                                let followInfo = ''; // 关注,带看,发布时间
-                                let tag = []; // 标签
-                                let price = ''; // 总价
-                                let priceSign = ''; // 单价
-                                // element.children[0].children[0].children[0].data.trim();
-                                element.children.forEach((item, index) => {
-                                    switch (index) {
-                                        case 0:
-                                            title = item.children[0].children[0].data.trim();
-                                            break;
+    //                     }
+    //                     if (err) {
+    //                         console.log(` 西安 ====>>>>>  ${err}`);
+    //                     } else {
+    //                         let data = [];
+    //                         $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
+    //                             total = element.children[0].data;
+    //                         });
+    //                         await $('div#content ul.sellListContent li div.info').each((index, element) => {
+    //                             let title = ''; // 标题
+    //                             let address = ''; // 地址
+    //                             let addressSupplement = ''; // 地址补充
+    //                             let floodSupplement = ''; // 楼层以及实际的楼层位置补充
+    //                             let flood = ''; // 楼层以及实际的楼层位置
+    //                             let followInfo = ''; // 关注,带看,发布时间
+    //                             let tag = []; // 标签
+    //                             let price = ''; // 总价
+    //                             let priceSign = ''; // 单价
+    //                             // element.children[0].children[0].children[0].data.trim();
+    //                             element.children.forEach((item, index) => {
+    //                                 switch (index) {
+    //                                     case 0:
+    //                                         title = item.children[0].children[0].data.trim();
+    //                                         break;
 
-                                        case 1:
-                                            item.children[0].children.forEach(item => {
-                                                if (item.name === 'a') {
-                                                    address = item.children[0].data.trim();
-                                                }
-                                                if (item.type === 'text') {
-                                                    addressSupplement = item.data.trim();
-                                                }
-                                            });
-                                            break;
+    //                                     case 1:
+    //                                         item.children[0].children.forEach(item => {
+    //                                             if (item.name === 'a') {
+    //                                                 address = item.children[0].data.trim();
+    //                                             }
+    //                                             if (item.type === 'text') {
+    //                                                 addressSupplement = item.data.trim();
+    //                                             }
+    //                                         });
+    //                                         break;
 
-                                        case 2:
-                                            item.children[0].children.forEach(item => {
-                                                if (item.name === 'a') {
-                                                    flood = item.children[0].data.trim();
-                                                }
-                                                if (item.type === 'text') {
-                                                    floodSupplement = item.data.trim();
-                                                }
-                                            });
-                                            break;
+    //                                     case 2:
+    //                                         item.children[0].children.forEach(item => {
+    //                                             if (item.name === 'a') {
+    //                                                 flood = item.children[0].data.trim();
+    //                                             }
+    //                                             if (item.type === 'text') {
+    //                                                 floodSupplement = item.data.trim();
+    //                                             }
+    //                                         });
+    //                                         break;
 
-                                        case 3:
-                                            followInfo = item.children[1].data.trim();
-                                            break;
+    //                                     case 3:
+    //                                         followInfo = item.children[1].data.trim();
+    //                                         break;
 
-                                        case 4:
-                                            item.children.forEach(element => {
-                                                tag.push(element.children[0].data.trim());
-                                            });
-                                            // console.log('tag', item.children[0].children);
-                                            break;
+    //                                     case 4:
+    //                                         item.children.forEach(element => {
+    //                                             tag.push(element.children[0].data.trim());
+    //                                         });
+    //                                         // console.log('tag', item.children[0].children);
+    //                                         break;
 
-                                        case 5:
-                                            item.children.forEach((element, number) => {
-                                                if (number === 0) {
-                                                    price = element.children[0].children[0].data.trim(); // 总价
-                                                } else {
-                                                    priceSign = element.children[0].children[0].data.trim(); // 单价
-                                                }
-                                            });
-                                            break;
+    //                                     case 5:
+    //                                         item.children.forEach((element, number) => {
+    //                                             if (number === 0) {
+    //                                                 price = element.children[0].children[0].data.trim(); // 总价
+    //                                             } else {
+    //                                                 priceSign = element.children[0].children[0].data.trim(); // 单价
+    //                                             }
+    //                                         });
+    //                                         break;
 
-                                        default:
-                                            break;
-                                    }
-                                });
-                                data.push(
-                                    {
-                                        'title': title, 'address': address, 'addressSupplement': addressSupplement,
-                                        'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
-                                        'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
-                                    }
-                                );
-                            });
-                            if (i === 99) {
-                                console.log(`结束西安数据写入,今日的总量数据为 ${total}`);
-                            }
-                            await database.xianData(data);
-                        }
-                    });
-                }, 2000 * i);
-            })();
-        }
-    },
+    //                                     default:
+    //                                         break;
+    //                                 }
+    //                             });
+    //                             data.push(
+    //                                 {
+    //                                     'title': title, 'address': address, 'addressSupplement': addressSupplement,
+    //                                     'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+    //                                     'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
+    //                                 }
+    //                             );
+    //                         });
+    //                         if (i === 99) {
+    //                             console.log(`结束西安数据写入,今日的总量数据为 ${total}`);
+    //                         }
+    //                         await database.xianData(data);
+    //                     }
+    //                 });
+    //             }, 2000 * i);
+    //         })();
+    //     }
+    // },
     chengdu() {
         let total = '';
         for (let i = 0; i < 100; i++) {

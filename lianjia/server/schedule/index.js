@@ -24,9 +24,9 @@ new cron.CronJob('01 23 16 * * *', async () => {
 /**
  * 每天定时去请求数据,11:01:01 去请求西安二手房数据
  */
-new cron.CronJob('01 26 16 * * *', async () => {
-    city.xian();
-}, null, true);
+// new cron.CronJob('01 26 16 * * *', async () => {
+//     city.xian();
+// }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求 合肥hf 二手房数据
