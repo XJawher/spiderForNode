@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import http from '../../http/http';
+import LineChart from '../../components/LineChart/LineChart';
+
 
 export default class Xian extends Component {
     constructor(props) {
@@ -17,8 +19,10 @@ export default class Xian extends Component {
                 chengbei: [],
                 chengnan: [],
                 chengdong: [],
+                chengnei: [],
                 jingkai: [],
             },
+            allRegion: []
         };
     }
 
@@ -40,6 +44,7 @@ export default class Xian extends Component {
      */
     async getAllData() {
         let { data } = await http.xianNewTotal();
+        let allMoney = 0;
         let xixian = [];
         let gaoling = [];
         let gaoxin = [];
@@ -52,19 +57,10 @@ export default class Xian extends Component {
         let chengbei = [];
         let chengdong = [];
         let jingkai = [];
-        // 0: "西咸"
-        // 1: "浐灞"
-        // 2: "长安"
-        // 3: "高新"
-        // 4: "城南"
-        // 5: "曲江"
-        // 6: "城西"
-        // 7: "城北"
-        // 8: "城内"
-        // 9: "城东"
-        // 10: "经开"
-        // 11: "高陵
+        let chengnei = [];
+        // "西咸" "浐灞" "长安" "高新" "城南" "曲江" "城西" "城北" "城内" "城东" "经开" "高陵
         data.forEach(element => {
+            allMoney = allMoney + Number(element.price);
             allRegion.push(element.flood);
             switch (element.flood) {
                 case '西咸':
@@ -100,6 +96,9 @@ export default class Xian extends Component {
                 case '经开':
                     jingkai.push(element);
                     break;
+                case '城内':
+                    chengnei.push(element);
+                    break;
 
                 default:
                     break;
@@ -119,16 +118,109 @@ export default class Xian extends Component {
                 chengbei,
                 chengdong,
                 chengnan,
-            }, allRegion: [... new Set(allRegion)]
+                chengnei,
+            }, allRegion: [... new Set(allRegion)], allMoney: allMoney.toFixed(2)
         });
 
     }
 
     render() {
         console.log(this.state);
+        let { xianRegion } = this.state;
+        let option = {
+            title: {
+                text: '某站点用户访问来源',
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{b}: {c} ({d}%)"
+            },
+            legend: {
+                data: this.state.allRegion
+            },
+            series: [
+                {
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    label: {
+                        normal: {
+                            formatter: ' {b|{b}：}{c}  {per|{d}%}  ',
+                            backgroundColor: '#eee',
+                            borderColor: '#aaa',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                            // shadowBlur:3,
+                            // shadowOffsetX: 2,
+                            // shadowOffsetY: 2,
+                            // shadowColor: '#999',
+                            // padding: [0, 7],
+                            rich: {
+                                // a: {
+                                //     color: '#999',
+                                //     lineHeight: 22,
+                                //     align: 'center'
+                                // },
+                                // abg: {
+                                //     backgroundColor: '#333',
+                                //     width: '100%',
+                                //     align: 'right',
+                                //     height: 22,
+                                //     borderRadius: [4, 4, 0, 0]
+                                // },
+                                hr: {
+                                    borderColor: '#aaa',
+                                    width: '100%',
+                                    borderWidth: 0.5,
+                                    height: 0
+                                },
+                                b: {
+                                    fontSize: 16,
+                                    lineHeight: 33
+                                },
+                                per: {
+                                    color: '#eee',
+                                    backgroundColor: '#334455',
+                                    padding: [2, 4],
+                                    borderRadius: 2
+                                }
+                            }
+                        }
+                    }, // "西咸" "浐灞" "长安" "高新" "城南" "曲江" "城西" "城北" "城内" "城东" "经开" "高陵
+                    // xianRegion: {
+                    //     jingkai,
+                    //     xixian,
+                    //     gaoling,
+                    //     gaoxin,
+                    //     changan,
+                    //     qujiang,
+                    //     chengxi,
+                    //     data,
+                    //     chengbei,
+                    //     chengdong,
+                    //     chengnan,
+                    //     chengnei,
+                    // }
+                    data: xianRegion.jingkai.length ? [
+                        { value: xianRegion.xixian.length, name: '西咸' },
+                        { value: xianRegion.chanba.length, name: '浐灞' },
+                        { value: xianRegion.changan.length, name: '长安' },
+                        { value: xianRegion.gaoxin.length, name: '高新' },
+                        { value: xianRegion.chengnan.length, name: '城南' },
+                        { value: xianRegion.qujiang.length, name: '曲江' },
+                        { value: xianRegion.chengxi.length, name: '城西' },
+                        { value: xianRegion.chengbei.length, name: '城北' },
+                        { value: xianRegion.chengnei.length, name: '城内' },
+                        { value: xianRegion.chengdong.length, name: '城东' },
+                        { value: xianRegion.jingkai.length, name: '经开' },
+                        { value: xianRegion.gaoling.length, name: '高陵' }
+                    ] : []
+                }
+            ]
+        };
         return (
             <div className="xc-body-wrapper">
-                this is xian page
+                <LineChart option={option} />
             </div>
         );
     }
