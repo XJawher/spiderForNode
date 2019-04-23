@@ -248,6 +248,9 @@ app.use() 他的执行顺序是怎么设定的,将 **app.use(middleware.initRequ
 
 做数据的删除 `db.cities.find({"time" : {"$gte":ISODate("2019-04-01"),"$lte":ISODate("2019-04-02")},cityEN:'xa'})`,然后通过 `db.cities.update({"time" : {"$gte":ISODate("2019-04-01"),"$lte":ISODate("2019-04-02")},cityEN:'xa'})`
 
+### 写更新的脚本,添加 **datasSring** 字段
 
+先给数据集 db.xiantotals.find 做字段的添加
+第一步先获取全部的数据,做个判断,如果是有 datasSring 字段的就不做更新,如果是没有这个字段的,或者这个字段为空的就从 time 字段中获取数据,添加到 dataString 中去,让数据全部是一致的,不会出现错位的情况
 
-
+`database.xianUpdateOne({ '_id': element._id }, { '$set': { datasSring: '2019-4-22' } }, { multi: 1 });` 更新语句

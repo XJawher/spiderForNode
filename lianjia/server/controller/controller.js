@@ -1,6 +1,7 @@
 const xian = require('../service/xian');
 // const chengdu = require('../service/chengdu');
 const service = require('../service/index');
+const updateTime = require('../service/updateTime');
 const model = {
     '/api/testapi': async ctx => {
         ctx.body = ctx;
@@ -245,6 +246,29 @@ const model = {
         ctx.body = {
             code: 0, data: cityTotal
         };
+    },
+
+    '/api/update/gettime': async ctx => {
+        let data = await updateTime.xianNewTotal();
+        let modifyData = [];
+        data.data.forEach(element => {
+            let splicTime = JSON.stringify(element.time).split('T');
+            if (splicTime[0] === `"2019-04-21`) {
+                modifyData.push({ _id: element._id, time: '2019-4-21' });
+            } else if (splicTime[0] === `"2019-04-22`) {
+                modifyData.push({ _id: element._id, time: '2019-4-22' });
+            }
+        });
+        let res = updateTime.batchUpdate(modifyData);
+        ctx.body = { code: 0, data: res };
+    },
+
+    '/api/update/settime': async ctx => {
+        let { data } = ctx.parma;
+        console.log(`/api/update/settime `);
+        console.log(data[0]);
+        let res = await updateTime.batchUpdate(data);
+        ctx.body = { code: 0, data: res };
     },
 };
 module.exports = model;

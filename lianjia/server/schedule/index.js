@@ -1,5 +1,6 @@
 const cron = require('cron');
 const city = require('../service/city');
+const xian = require('../service/xian');
 
 /**
  *
@@ -17,84 +18,84 @@ const city = require('../service/city');
 /**
  * 每天定时去请求数据,11:01:01 去请求所有的二手房数据
  */
-new cron.CronJob('01 23 16 * * *', async () => {
+new cron.CronJob('01 23 17 * * *', async () => {
     city.lianjia();
 }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求西安二手房数据
  */
-// new cron.CronJob('01 26 16 * * *', async () => {
-//     city.xian();
-// }, null, true);
+new cron.CronJob('01 26 17 * * *', async () => {
+    xian.lianjia();
+}, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求 合肥hf 二手房数据
  */
-new cron.CronJob('01 29 16 * * *', async () => {
+new cron.CronJob('01 29 17 * * *', async () => {
     city.hf();
 }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求 北京bj 二手房数据
  */
-new cron.CronJob('01 33 16 * * *', async () => {
+new cron.CronJob('01 33 17 * * *', async () => {
     city.bj();
 }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求 重庆cq 二手房数据
  */
-new cron.CronJob('01 36 16 * * *', async () => {
+new cron.CronJob('01 36 17 * * *', async () => {
     city.cq();
 }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求 福州fz 二手房数据
  */
-new cron.CronJob('01 39 16 * * *', async () => {
+new cron.CronJob('01 39 17 * * *', async () => {
     city.fz();
 }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求广州  gz二手房数据
  */
-new cron.CronJob('01 43 16 * * *', async () => {
+new cron.CronJob('01 43 17 * * *', async () => {
     city.gz();
 }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求 太原ty 二手房数据
  */
-new cron.CronJob('01 46 16 * * *', async () => {
+new cron.CronJob('01 46 17 * * *', async () => {
     city.ty();
 }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求 天津tj 二手房数据
  */
-new cron.CronJob('01 49 16 * * *', async () => {
+new cron.CronJob('01 49 17 * * *', async () => {
     city.tj();
 }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求 昆明km 二手房数据
  */
-new cron.CronJob('01 53 16 * * *', async () => {
+new cron.CronJob('01 53 17 * * *', async () => {
     city.km();
 }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求 杭州 二手房数据
  */
-new cron.CronJob('01 56 16 * * *', async () => {
+new cron.CronJob('01 56 17 * * *', async () => {
     city.hz();
 }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求 深圳sz  二手房数据
  */
-new cron.CronJob('01 59 16 * * *', async () => {
+new cron.CronJob('01 59 17 * * *', async () => {
     city.sz();
 }, null, true);
 
@@ -129,7 +130,7 @@ new cron.CronJob('01 13 18 * * *', async () => {
 /**
  * 每天定时去请求数据,11:01:01 去请求 武汉wh 二手房数据
  */
-new cron.CronJob('01 16 18 * * *', async () => {
+new cron.CronJob('01 17 18 * * *', async () => {
     city.wh();
 }, null, true);
 
@@ -144,7 +145,7 @@ new cron.CronJob('01 19 18 * * *', async () => {
 /**
  * 每天定时去请求数据,11:01:01 去请求 济南jn 二手房数据
  */
-new cron.CronJob('01 00 16 * * *', async () => {
+new cron.CronJob('01 00 17 * * *', async () => {
     city.jn();
 }, null, true);
 

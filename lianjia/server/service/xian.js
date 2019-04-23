@@ -5,6 +5,8 @@ const cheerio = require('cheerio');
 const model = {
     async lianjia() {
         let total = '';
+        let myDate = new Date();
+        let datasSring = myDate.toLocaleDateString();
         let xianRegion = {
             beilin: [],
             xixian1: [],
@@ -138,7 +140,7 @@ const model = {
                                         });
                                         data.push({
                                             'title': title, 'address': address, 'addressSupplement': addressSupplement,
-                                            'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
+                                            'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo, 'datasSring': datasSring,
                                             'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
                                         });
                                     });
@@ -234,7 +236,7 @@ const model = {
                                                 }
                                             });
                                             data.push({
-                                                'title': title, 'address': address, 'addressSupplement': addressSupplement,
+                                                'title': title, 'address': address, 'addressSupplement': addressSupplement, 'datasSring': datasSring,
                                                 'flood': flood, 'floodSupplement': floodSupplement, 'followInfo': followInfo,
                                                 'tag': tag.join(','), price: price, priceSign: priceSign, total: total, time: new Date()
                                             });
@@ -248,7 +250,6 @@ const model = {
                 }
             }
         }
-        console.log(`the function of xi'an is take success`);
     },
 
     waitSeconds(time) {

@@ -25,6 +25,13 @@ const modal = {
     async xianNewTotal() {
         return await fetchGet('api/city/xianNewTotal');
     },
+
+    async updateTime() {
+        return await fetchGet('api/update/gettime');
+    },
+    async updateSetTime(data) {
+        return await fetchPost('api/update/settime', { data });
+    },
 };
 
 export default modal;

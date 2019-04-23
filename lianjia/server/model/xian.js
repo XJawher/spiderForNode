@@ -13,5 +13,6 @@ module.exports = mongoose.model(`xiantotal`,
         priceSign: String,
         total: String,
         time: Date,
+        datasSring: String,
     })
 );
