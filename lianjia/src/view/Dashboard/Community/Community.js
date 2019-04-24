@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Table } from 'antd';
+import { Table } from 'antd';
 import http from '../../../http/http';
+
 export default class Community extends Component {
     constructor(props) {
         super(props);
@@ -8,6 +9,8 @@ export default class Community extends Component {
             community: [],// 筛选全部小区
             administrative: [],// 行政区划数据
             allData: [],// 行政区划数据
+            pageChangeLoading: false,// 分页动画
+            current: 1, // 当前页,可以通过修改参数的值来改变页数
         };
     }
 
@@ -24,8 +27,25 @@ export default class Community extends Component {
     title: "华润二十四城 两室精装 满三满二拎包入住"
     total: "34625"
      */
+
+    componentDidMount() {
+        this.getAllData();
+    }
+
+    time(text, record) {
+        return text;
+    }
+
+    pageChange(pagination) {
+        this.setState({ pageChangeLoading: true });
+        this.setState({ pageChangeLoading: false, current: pagination });
+    }
+
     async  getAllData() {
-        let { data } = await http.updateTime();
+        let myDate = new Date();
+        let fullYear = myDate.toLocaleDateString();
+        fullYear.replace(/\//g, '-');
+        let { data } = await http.updateTime('2019-4-23');
         let community = [];
         data.data.forEach(element => {
             community.push(element.address);
@@ -119,9 +139,11 @@ export default class Community extends Component {
             rowKey: 'administrative',
             pagination: {
                 total: this.state.administrative.length,
-                pageSize: 100,
-                current: 1,
+                pageSize: 3,
+                current: this.state.current,
                 showQuickJumper: true,
+                onChange: this.pageChange.bind(this),
+                loading: this.state.pageChangeLoading,
             },
             columns: [
                 {
@@ -130,7 +152,8 @@ export default class Community extends Component {
                 },
 
                 {
-                    title: '创建时间', dataIndex: 'datasSring', width: 100
+                    title: '创建时间', dataIndex: 'datasSring', width: 100,
+                    render: this.time.bind(this)
                 },
                 {
                     title: '小区列表', dataIndex: 'community',
@@ -144,7 +167,7 @@ export default class Community extends Component {
                     <header>行政区划数据分布</header>
                     <Table  {...tableProps} />
                 </div>
-                <Button onClick={this.getAllData.bind(this)}>all data</Button>
+                <div>{}</div>
             </div>
         );
     }

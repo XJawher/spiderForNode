@@ -241,8 +241,10 @@ const model = {
     },
 
     '/api/update/gettime': async ctx => {
-        let data = await updateTime.xianNewTotal();
+        let { datasSring } = ctx.parma;
+        let data = await updateTime.xianNewTotal({ datasSring: datasSring });
         ctx.body = { code: 0, data: data };
+        console.log(new Date());
     },
 
     '/api/update/settime': async ctx => {

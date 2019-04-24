@@ -6,8 +6,8 @@ const model = {
 
     //  database.xianUpdateOne({ '_id': element._id }, { '$set': { datasSring: '2019-4-2' } }, { multi: 1 });
 
-    async xianNewTotal() {
-        let data = await database.xianNewTotal();
+    async xianNewTotal(datasSring) {
+        let data = await database.xianNewTotal(datasSring);
         return { data };
     },
 
