@@ -1,4 +1,5 @@
 const xian = require('../service/xian');
+// const database = require('../service/database');
 // const chengdu = require('../service/chengdu');
 const service = require('../service/index');
 const updateTime = require('../service/updateTime');
@@ -57,6 +58,50 @@ const model = {
         xian.lianjia();
         ctx.body = {
             code: 1, data: 'start bj'
+        };
+    },
+
+    /**
+     * 当一次性插入过多的数据的时候,就会报错,这也许和我的电脑有关系
+     * <--- Last few GCs --->
+        [35126:0x104800000]   552817 ms: Mark-sweep 1376.9 (1446.6) -> 1365.3 (1448.6) MB, 884.1 / 0.0 ms  (average mu = 0.113, current mu = 0.026) allocation failure scavenge might not succeed
+        [35126:0x104800000]   553722 ms: Mark-sweep 1378.9 (1448.6) -> 1367.3 (1451.1) MB, 881.1 / 0.0 ms  (average mu = 0.071, current mu = 0.026) allocation failure scavenge might not succeed
+        <--- JS stacktrace --->
+        ==== JS stack trace =========================================
+            0: ExitFrame [pc: 0x3b30327dbe3d]
+        Security context: 0x1d461609e6e1 <JSObject>
+            1:  [0x1d467dae8411] [/Users/lipc/Desktop/work/spiderForNode/lianjia/node_modules/mongoose/lib/schema.js:~513] [pc=0x3b3032c3236e](this=0x1d46511e2ca9 <Schema map = 0x1d467f8da5c9>,path=0x1d46c4468509 <String[5]: flood>,obj=0x1d462dd026f1 <undefined>)
+            2: arguments adaptor frame: 1->2
+            3: _getPathsToValidate(aka _getPathsToValidate) ...
+
+        FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+        1: 0x10003ae75 node::Abort() [/Users/lipc/.nvm/versions/node/v10.13.0/bin/node]
+        2: 0x10003b07f node::OnFatalError(char const*, char const*) [/Users/lipc/.nvm/versions/node/v10.13.0/bin/node]
+        3: 0x1001a7ae5 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [/Users/lipc/.nvm/versions/node/v10.13.0/bin/node]
+        4: 0x100572ef2 v8::internal::Heap::FatalProcessOutOfMemory(char const*) [/Users/lipc/.nvm/versions/node/v10.13.0/bin/node]
+        5: 0x1005759c5 v8::internal::Heap::CheckIneffectiveMarkCompact(unsigned long, double) [/Users/lipc/.nvm/versions/node/v10.13.0/bin/node]
+        6: 0x10057186f v8::internal::Heap::PerformGarbageCollection(v8::internal::GarbageCollector, v8::GCCallbackFlags) [/Users/lipc/.nvm/versions/node/v10.13.0/bin/node]
+        7: 0x10056fa44 v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [/Users/lipc/.nvm/versions/node/v10.13.0/bin/node]
+        8: 0x10057c2dc v8::internal::Heap::AllocateRawWithLigthRetry(int, v8::internal::AllocationSpace, v8::internal::AllocationAlignment) [/Users/lipc/.nvm/versions/node/v10.13.0/bin/node]
+        9: 0x10057c35f v8::internal::Heap::AllocateRawWithRetryOrFail(int, v8::internal::AllocationSpace, v8::internal::AllocationAlignment) [/Users/lipc/.nvm/versions/node/v10.13.0/bin/node]
+        10: 0x10054bca4 v8::internal::Factory::NewFillerObject(int, bool, v8::internal::AllocationSpace) [/Users/lipc/.nvm/versions/node/v10.13.0/bin/node]
+        11: 0x1007d3b54 v8::internal::Runtime_AllocateInNewSpace(int, v8::internal::Object**, v8::internal::Isolate*) [/Users/lipc/.nvm/versions/node/v10.13.0/bin/node]
+        12: 0x3b30327dbe3d
+        [1]    35126 abort      node index.js
+     */
+    '/api/city/xian/insert': async ctx => {
+        // 注释不要删除
+        // let data = await service.xian();
+        // data.forEach(item => {
+        //     let datasSring = JSON.stringify(item.time).split('T')[0].replace('"', '');
+        //     database.xianLianjia([{
+        //         'title': item.title, 'address': item.address, 'addressSupplement': item.addressSupplement, 'datasSring': `${datasSring}`,
+        //         'flood': item.flood, 'floodSupplement': item.floodSupplement, 'followInfo': item.followInfo,
+        //         'tag': item.tag, price: item.price, priceSign: item.priceSign, total: item.total, time: item.time
+        //     }]);
+        // });
+        ctx.body = {
+            code: 1, data: ''
         };
     },
 

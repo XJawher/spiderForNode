@@ -18,5 +18,6 @@ router.all('/api/city/rankings', controller['/api/city/rankings']);
 router.all('/api/city/xianNewTotal', controller['/api/city/xianNewTotal']);
 router.all('/api/update/gettime', controller['/api/update/gettime']);
 router.all('/api/update/settime', controller['/api/update/settime']);
+router.all('/api/city/xian/insert', controller['/api/city/xian/insert']);
 
 module.exports = router;
