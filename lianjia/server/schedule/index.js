@@ -25,7 +25,7 @@ new cron.CronJob('01 23 17 * * *', async () => {
 /**
  * 每天定时去请求数据,11:01:01 去请求西安二手房数据
  */
-new cron.CronJob('01 26 17 * * *', async () => {
+new cron.CronJob('01 26 16 * * *', async () => {
     xian.lianjia();
 }, null, true);
 
