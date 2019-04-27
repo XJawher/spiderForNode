@@ -27,8 +27,13 @@ export default class DailyGrowth extends Component {
         let { data } = await http.cityRankings();
         let series = [];
         let legend = [];
+        let sortNumber = (a, b) => a.time < b.time ? -1 : 1;
         data.forEach(element => {
-            series.push({ name: element.cityCH, type: 'line', data: element.total });
+            let sourceData = element.modify;
+            if (element.cityCH === '上海') {
+                sourceData.sort(sortNumber);
+            }
+            series.push({ name: element.cityCH, type: 'line', data: sourceData.map(item => item.total.trim()) });
             legend.push(element.cityCH);
         });
         // console.log([... new Set(data[0].time.map(item => item.split('T')[0]))]);
@@ -76,7 +81,7 @@ export default class DailyGrowth extends Component {
             yAxis: {
                 type: 'value',
                 min: '25000',
-                max: '85000',
+                max: '88000',
                 axisTick: {
                     show: false
                 },

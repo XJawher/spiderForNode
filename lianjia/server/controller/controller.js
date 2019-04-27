@@ -270,6 +270,7 @@ const model = {
         cityTotal.forEach(item => {
             item.total = [];
             item.time = [];
+            item.modify = [];
         });
         let data = await service.cityRankings();
         data.sort().forEach(item => {
@@ -277,6 +278,7 @@ const model = {
                 if (cityTotal.cityEN === item.cityEN) {
                     cityTotal.total.push(item.total);
                     cityTotal.time.push(item.time);
+                    cityTotal.modify.push({ total: item.total, time: JSON.stringify(item.time).split('T')[0].replace('"', '') });
                 }
             });
         });
