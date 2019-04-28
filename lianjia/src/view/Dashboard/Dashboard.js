@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import Province from './Province/Province';
+// import Province from './Province/Province';
+import Blank from '../../components/Blank';
 import Community from './Community/Community';
+import CommunityDesignated from './Community/CommunityDesignated'; // 指定的小区数据
 export default class Dashboard extends Component {
     constructor(props) {
         super(props);
@@ -15,9 +17,13 @@ export default class Dashboard extends Component {
 
         return (
             <div className="xc-dashboard-body-wrapper">
-                <div className='xc-dashboard-top-select'><Province /></div>
+                {/* <div className='xc-dashboard-top-select'><Province /></div> */}
                 <div className='xc-dashboard-body-data-show'>
                     <Community />
+                </div>
+                <Blank />
+                <div className='xc-dashboard-body-data-show'>
+                    <CommunityDesignated />
                 </div>
             </div>
         );

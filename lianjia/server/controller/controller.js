@@ -122,8 +122,10 @@ const model = {
      */
     '/api/city/condition': async ctx => {
         console.log(ctx.parma);
+        let { name, time } = ctx.parma;
+        let data = await service.xianNewTotal({ address: name, datasSring: time });
         ctx.body = {
-            code: 0, data: ctx.parma
+            code: 0, data: data
         };
     },
     /**

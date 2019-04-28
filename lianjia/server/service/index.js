@@ -11,8 +11,8 @@ const model = {
     /**
      * xi an second-hand house data
      */
-    xianNewTotal() {
-        return database.xianNewTotal();
+    xianNewTotal(parma) {
+        return database.xianNewTotal(parma);
     },
 
     /**
