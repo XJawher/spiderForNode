@@ -21,7 +21,7 @@ const model = {
 
                         }
                         if (err) {
-                            console.log(`the function is take error  ${err}`)
+                            console.log(`the function is take error  ${err}`);
                         } else {
                             $('div#content div.leftContent div.resultDes h2.total span').each((index, element) => {
                                 total = element.children[0].data;
@@ -51,7 +51,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     addressSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 2:
@@ -62,7 +62,7 @@ const model = {
                                                 if (item.type === 'text') {
                                                     floodSupplement = item.data.trim();
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         case 3:
@@ -72,7 +72,7 @@ const model = {
                                         case 4:
                                             item.children.forEach(element => {
                                                 tag.push(element.children[0].data);
-                                            })
+                                            });
                                             // console.log('tag', item.children[0].children);
                                             break;
 
@@ -83,7 +83,7 @@ const model = {
                                                 } else {
                                                     priceSign = element.children[0].children[0].data; // 单价
                                                 }
-                                            })
+                                            });
                                             break;
 
                                         default:
@@ -103,14 +103,14 @@ const model = {
                             }
                             if (i === 99) {
                                 console.log(`开始写入成都数据,数据量为: ${total.trim()},插入数据库数据为: ${data.length}`);
-                                await database.chengduLianjia(data)
+                                await database.chengduLianjia(data);
                             }
                         }
                     });
-                }, 2000 * i)
-            })()
+                }, 2000 * i);
+            })();
         }
-        console.log(`the chengduLianjia function is take success`)
+        console.log(`the chengduLianjia function is take success`);
     }
-}
+};
 module.exports = model;

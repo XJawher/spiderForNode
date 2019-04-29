@@ -1,6 +1,7 @@
 const cron = require('cron');
 const city = require('../service/city');
 const xian = require('../service/xian');
+const shanghai = require('../service/shanghai');
 
 /**
  *
@@ -25,7 +26,7 @@ new cron.CronJob('01 23 17 * * *', async () => {
 /**
  * 每天定时去请求数据,11:01:01 去请求西安二手房数据
  */
-new cron.CronJob('01 26 16 * * *', async () => {
+new cron.CronJob('01 50 16 * * *', async () => {
     xian.lianjia();
 }, null, true);
 
@@ -102,42 +103,42 @@ new cron.CronJob('01 59 17 * * *', async () => {
 /**
  * 每天定时去请求数据,11:01:01 去请求 成都 二手房数据
  */
-new cron.CronJob('01 03 18 * * *', async () => {
+new cron.CronJob('01 03 16 * * *', async () => {
     city.chengdu();
 }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求 贵阳gy 二手房数据
  */
-new cron.CronJob('01 06 18 * * *', async () => {
+new cron.CronJob('01 06 16 * * *', async () => {
     city.gy();
 }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求 南宁 二手房数据
  */
-new cron.CronJob('01 09 18 * * *', async () => {
+new cron.CronJob('01 09 16 * * *', async () => {
     city.nn();
 }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求 兰州 二手房数据
  */
-new cron.CronJob('01 13 18 * * *', async () => {
+new cron.CronJob('01 13 16 * * *', async () => {
     city.lz();
 }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求 武汉wh 二手房数据
  */
-new cron.CronJob('01 17 18 * * *', async () => {
+new cron.CronJob('01 17 16 * * *', async () => {
     city.wh();
 }, null, true);
 
 /**
  * 每天定时去请求数据,11:01:01 去请求 长沙cs 二手房数据
  */
-new cron.CronJob('01 19 18 * * *', async () => {
+new cron.CronJob('01 19 16 * * *', async () => {
     city.cs();
 }, null, true);
 
@@ -222,7 +223,7 @@ new cron.CronJob('01 50 17 * * *', async () => {
 /**
  * 每天定时去请求数据,11:01:01 去请求 上海sh 二手房数据
  */
-new cron.CronJob('01 55 17 * * *', async () => {
-    city.sh();
+new cron.CronJob('01 55 15 * * *', async () => {
+    shanghai.lianjia();
 }, null, true);
 

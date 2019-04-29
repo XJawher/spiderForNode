@@ -11,6 +11,7 @@ module.exports = mongoose.model(`sz`,
         price: String,
         priceSign: String,
         total: String,
+        datasSring: String,
         time: Date,
     })
 );
