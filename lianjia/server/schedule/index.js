@@ -2,6 +2,7 @@ const cron = require('cron');
 const city = require('../service/city');
 const xian = require('../service/xian');
 const shanghai = require('../service/shanghai');
+const shenzhen = require('../service/shenzhen');
 
 /**
  *
@@ -97,7 +98,7 @@ new cron.CronJob('01 56 17 * * *', async () => {
  * 每天定时去请求数据,11:01:01 去请求 深圳sz  二手房数据
  */
 new cron.CronJob('01 59 17 * * *', async () => {
-    city.sz();
+    shenzhen.lianjia();
 }, null, true);
 
 /**

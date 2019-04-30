@@ -42,8 +42,6 @@ export default class DailyGrowth extends Component {
     }
 
     yAxis(value) {
-        console.log(value);
-
         return value;
     }
 

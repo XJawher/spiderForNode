@@ -155,7 +155,7 @@ const model = {
                     (function () {
                         setTimeout(async () => {
                             value.forEach(async (item) => {
-                                await superagent.get(`https://sh.lianjia.com/ershoufang/${key}/${item}/pg${i + 1}/`).end(async (err, res) => {
+                                await superagent.get(`https://sh.lianjia.com/ershoufang/${key}/pg${i + 1}${item}/`).end(async (err, res) => {
                                     let $ = null;
                                     try {
                                         $ = await cheerio.load(res.text);

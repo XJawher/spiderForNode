@@ -13,7 +13,7 @@ export default class MonthToMonth extends Component {
     }
 
     /**
-     * 环比的数据从 3-16 号开始,然后 4-16 5-16 一直这么排列
+     * 环比的数据从 3-29 号开始,然后 4-29 5-16 一直这么排列
      * 环比的计算方法:
      * @param {*} nextProps
      * 一、同比和环比的区别
@@ -34,14 +34,19 @@ export default class MonthToMonth extends Component {
     componentWillReceiveProps(nextProps) {
         let resetDataFirst = [];
         let resetDataSecond = [];
-        let first = '03-16';
-        let second = '04-16';
+        let first = '03-29';
+        let second = '04-29';
         nextProps.city.forEach(element => {
             element.time.forEach((itemOfTime, indexTime) => {
-                if (/03-16/.test(itemOfTime)) { ///^(pri|bak)-[\w]/.test(record.poolName),
+                if (/03-29/.test(itemOfTime)) {
                     resetDataFirst.push({ time: first, cityEN: element.cityEN, cityCH: element.cityCH, total: Number(element.total[indexTime]) });
-                } else if (/04-16/.test(itemOfTime)) {
-                    resetDataSecond.push({ time: second, cityEN: element.cityEN, cityCH: element.cityCH, total: Number(element.total[indexTime]) });
+                } else if (/04-29/.test(itemOfTime)) {
+                    let sortNumber = (a, b) => a.time < b.time ? -1 : 1;
+                    let sourceData = element.modify;
+                    if (element.cityCH === '上海') {
+                        sourceData.sort(sortNumber);
+                    }
+                    resetDataSecond.push({ time: second, cityEN: element.cityEN, cityCH: element.cityCH, total: Number(sourceData[indexTime].total) });
                 }
             });
         });
@@ -57,9 +62,10 @@ export default class MonthToMonth extends Component {
     }
 
     render() {
+        let cityCH = ["成都", '重庆', '武汉', '上海', '郑州', '广州', '天津', '深圳', '西安'];
         let firstMarkPoint = [];
         if (this.state.resetDataFirst.length) {
-            this.state.resetDataFirst.forEach((item, index) => {
+            this.state.resetDataFirst.sort((a, b) => cityCH.findIndex(n => n === a.cityCH) - cityCH.findIndex(n => n === b.cityCH)).forEach((item, index) => {
                 let value = (this.state.resetDataSecond[index].total / item.total) - 1;
                 firstMarkPoint.push({ name: item.cityCH, value: value });
             });
@@ -83,12 +89,12 @@ export default class MonthToMonth extends Component {
                 }
             },
             legend: {
-                data: ['3-16', '4-16', '月环比']
+                data: ['3-29', '4-29', '月环比']
             },
             xAxis: [
                 {
                     type: 'category',
-                    data: this.state.resetDataFirst.length ? this.state.resetDataFirst.map(item => item.cityCH) : [],
+                    data: cityCH,
                     axisPointer: {
                         type: 'shadow'
                     }
@@ -108,9 +114,9 @@ export default class MonthToMonth extends Component {
             ],
             series: [
                 {
-                    name: '3-16',
+                    name: '3-29',
                     type: 'bar',
-                    data: this.state.resetDataFirst.length ? this.state.resetDataFirst.map(item => item.total) : [],
+                    data: this.state.resetDataFirst.length ? this.state.resetDataFirst.sort((a, b) => cityCH.findIndex(n => n === a.cityCH) - cityCH.findIndex(n => n === b.cityCH)).map(item => item.total) : [],
                     label: {
                         normal: {
                             show: true, //开启显示
@@ -123,9 +129,9 @@ export default class MonthToMonth extends Component {
                     }
                 },
                 {
-                    name: '4-16',
+                    name: '4-29',
                     type: 'bar',
-                    data: this.state.resetDataSecond.length ? this.state.resetDataSecond.map(item => item.total) : [],
+                    data: this.state.resetDataSecond.length ? this.state.resetDataSecond.sort((a, b) => cityCH.findIndex(n => n === a.cityCH) - cityCH.findIndex(n => n === b.cityCH)).map(item => item.total) : [],
                     label: {
                         normal: {
                             show: true, //开启显示
