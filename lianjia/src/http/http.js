@@ -29,8 +29,13 @@ const modal = {
     async updateTime(datasSring = '') {
         return await fetchGet('api/update/gettime', { datasSring: datasSring });
     },
+
     async updateSetTime(data) {
         return await fetchPost('api/update/settime', { data });
+    },
+
+    async getSelectCity(city, datasSring) {
+        return await fetchPost('/api/get/city', { city, datasSring });
     },
 };
 

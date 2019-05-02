@@ -50,6 +50,23 @@ const model = {
         return await dao.findAll(xian, param);
     },
 
+    async findByCity(city, param) {
+        let data = null;
+        switch (city) {
+            case 'shanghai':
+                data = await dao.findAll(sh, param);
+                break;
+
+            case 'shenzhen':
+                data = await dao.findAll(sz, param);
+                break;
+
+            default:
+                break;
+        }
+        return data;
+    },
+
     async xianData(param) {
         return await dao.createOne(xianData, param);
     },

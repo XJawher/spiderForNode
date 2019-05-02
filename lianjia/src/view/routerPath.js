@@ -10,6 +10,8 @@ const index = {
     DailyGrowth: '/dailygrowth',
 
     Xian: '/xian',
+
+    Shanghai: '/Shanghai',
 };
 
 export default index;
@@ -18,4 +20,5 @@ export const pathToMenu = {
     Dashboard: [index.Dashboard],
     DailyGrowth: [index.DailyGrowth],
     Xian: [index.Xian],
+    Shanghai: [index.Shanghai],
 };

@@ -15,6 +15,8 @@ import DailyGrowth from '../DailyGrowth/DailyGrowth';
 // Daily growth
 import Xian from '../City/Xian';
 
+import Shanghai from '../City/Shanghai';
+
 export default class Main extends Component {
     constructor(props) {
         super(props);
@@ -36,6 +38,8 @@ export default class Main extends Component {
                             <Route path={`${Main}${routerPath.DailyGrowth}`} component={DailyGrowth} />
 
                             <Route path={`${Main}${routerPath.Xian}`} component={Xian} />
+
+                            <Route path={`${Main}${routerPath.Shanghai}`} component={Shanghai} />
 
                             <Redirect from={routerPath.Root} to={`${Main}${routerPath.Dashboard}`} />
                         </Switch>

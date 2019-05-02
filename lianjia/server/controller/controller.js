@@ -1,5 +1,5 @@
 const xian = require('../service/xian');
-// const database = require('../service/database');
+const database = require('../service/database');
 // const chengdu = require('../service/chengdu');
 const service = require('../service/index');
 const updateTime = require('../service/updateTime');
@@ -301,5 +301,19 @@ const model = {
         let res = await updateTime.batchUpdate(data);
         ctx.body = { code: 0, data: res };
     },
+
+    '/api/get/city': async ctx => {
+        /**
+         * @todo
+         * @param city which city's data you wanted to get,city is database city
+         * @param datasSring  you wanted to query the time of city
+         *
+         * findByCity
+         */
+        let { city, datasSring } = ctx.parma;
+        let data = await database.findByCity(city, { datasSring: datasSring });
+        ctx.body = { code: 0, data: data };
+    },
+
 };
 module.exports = model;

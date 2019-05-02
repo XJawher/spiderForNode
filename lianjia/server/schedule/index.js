@@ -224,7 +224,7 @@ new cron.CronJob('01 50 17 * * *', async () => {
 /**
  * 每天定时去请求数据,11:01:01 去请求 上海sh 二手房数据
  */
-new cron.CronJob('01 55 15 * * *', async () => {
+new cron.CronJob('01 55 22 * * *', async () => {
     shanghai.lianjia();
 }, null, true);
 
