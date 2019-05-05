@@ -31,10 +31,13 @@ export default class Shanghai extends Component {
             total: "76033"
          */
         let data = await http.getSelectCity('shanghai', '2019-4-30');
-        console.log(data);
         let flood = [];
+        let price = [];
+        let address = [];
         let area = [];
         data.data.forEach(element => {
+            price.push(element.price);
+            address.push(element.address);
             let areaSign = element.addressSupplement.replace('平米', '').split('|');
             areaSign.forEach(item => {
                 if (Number(item.trim())) {
@@ -44,8 +47,11 @@ export default class Shanghai extends Component {
             flood.push(element.flood);
         });
         flood = [... new Set(flood)];
+        address = [... new Set(address)];
         console.log(area.sort((a, b) => a - b));
         console.log(eval(area.join("+")));
+        console.log(eval(price.join("+")));
+        console.log(address);
 
     }
 

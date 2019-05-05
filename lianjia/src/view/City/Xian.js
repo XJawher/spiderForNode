@@ -44,6 +44,8 @@ export default class Xian extends Component {
      */
     async getAllData() {
         let { data } = await http.xianNewTotal();
+        console.log(data.length);
+
         let allMoney = 0;
         let xixian = [];
         let gaoling = [];

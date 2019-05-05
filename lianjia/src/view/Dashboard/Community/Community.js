@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { Component } from 'react';
 import { Table } from 'antd';
 import http from '../../../http/http';
@@ -45,13 +46,37 @@ export default class Community extends Component {
         let myDate = new Date();
         let fullYear = myDate.toLocaleDateString();
         fullYear.replace(/\//g, '-');
-        let { data } = await http.updateTime('2019-4-23');
+        // let data4_23 = null;
+        // let data5_3 = null;
+        let { data: data4_23 } = await http.updateTime('2019-4-23');
+        let { data: data5_3 } = await http.updateTime('2019-5-3');
         let community = [];
-        data.data.forEach(element => {
+        console.log(data5_3.data);
+        console.log(data4_23.data);
+        let flood = [];
+        let price = [];
+        let area = [];
+        data4_23.data.push(...data5_3.data);
+        data4_23.data.forEach(element => {
+            price.push(element.price);
+            let areaSign = element.addressSupplement.replace('平米', '').split('|');
+            areaSign.forEach(item => {
+                if (Number(item.trim())) {
+                    area.push(Number(item.trim()));
+                }
+            });
+            flood.push(element.flood);
+        });
+        flood = [... new Set(flood)];
+        console.log(area.sort((a, b) => a - b));
+        console.log(eval(area.join("+")));
+        console.log(eval(price.join("+")));
+        data4_23.data.forEach(element => {
             community.push(element.address);
         });
-        let administrativeData = await this.setAdministrativeDate([... new Set(community)], data.data);
-        await this.setState({ community: [... new Set(community)], allData: data, administrative: administrativeData });
+        let administrativeData = await this.setAdministrativeDate([... new Set(community)], data4_23.data);
+        console.log([... new Set(community)]);
+        await this.setState({ community: [... new Set(community)], allData: data4_23, administrative: administrativeData });
     }
 
     // 设置行政区划的数据
