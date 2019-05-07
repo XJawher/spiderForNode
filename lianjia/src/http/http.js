@@ -5,7 +5,7 @@ const modal = {
         console.log(data);
     },
 
-    async getCityByCondition(name = '222', time = '123', ) {
+    async getCityByCondition(name = '222', time = '', ) {
         return await fetchPost('/api/city/condition', { name, time });
     },
 

@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Input, Table } from 'antd';
+import { Button, Input } from 'antd';
 import http from '../../../http/http';
-export default class CommunityDesignated extends Component {
+import DaysLine from "./DaysLine";
+export default class CommunityDayLine extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
-            date: '2019-4-21',
-            community: [],// 筛选全部小区
-            administrative: [],// 行政区划数据
-            allData: [],// 行政区划数据
-            pageChangeLoading: false,// 分页动画
-            current: 1,
+            name: '白桦林居小区',
+            community: [],// 行政区划数据
         };
     }
 
@@ -21,24 +17,19 @@ export default class CommunityDesignated extends Component {
     }
 
     async search() {
-        let data = await http.getCityByCondition(this.state.name, this.state.date);
-        console.log(this.state);
-        console.log(data);
+        let data = await http.getCityByCondition(this.state.name);
         if (data.code === 0) {
-            // administrative
-            this.setState({ administrative: data.data });
+            this.setState({ community: data.data });
         }
-    }
-
-    pageChange(pagination) {
-        this.setState({ pageChangeLoading: true });
-        this.setState({ pageChangeLoading: false, current: pagination });
     }
 
     /**
      * this page is for search designated community,
      * input date {eg:2019-04-13}
      * input name {eg:'新河湾'}
+     * add numbers in the search community EG:4-21 the community has 20's house,and alert this number in
+     *
+     *
      * address: "唐品A"
         addressSupplement: "| 3室2厅 | 122.97平米 | 南 北 | 简装"
         datasSring: "2019-4-21"
@@ -54,41 +45,6 @@ export default class CommunityDesignated extends Component {
      *
      */
     render() {
-        let tableProps = {
-            dataSource: this.state.administrative,
-            rowKey: '_id',
-            pagination: {
-                total: this.state.administrative.length,
-                pageSize: 20,
-                current: this.state.current,
-                showQuickJumper: true,
-                onChange: this.pageChange.bind(this),
-                loading: this.state.pageChangeLoading,
-            },
-            columns: [
-                {
-                    title: '小区', dataIndex: 'address', width: 100,
-                },
-
-                {
-                    title: '日期', dataIndex: 'datasSring', width: 100,
-                },
-                {
-                    title: '行政区域', dataIndex: 'flood', width: 100,
-                },
-                {
-                    title: '楼层', dataIndex: 'floodSupplement'
-                },
-                {
-                    title: '价格/单价', dataIndex: 'price',
-                    render: (text, record) => `${text}万/${record.priceSign}`
-                },
-                {
-                    title: '描述', dataIndex: 'addressSupplement',
-                    render: (text, record) => `${text.replace(/\|/g, ' ')} ${record.title}`
-                },
-            ],
-        };
         return (
             <div className='xc-community-designated'>
                 <div className='xc-community-designated-search'>
@@ -107,6 +63,7 @@ export default class CommunityDesignated extends Component {
                         className='xc-community-designated-input'
                         value={this.state.date}
                         placeholder={'输入日期'}
+                        disabled
                         onChange={({ target: { value } }) => {
                             this.setData.bind(this, 'date')(value);
                         }}
@@ -123,7 +80,7 @@ export default class CommunityDesignated extends Component {
                 </div>
 
                 <div className='xc-common-list'>
-                    <Table  {...tableProps} />
+                    <DaysLine community={this.state.community} />
                 </div>
             </div>
         );

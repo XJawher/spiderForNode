@@ -48,11 +48,9 @@ export default class Community extends Component {
         fullYear.replace(/\//g, '-');
         // let data4_23 = null;
         // let data5_3 = null;
-        let { data: data4_23 } = await http.updateTime('2019-4-23');
-        let { data: data5_3 } = await http.updateTime('2019-5-3');
+        let { data: data4_23 } = await http.updateTime('2019-4-2311');
+        let { data: data5_3 } = await http.updateTime('2019-5-3111');
         let community = [];
-        console.log(data5_3.data);
-        console.log(data4_23.data);
         let flood = [];
         let price = [];
         let area = [];
@@ -68,14 +66,10 @@ export default class Community extends Component {
             flood.push(element.flood);
         });
         flood = [... new Set(flood)];
-        console.log(area.sort((a, b) => a - b));
-        console.log(eval(area.join("+")));
-        console.log(eval(price.join("+")));
         data4_23.data.forEach(element => {
             community.push(element.address);
         });
         let administrativeData = await this.setAdministrativeDate([... new Set(community)], data4_23.data);
-        console.log([... new Set(community)]);
         await this.setState({ community: [... new Set(community)], allData: data4_23, administrative: administrativeData });
     }
 
@@ -188,7 +182,7 @@ export default class Community extends Component {
         };
         return (
             <div>
-                <div className='bd-common-list'>
+                <div className='xc-common-list'>
                     <header>行政区划数据分布</header>
                     <Table  {...tableProps} />
                 </div>

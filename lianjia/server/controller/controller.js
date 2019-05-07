@@ -121,9 +121,8 @@ const model = {
      * @param {time 指定日期的城市名字,如果为空则是该城市的全部数据}
      */
     '/api/city/condition': async ctx => {
-        console.log(ctx.parma);
         let { name, time } = ctx.parma;
-        let data = await service.xianNewTotal({ address: name, datasSring: time });
+        let data = await service.xianNewTotal(time ? { address: name, datasSring: time } : { address: name });
         ctx.body = {
             code: 0, data: data
         };
@@ -293,7 +292,6 @@ const model = {
         let { datasSring } = ctx.parma;
         let data = await updateTime.xianNewTotal({ datasSring: datasSring });
         ctx.body = { code: 0, data: data };
-        console.log(new Date());
     },
 
     '/api/update/settime': async ctx => {

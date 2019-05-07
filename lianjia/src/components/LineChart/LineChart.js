@@ -6,7 +6,7 @@ import echarts from 'echarts';
 class LineChart extends Component {
     constructor(props) {
         super(props);
-        let { title, tooltip, legend, grid, toolbox, xAxis, yAxis, series } = this.props.option;
+        let { title, tooltip, legend, grid, toolbox, xAxis, yAxis, series, backgroundColor, dataZoom } = this.props.option;
         this.state = {
             option: {
                 title,
@@ -16,6 +16,8 @@ class LineChart extends Component {
                 toolbox,
                 xAxis,
                 yAxis,
+                backgroundColor,
+                dataZoom,
                 series
             }
         };

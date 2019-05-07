@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Blank from '../../components/Blank';
 import Community from './Community/Community';
 import CommunityDesignated from './Community/CommunityDesignated'; // 指定的小区数据
+import CommunityDayLine from './Community/CommunityDayLine'; // 指定小区的line数据
 export default class Dashboard extends Component {
     constructor(props) {
         super(props);
@@ -24,6 +25,10 @@ export default class Dashboard extends Component {
                 <Blank />
                 <div className='xc-dashboard-body-data-show'>
                     <CommunityDesignated />
+                </div>
+                <Blank />
+                <div className='xc-dashboard-body-data-show'>
+                    <CommunityDayLine />
                 </div>
             </div>
         );

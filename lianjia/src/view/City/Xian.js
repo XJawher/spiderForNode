@@ -127,7 +127,6 @@ export default class Xian extends Component {
     }
 
     render() {
-        console.log(this.state);
         let { xianRegion } = this.state;
         let option = {
             title: {
