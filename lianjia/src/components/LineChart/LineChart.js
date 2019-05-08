@@ -7,7 +7,9 @@ class LineChart extends Component {
     constructor(props) {
         super(props);
         let { title, tooltip, legend, grid, toolbox, xAxis, yAxis, series, backgroundColor, dataZoom } = this.props.option;
+        let { width = 1300, height = 500 } = this.props;
         this.state = {
+            height, width,
             option: {
                 title,
                 tooltip,
@@ -42,7 +44,7 @@ class LineChart extends Component {
 
     render() {
         return (
-            <div style={{ width: 1300, height: 500 }} ref={chartWrapper => this.chartWrapper = chartWrapper}></div>
+            <div style={{ width: this.state.width, height: this.state.height }} ref={chartWrapper => this.chartWrapper = chartWrapper}></div>
         );
     }
 }

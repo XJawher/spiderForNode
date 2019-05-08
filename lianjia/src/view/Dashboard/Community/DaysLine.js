@@ -40,7 +40,7 @@ export default class DaysLine extends Component {
                 type: "bar",
                 stack: "总量",
                 barMaxWidth: 600,
-                "barGap": "10%",
+                "barGap": "2%",
                 "itemStyle": {
                     "normal": {
                         "label": {
@@ -58,7 +58,28 @@ export default class DaysLine extends Component {
                 data: this.seriesDate(item, community)
             });
         });
-
+        series.push({
+            name: '总量',
+            type: "line",
+            stack: "总量",
+            barMaxWidth: 600,
+            "barGap": "2%",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": true,
+                        "textStyle": {
+                            "color": "#fff"
+                        },
+                        "position": "insideTop",
+                        formatter: function (p) {
+                            return p.value > 0 ? (p.value) : '';
+                        }
+                    }
+                }
+            },
+            data: this.forLineData(community)
+        });
         this.setState({ community, series, legend, time });
     }
 
@@ -105,6 +126,10 @@ export default class DaysLine extends Component {
          * 现在需要做的是做个对象 {'2019-4-21':3,'2019-4-22':1,'2019-4-24':1,'2019-4-25':1}
          */
         return Object.values(flatten(allPriceRange.map(item => Object.keys(item))).reduce((res, cur) => res[cur] ? Object.assign(res, { [cur]: res[cur] + 1 }) : Object.assign(res, { [cur]: 1 }), {}));
+    }
+
+    forLineData(community) {
+        return Object.values(community.reduce((res, cur) => res[cur.datasSring] ? Object.assign(res, { [cur.datasSring]: res[cur.datasSring] + 1 }) : Object.assign(res, { [cur.datasSring]: 1 }), {}));
     }
 
     render() {
@@ -226,7 +251,7 @@ export default class DaysLine extends Component {
         };
         return (
             <div className="xc-body-wrapper">
-                <LineChart option={option} />
+                <LineChart option={option} height={700} />
             </div>
         );
     }
