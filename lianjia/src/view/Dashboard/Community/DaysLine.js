@@ -26,21 +26,70 @@ export default class DaysLine extends Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        let { community } = nextProps;
-        let { time, legend, series, nameOfSeries } = this.state;
-        community.forEach(element => {
-            time.push(element.datasSring);
-        });
-        legend.push(...nameOfSeries);
-        time = [...new Set(time)];
-        nameOfSeries.forEach((item, index) => {
+    async  componentWillReceiveProps(nextProps) {
+        if (this.state.community.length !== nextProps.community.length) {
+            await this.setState({
+                data: {
+                    code: 1,
+                    data: []
+                },
+                series: [],
+                time: [],
+                city: [],
+                legend: [],
+                community: [],
+                nameOfSeries: [
+                    '0-100万', '100-200万', '200-300万', '300-400万', '400-500万', '500万以上'
+                ],
+                mockPrice: [[0, 100], [100, 200], [200, 300], [300, 400], [400, 500], [500, Infinity]]
+            });
+            let community = [];
+            community = nextProps.community;
+            let { time, legend, series, nameOfSeries } = this.state;
+            community.forEach(element => {
+                time.push(element.datasSring);
+            });
+            legend.push(...nameOfSeries);
+            time = [...new Set(time)];
+            nameOfSeries.forEach((item, index) => {
+                series.push({
+                    name: item,
+                    type: "bar",
+                    stack: "总量",
+                    barMaxWidth: 600,
+                    "barGap": "2%",
+                    "itemStyle": {
+                        "normal": {
+                            "label": {
+                                "show": true,
+                                "textStyle": {
+                                    "color": "#fff"
+                                },
+                                "position": "insideTop",
+                                formatter: p => p.value > 0 ? (p.value) : ''
+                            }
+                        }
+                    },
+                    data: this.seriesDate(item, community)
+                });
+            });
             series.push({
-                name: item,
-                type: "bar",
+                name: '总量',
+                type: "line",
                 stack: "总量",
                 barMaxWidth: 600,
                 "barGap": "2%",
+                label: {
+                    normal: {
+                        show: true, //开启显示
+                        position: 'buttom', //在上方显示
+                        textStyle: { //数值样式
+                            color: '#fff',
+                            fontSize: 16,
+                        },
+                        formatter: p => `${p.value > 0 ? (p.value) : ''}套\n\n均价:${(community.reduce((res, cur) => cur.datasSring === p.name ? res = Number(cur.price) + res : res, 0) / p.value).toFixed(0)}`
+                    }
+                },
                 "itemStyle": {
                     "normal": {
                         "label": {
@@ -49,38 +98,14 @@ export default class DaysLine extends Component {
                                 "color": "#fff"
                             },
                             "position": "insideTop",
-                            formatter: function (p) {
-                                return p.value > 0 ? (p.value) : '';
-                            }
+                            formatter: p => p.value > 0 ? (p.value) : ''
                         }
                     }
                 },
-                data: this.seriesDate(item, community)
+                data: this.forLineData(community)
             });
-        });
-        series.push({
-            name: '总量',
-            type: "line",
-            stack: "总量",
-            barMaxWidth: 600,
-            "barGap": "2%",
-            "itemStyle": {
-                "normal": {
-                    "label": {
-                        "show": true,
-                        "textStyle": {
-                            "color": "#fff"
-                        },
-                        "position": "insideTop",
-                        formatter: function (p) {
-                            return p.value > 0 ? (p.value) : '';
-                        }
-                    }
-                }
-            },
-            data: this.forLineData(community)
-        });
-        this.setState({ community, series, legend, time });
+            this.setState({ community, series, legend, time });
+        }
     }
 
     getIndex(price) {
