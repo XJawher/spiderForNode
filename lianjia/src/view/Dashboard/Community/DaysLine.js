@@ -137,8 +137,7 @@ export default class DaysLine extends Component {
      * 这里要返回一个 [这里的数组是该价格段每个日期对应有几个,比如200万,每个日期有几个]
      */
     seriesDate(priceRange, community) {
-        const flatten = (arr, depth = 1) =>
-            arr.reduce((a, v) => a.concat(depth > 1 && Array.isArray(v) ? flatten(v, depth - 1) : v), []);
+        const flattenArray = (arr, depth = 1) => arr.reduce((a, v) => a.concat(depth > 1 && Array.isArray(v) ? flattenArray(v, depth - 1) : v), []);
         let allPriceRange = [];
         community.forEach(item => {
             let [min, max = Infinity] = priceRange.replace('万', '').split('-');
@@ -150,7 +149,7 @@ export default class DaysLine extends Component {
          * 现在获取到了全部的日期数据,现在格式是这样的 ['2019-4-21','2019-4-22','2019-4-24','2019-4-25','2019-4-21','2019-4-21']
          * 现在需要做的是做个对象 {'2019-4-21':3,'2019-4-22':1,'2019-4-24':1,'2019-4-25':1}
          */
-        return Object.values(flatten(allPriceRange.map(item => Object.keys(item))).reduce((res, cur) => res[cur] ? Object.assign(res, { [cur]: res[cur] + 1 }) : Object.assign(res, { [cur]: 1 }), {}));
+        return Object.values(flattenArray(allPriceRange.map(item => Object.keys(item))).reduce((res, cur) => res[cur] ? Object.assign(res, { [cur]: res[cur] + 1 }) : Object.assign(res, { [cur]: 1 }), {}));
     }
 
     forLineData(community) {

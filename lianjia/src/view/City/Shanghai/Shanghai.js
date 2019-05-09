@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import http from '../../http/http';
-// import LineChart from '../../components/LineChart/LineChart';
+import http from '../../../http/http';
+import LinearShanghai from './LinearShanghai';
+import BoxPlotShanghai from './BoxPlotShanghai';
+import Blank from '../../../components/Blank';
 
 
 export default class Shanghai extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            area: []
         };
     }
 
@@ -48,23 +50,20 @@ export default class Shanghai extends Component {
         });
         flood = [... new Set(flood)];
         address = [... new Set(address)];
-        console.log(area.sort((a, b) => a - b));
-        console.log(eval(area.join("+")));
-        console.log(eval(price.join("+")));
-        console.log(address);
+        // console.log(area.sort((a, b) => a - b));
+        // console.log(eval(area.join("+")));
+        // console.log(eval(price.join("+")));
+        // console.log(address);
+        this.setState({ area: area });
 
-    }
-
-    sum(arr) {
-        return arr.reduce(function (prev, curr, idx, arr) {
-            return prev + curr;
-        });
     }
 
     render() {
         return (
-            <div className="xc-body-wrapper">
-                this is shanghai data
+            <div className="xc-body-main-wrapper">
+                <LinearShanghai area={this.state.area} />
+                <Blank />
+                <BoxPlotShanghai area={this.state.area} />
             </div>
         );
     }

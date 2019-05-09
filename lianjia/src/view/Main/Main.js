@@ -15,7 +15,7 @@ import DailyGrowth from '../DailyGrowth/DailyGrowth';
 // Daily growth
 import Xian from '../City/Xian';
 
-import Shanghai from '../City/Shanghai';
+import Shanghai from '../City/Shanghai/Shanghai';
 
 export default class Main extends Component {
     constructor(props) {

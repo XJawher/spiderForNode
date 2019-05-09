@@ -17,7 +17,7 @@ export default class Dashboard extends Component {
     render() {
 
         return (
-            <div className="xc-dashboard-body-wrapper">
+            <div className="xc-body-main-wrapper">
                 {/* <div className='xc-dashboard-top-select'><Province /></div> */}
                 <div className='xc-dashboard-body-data-show'>
                     <Community />
