@@ -14,7 +14,7 @@ export default class Shanghai extends Component {
     }
 
     componentWillMount() {
-        this.getAllData();
+        // this.getAllData();
     }
 
     async getAllData() {
