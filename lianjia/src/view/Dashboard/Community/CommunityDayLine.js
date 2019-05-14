@@ -6,7 +6,7 @@ export default class CommunityDayLine extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '颐和宫',
+            name: '金叶新城',
             community: [],// 行政区划数据
         };
     }

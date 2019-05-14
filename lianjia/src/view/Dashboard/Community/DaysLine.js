@@ -153,16 +153,11 @@ export default class DaysLine extends Component {
         return Object.values(flattenArray(allPriceRange.map(item => Object.keys(item))).reduce((res, cur) => res[cur] ? Object.assign(res, { [cur]: res[cur] + 1 }) : Object.assign(res, { [cur]: 1 }), {}));
     }
 
+    /**
+     *
+     * @param {* 全部的小区数据 作图全部小区总数没问题} community
+     */
     forLineData(community) {
-        console.log(community.reduce((res, cur) => {
-            // console.log(res, cur);
-            if (res[cur.datasSring]) {
-                return Object.assign(res, { [cur.datasSring]: res[cur.datasSring] + 1 });
-            } else {
-                return Object.assign(res, { [cur.datasSring]: 1 });
-            }
-            // res[cur.datasSring] ? Object.assign(res, { [cur.datasSring]: res[cur.datasSring] + 1 }) : Object.assign(res, { [cur.datasSring]: 1 });
-        }, {}));
         return Object.values(community.reduce((res, cur) => res[cur.datasSring] ? Object.assign(res, { [cur.datasSring]: res[cur.datasSring] + 1 }) : Object.assign(res, { [cur.datasSring]: 1 }), {}));
     }
 
