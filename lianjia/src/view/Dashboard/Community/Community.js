@@ -30,7 +30,7 @@ export default class Community extends Component {
      */
 
     componentDidMount() {
-        this.getAllData();
+        !this.state.community.length && this.getAllData();
     }
 
     time(text, record) {
@@ -48,8 +48,8 @@ export default class Community extends Component {
         fullYear.replace(/\//g, '-');
         // let data4_23 = null;
         // let data5_3 = null;
-        let { data: data4_23 } = await http.updateTime('2019-4-2311');
-        let { data: data5_3 } = await http.updateTime('2019-5-3111');
+        let { data: data4_23 } = await http.updateTime('2019-4-23');
+        let { data: data5_3 } = await http.updateTime('2019-5-8');
         let community = [];
         let flood = [];
         let price = [];

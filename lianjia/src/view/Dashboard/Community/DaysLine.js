@@ -63,7 +63,7 @@ export default class DaysLine extends Component {
                             "label": {
                                 "show": true,
                                 "textStyle": {
-                                    "color": "#fff"
+                                    "color": "#000"
                                 },
                                 "position": "insideTop",
                                 formatter: p => p.value > 0 ? (p.value) : ''
@@ -84,10 +84,10 @@ export default class DaysLine extends Component {
                         show: true, //开启显示
                         position: 'buttom', //在上方显示
                         textStyle: { //数值样式
-                            color: '#fff',
-                            fontSize: 16,
+                            color: '#000',
+                            fontSize: 12,
                         },
-                        formatter: p => `${p.value > 0 ? (p.value) : ''}套\n\n均价:${(community.reduce((res, cur) => cur.datasSring === p.name ? res = Number(cur.price) + res : res, 0) / p.value).toFixed(0)}`
+                        formatter: p => `${p.value > 0 ? (p.value) : ''}套\n\n${(community.reduce((res, cur) => cur.datasSring === p.name ? res = Number(cur.price) + res : res, 0) / p.value).toFixed(0)}`
                     }
                 },
                 "itemStyle": {
@@ -95,7 +95,7 @@ export default class DaysLine extends Component {
                         "label": {
                             "show": true,
                             "textStyle": {
-                                "color": "#fff"
+                                "color": "#000"
                             },
                             "position": "insideTop",
                             formatter: p => p.value > 0 ? (p.value) : ''
@@ -149,22 +149,32 @@ export default class DaysLine extends Component {
          * 现在获取到了全部的日期数据,现在格式是这样的 ['2019-4-21','2019-4-22','2019-4-24','2019-4-25','2019-4-21','2019-4-21']
          * 现在需要做的是做个对象 {'2019-4-21':3,'2019-4-22':1,'2019-4-24':1,'2019-4-25':1}
          */
+        console.log(allPriceRange);
         return Object.values(flattenArray(allPriceRange.map(item => Object.keys(item))).reduce((res, cur) => res[cur] ? Object.assign(res, { [cur]: res[cur] + 1 }) : Object.assign(res, { [cur]: 1 }), {}));
     }
 
     forLineData(community) {
+        console.log(community.reduce((res, cur) => {
+            // console.log(res, cur);
+            if (res[cur.datasSring]) {
+                return Object.assign(res, { [cur.datasSring]: res[cur.datasSring] + 1 });
+            } else {
+                return Object.assign(res, { [cur.datasSring]: 1 });
+            }
+            // res[cur.datasSring] ? Object.assign(res, { [cur.datasSring]: res[cur.datasSring] + 1 }) : Object.assign(res, { [cur.datasSring]: 1 });
+        }, {}));
         return Object.values(community.reduce((res, cur) => res[cur.datasSring] ? Object.assign(res, { [cur.datasSring]: res[cur.datasSring] + 1 }) : Object.assign(res, { [cur.datasSring]: 1 }), {}));
     }
 
     render() {
         let option = {
-            backgroundColor: "#344b58",
+            // backgroundColor: "#344b58",
             "title": {
                 "text": "最近30日内本车出行时段统计",
                 "subtext": '阿米丢制图',
                 x: "4%",
                 textStyle: {
-                    color: '#fff',
+                    color: '#000',
                     fontSize: '22'
                 },
                 subtextStyle: {
@@ -177,7 +187,7 @@ export default class DaysLine extends Component {
                 "axisPointer": {
                     "type": "shadow",
                     textStyle: {
-                        color: "#fff"
+                        color: "#000"
                     }
 
                 },
@@ -187,7 +197,7 @@ export default class DaysLine extends Component {
                 "top": 110,
                 "bottom": 95,
                 textStyle: {
-                    color: "#fff"
+                    color: "#000"
                 }
             },
             "legend": {
@@ -259,7 +269,7 @@ export default class DaysLine extends Component {
 
                 },
                 textStyle: {
-                    color: "#fff"
+                    color: "#000"
                 },
                 borderColor: "#90979c"
 

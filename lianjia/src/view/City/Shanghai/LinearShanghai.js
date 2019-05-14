@@ -64,27 +64,224 @@ export default class LinearShanghai extends Component {
                 '2016': { TransactionsNumers: 347667, TransactionsArea: 3219.80, TransactionsOfficeBuildingArea: 2225.42, TransactionsHouseArea: 450.89, TransactionCommercialArea: 261.04 },
                 '2017': { TransactionsNumers: 179385, TransactionsArea: 1563.53, TransactionsOfficeBuildingArea: 1264.13, TransactionsHouseArea: 80.75, TransactionCommercialArea: 60.26 },
             },
+
+            constructionArea: {
+                constructionAreaAll: [],// 历年的全部建筑面积
+                linearCompleted: [],// 线性数据,历年的建筑面积和竣工面积
+            },
+            constructionAreaHouse: {
+                constructionAreaHouseAll: [],//历年的全部住宅建筑面积
+                linearCompletedHouse: [],// 线性数据,历年的住宅建筑面积和住宅竣工面积
+            },
+            beCompletedAreaAll: [],// 历年的全部竣工建筑面积
+            beCompletedAreaHouseAll: [],// 历年的全部住宅竣工面积
+            loanPerson: {
+                2001: {
+                    //个人消费贷款
+                    total: 1009.50, // 总额
+                    person: {
+                        total: 743.50, // 个人消费贷款总额
+                        house: 650.00,// 按揭总额
+                        cars: 22.62
+                    },
+                    accumulationFund: 266 // 公积金贷款
+                },
+                2002: {
+                    //个人消费贷款
+                    total: 1513.67, // 总额
+                    person: {
+                        total: 1195.69, // 个人消费贷款总额
+                        house: 1086.71, // 按揭总额
+                        cars: 41.45
+                    },
+                    accumulationFund: 317.98 // 公积金贷款
+                },
+                2003: {
+                    //个人消费贷款
+                    total: 2276.42, // 总额
+                    person: {
+                        total: 1930.03, // 个人消费贷款总额
+                        house: 1709.13, // 按揭总额
+                        cars: 84.68
+                    },
+                    accumulationFund: 346.39 // 公积金贷款
+                },
+                2004: {
+                    //个人消费贷款
+                    total: 3019.07, // 总额
+                    person: {
+                        total: 2672.65, // 个人消费贷款总额
+                        house: 2445.53, // 按揭总额
+                        cars: 79.28
+                    },
+                    accumulationFund: 346.42 // 公积金贷款
+                },
+                2005: {
+                    //个人消费贷款
+                    total: 3149.01, // 总额
+                    person: {
+                        total: 2814.16, // 个人消费贷款总额
+                        house: 2644.94, // 按揭总额
+                        cars: 47.85
+                    },
+                    accumulationFund: 334.85// 公积金贷款
+                },
+                2006: {
+                    //个人消费贷款
+                    total: 3069.15, // 总额
+                    person: {
+                        total: 2653.16, // 个人消费贷款总额
+                        house: 2483.73, // 按揭总额
+                        cars: 28.04
+                    },
+                    accumulationFund: 415.99// 公积金贷款
+                },
+                2007: {
+                    //个人消费贷款
+                    total: 3653.20, // 总额
+                    person: {
+                        total: 3071.20, // 个人消费贷款总额
+                        house: 2859.92, // 按揭总额
+                        cars: 27.07
+                    },
+                    accumulationFund: 582.00// 公积金贷款
+                },
+                2008: {
+                    //个人消费贷款
+                    total: 3799.06, // 总额
+                    person: {
+                        total: 3146.95, // 个人消费贷款总额
+                        house: 2915.49, // 按揭总额
+                        cars: 50.71
+                    },
+                    accumulationFund: 652.11// 公积金贷款
+                },
+                2009: {
+                    //个人消费贷款
+                    total: 5289.51, // 总额
+                    person: {
+                        total: 4262.65, // 个人消费贷款总额
+                        house: 3912.88, // 按揭总额
+                        cars: 90.89
+                    },
+                    accumulationFund: 1026.86// 公积金贷款
+                },
+                2010: {
+                    //个人消费贷款
+                    total: 4841.45, // 总额
+                    person: {
+                        total: 4399.90, // 个人消费贷款总额
+                        house: 134.29, // 按揭总额
+                        cars: 90.9
+                    },
+                    accumulationFund: 1127.45 // 公积金贷款
+                },
+                2011: {
+                    //个人消费贷款
+                    total: 5914.48, // 总额
+                    person: {
+                        total: 4753.99, // 个人消费贷款总额
+                        cars: 662.65, // 按揭总额
+                    },
+                    accumulationFund: 1203.11// 公积金贷款
+                },
+                2012: {
+                    //个人消费贷款
+                    total: 6341.38, // 总额
+                    person: {
+                        total: 4925.98, // 个人消费贷款总额
+                        cars: 822.05, // 按揭总额
+                    },
+                    accumulationFund: 1420.50 // 公积金贷款
+                },
+                2013: {
+                    //个人消费贷款
+                    total: 7700.47, // 总额
+                    person: {
+                        total: 5686.28, // 个人消费贷款总额
+                        cars: 1278.30, // 按揭总额
+                    },
+                    accumulationFund: 1788.31// 公积金贷款
+                },
+                2014: {
+                    //个人消费贷款
+                    total: 8753.460, // 总额
+                    person: {
+                        total: 6258.860, // 个人消费贷款总额
+                        cars: 1524.110, // 按揭总额
+                    },
+                    accumulationFund: 2012.000// 公积金贷款
+                },
+                2015: {
+                    //个人消费贷款
+                    total: 10751.600, // 总额
+                    person: {
+                        total: 7765.810, // 个人消费贷款总额
+                        cars: 1869.75, // 按揭总额
+                    },
+                    accumulationFund: 2770.080// 公积金贷款
+                },
+                2016: {
+                    //个人消费贷款
+                    total: 15038.050, // 总额
+                    person: {
+                        total: 11141.860, // 个人消费贷款总额
+                        cars: 2596.32
+                    },
+                    accumulationFund: 3257.770// 公积金贷款
+                },
+                2017: {
+                    //个人消费贷款
+                    total: 18159.180, // 总额
+                    person: {
+                        total: 12720.890, // 个人消费贷款总额
+                        cars: 3633.34
+                    },
+                    accumulationFund: 3531.010// 公积金贷款
+                },
+            },
             area: []
         };
     }
 
     componentWillMount() {
-        let constructionAreaAll = [];// 历年的全部建筑面积
-        let constructionAreaHouseAll = [];// 历年的全部住宅建筑面积
+
+        let constructionArea = {
+            constructionAreaAll: [],// 历年的全部建筑面积
+            linearCompleted: [],// 线性数据,历年的建筑面积和竣工面积
+        };
+        let constructionAreaHouse = {
+            constructionAreaHouseAll: [],//历年的全部住宅建筑面积
+            linearCompletedHouse: [],// 线性数据,历年的住宅建筑面积和住宅竣工面积
+        };
         let beCompletedAreaAll = [];// 历年的全部竣工建筑面积
         let beCompletedAreaHouseAll = [];// 历年的全部住宅竣工面积
+        let loanAll = []; // 历年全部贷款
+        let loanPersonAll = []; // 历年个人贷款
+        let loanCarsAll = []; // 历年车贷
+        // let loanMortgageAll = []; // 按揭
+        let loanCFundAll = []; // 历年公积金贷
         // eslint-disable-next-line no-unused-vars
         for (let [key, value] of Object.entries(this.state.estate)) {
-            constructionAreaAll.push(Number(value.constructionArea));
-            constructionAreaHouseAll.push(Number(value.constructionAreaHouse));
+            constructionArea.constructionAreaAll.push(Number(value.constructionArea));
+            constructionArea.linearCompleted.push([value.beCompletedArea, value.constructionArea]);
+            constructionAreaHouse.constructionAreaHouseAll.push(Number(value.constructionAreaHouse));
+            constructionAreaHouse.linearCompletedHouse.push([value.beCompletedAreaHouse, value.constructionAreaHouse]);
             beCompletedAreaAll.push(Number(value.beCompletedArea));
             beCompletedAreaHouseAll.push(Number(value.beCompletedAreaHouse));
         }
-        this.setState({ constructionAreaAll, constructionAreaHouseAll, beCompletedAreaAll, beCompletedAreaHouseAll });
-        console.log(`历年的全部建筑面积 : ${eval(constructionAreaAll.join("+"))}`);
-        console.log(`历年的全部住宅建筑面积 : ${eval(constructionAreaHouseAll.join("+"))}`);
-        console.log(`历年的全部竣工建筑面积 : ${eval(beCompletedAreaAll.join("+"))}`);
-        console.log(`历年的全部住宅竣工面积 : ${eval(beCompletedAreaHouseAll.join("+"))}`);
+        // eslint-disable-next-line no-unused-vars
+        for (let [key, value] of Object.entries(this.state.loanPerson)) {
+            loanAll.push(value.total);
+            loanPersonAll.push(value.person.total);
+            loanCarsAll.push(value.person.cars);
+            loanCFundAll.push(value.accumulationFund);
+        }
+        this.setState({ constructionArea, constructionAreaHouse, beCompletedAreaAll, beCompletedAreaHouseAll });
+        console.log(`历年的全部贷款总和 : ${eval(loanAll.join("+"))}`);
+        console.log(`历年的个人贷款总和 +历年的公积金贷款: ${eval(loanPersonAll.join("+")) + eval(loanCFundAll.join("+"))}`);
+        console.log(`历年车贷总和 : ${eval(loanCarsAll.join("+"))}`);
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -154,11 +351,15 @@ export default class LinearShanghai extends Component {
         // let heightArray = Array.from({ length: 1000 }, () => 10);
         // let height = [];
         // heightArray.forEach(item => height.push(this.getNumberInNormalDistribution(item, 15)));
-        let { area } = this.state;
-        let bins = ecStat.histogram(area.length > 0 ? area.filter(item => item < 500) : [1, 2, 3, 4, 5], 'freedmanDiaconis');
-        // let bins = ecStat.histogram(area.length > 0 ? area : [1, 2, 3, 4, 5], 'freedmanDiaconis');
-        // let bins = ecStat.histogram(area.length > 0 ? area : [1, 2, 3, 4, 5], 'sturges');
-        // // let bins = ecStat.histogram(area.length > 0 ? area : [1, 2, 3, 4, 5], 'squareRoot');
+        let { constructionArea, constructionAreaHouse, beCompletedAreaAll, beCompletedAreaHouseAll } = this.state;
+        let data = [
+            constructionArea.constructionAreaAll,
+            constructionAreaHouse.constructionAreaHouseAll,
+            beCompletedAreaAll,
+            beCompletedAreaHouseAll
+        ];
+        let myRegression = ecStat.clustering.hierarchicalKMeans(data, 4, false);
+        console.log(myRegression);
         let option = {
             color: ['rgb(25, 183, 207)'],
             grid: {
@@ -223,7 +424,7 @@ export default class LinearShanghai extends Component {
                 //         }
                 //     }
                 // },
-                data: bins.data
+                data: []
             }]
         };
         return (

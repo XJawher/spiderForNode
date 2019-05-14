@@ -109,7 +109,8 @@ const model = {
      * 获取数据库中存入的省份二手房数据二手房数据
      */
     '/api/city/xianNewTotal': async ctx => {
-        let data = await service.xianNewTotal();
+        let { datasSring } = ctx.parma;
+        let data = await service.xianNewTotal({ datasSring: datasSring });
         ctx.body = {
             code: 0, data: data
         };

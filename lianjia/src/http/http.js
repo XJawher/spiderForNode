@@ -22,8 +22,8 @@ const modal = {
         return await fetchGet('/api/city/xian');
     },
 
-    async xianNewTotal() {
-        return await fetchGet('api/city/xianNewTotal');
+    async xianNewTotal(datasSring = '') {
+        return await fetchGet('api/city/xianNewTotal', { datasSring: datasSring });
     },
 
     async updateTime(datasSring = '') {

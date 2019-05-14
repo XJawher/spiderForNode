@@ -27,7 +27,7 @@ export default class Xian extends Component {
     }
 
     componentWillMount() {
-        this.getAllData();
+        !this.state.community.length && this.getAllData();
     }
     /**
      * address: "华润二十四城"
@@ -43,7 +43,7 @@ export default class Xian extends Component {
     total: "34625"
      */
     async getAllData() {
-        let { data } = await http.xianNewTotal();
+        let { data } = await http.xianNewTotal('2019-5-7');
         console.log(data.length);
 
         let allMoney = 0;
@@ -220,7 +220,7 @@ export default class Xian extends Component {
             ]
         };
         return (
-            <div className="xc-body-wrapper">
+            <div className="xc-body-main-wrapper">
                 <LineChart option={option} />
             </div>
         );
