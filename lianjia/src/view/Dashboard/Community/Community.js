@@ -30,7 +30,7 @@ export default class Community extends Component {
      */
 
     componentDidMount() {
-        !this.state.community.length && this.getAllData();
+        // !this.state.community.length && this.getAllData();
     }
 
     time(text, record) {

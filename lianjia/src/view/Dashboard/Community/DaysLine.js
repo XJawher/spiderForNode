@@ -149,8 +149,9 @@ export default class DaysLine extends Component {
          * 现在获取到了全部的日期数据,现在格式是这样的 ['2019-4-21','2019-4-22','2019-4-24','2019-4-25','2019-4-21','2019-4-21']
          * 现在需要做的是做个对象 {'2019-4-21':3,'2019-4-22':1,'2019-4-24':1,'2019-4-25':1}
          */
-        console.log(allPriceRange);
-        return Object.values(flattenArray(allPriceRange.map(item => Object.keys(item))).reduce((res, cur) => res[cur] ? Object.assign(res, { [cur]: res[cur] + 1 }) : Object.assign(res, { [cur]: 1 }), {}));
+        let datasSringArray = flattenArray(allPriceRange).map(item => Object.keys(item));
+        let initData = community.reduce((res, cur) => Object.assign(res, { [cur.datasSring]: 0 }), {});
+        return Object.values(datasSringArray.reduce((res, cur) => res[cur] ? Object.assign(res, { [cur]: res[cur] + 1 }) : Object.assign(res, { [cur]: 1 }), initData));
     }
 
     /**
