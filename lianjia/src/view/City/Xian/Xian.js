@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import http from '../../http/http';
+import http from '../../../http/http';
 import { Input, Button } from 'antd';
-import LineChart from '../../components/LineChart/LineChart';
-import Blank from '../../components/Blank';
-
+import LineChart from '../../../components/LineChart/LineChart';
+import Blank from '../../../components/Blank';
+import { Counter, Number } from './hook';
 
 export default class Xian extends Component {
     constructor(props) {
@@ -124,7 +124,7 @@ export default class Xian extends Component {
                 chengdong,
                 chengnan,
                 chengnei,
-            }, allRegion: [... new Set(allRegion)], allMoney: allMoney.toFixed(2)
+            }, allRegion: [...new Set(allRegion)], allMoney: allMoney.toFixed(2)
         });
 
     }
@@ -276,6 +276,11 @@ export default class Xian extends Component {
                 <LineChart option={option} />
                 <Blank />
                 <LineChart option={option} />
+                <Blank />
+                <div>
+                    <Counter />
+                    <Number />
+                </div>
             </div>
         );
     }

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 // BoxPlotShanghai
 import React, { Component } from 'react';
 import ecStat from 'echarts-stat';

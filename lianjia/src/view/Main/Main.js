@@ -13,7 +13,7 @@ import Dashboard from '../Dashboard/Dashboard';
 import DailyGrowth from '../DailyGrowth/DailyGrowth';
 
 // Daily growth
-import Xian from '../City/Xian';
+import Xian from '../City/Xian/Xian';
 
 import Shanghai from '../City/Shanghai/Shanghai';
 
