@@ -13,7 +13,7 @@ export default class MonthToMonth extends Component {
     }
 
     /**
-     * 环比的数据从 3-29 号开始,然后 4-29 5-16 一直这么排列
+     * 环比的数据从 3-29 号开始,然后 5-19 5-16 一直这么排列
      * 环比的计算方法:
      * @param {*} nextProps
      * 一、同比和环比的区别
@@ -35,12 +35,12 @@ export default class MonthToMonth extends Component {
         let resetDataFirst = [];
         let resetDataSecond = [];
         let first = '03-29';
-        let second = '04-29';
+        let second = '05-19';
         nextProps.city.forEach(element => {
             element.time.forEach((itemOfTime, indexTime) => {
                 if (/03-29/.test(itemOfTime)) {
                     resetDataFirst.push({ time: first, cityEN: element.cityEN, cityCH: element.cityCH, total: Number(element.total[indexTime]) });
-                } else if (/04-29/.test(itemOfTime)) {
+                } else if (/05-19/.test(itemOfTime)) {
                     let sortNumber = (a, b) => a.time < b.time ? -1 : 1;
                     let sourceData = element.modify;
                     if (element.cityCH === '上海') {
@@ -89,7 +89,7 @@ export default class MonthToMonth extends Component {
                 }
             },
             legend: {
-                data: ['3-29', '4-29', '月环比']
+                data: ['3-29', '5-19', '月环比']
             },
             xAxis: [
                 {
@@ -129,7 +129,7 @@ export default class MonthToMonth extends Component {
                     }
                 },
                 {
-                    name: '4-29',
+                    name: '5-19',
                     type: 'bar',
                     data: this.state.resetDataSecond.length ? this.state.resetDataSecond.sort((a, b) => cityCH.findIndex(n => n === a.cityCH) - cityCH.findIndex(n => n === b.cityCH)).map(item => item.total) : [],
                     label: {

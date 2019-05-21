@@ -79,7 +79,7 @@ export default class DailyGrowth extends Component {
             yAxis: {
                 type: 'value',
                 min: '25000',
-                max: '88000',
+                max: '95000',
                 axisTick: {
                     show: false
                 },

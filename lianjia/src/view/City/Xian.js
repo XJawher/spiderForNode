@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import http from '../../http/http';
+import { Input, Button } from 'antd';
 import LineChart from '../../components/LineChart/LineChart';
+import Blank from '../../components/Blank';
 
 
 export default class Xian extends Component {
@@ -22,12 +24,15 @@ export default class Xian extends Component {
                 chengnei: [],
                 jingkai: [],
             },
+            community: [],
+            coordinate: '2019-4-23',// 坐标日期
+            contrast: '2019-5-7',// 对比日期
             allRegion: []
         };
     }
 
     componentWillMount() {
-        !this.state.community.length && this.getAllData();
+        // !this.state.community.length && this.getAllData();
     }
     /**
      * address: "华润二十四城"
@@ -42,10 +47,8 @@ export default class Xian extends Component {
     title: "华润二十四城 两室精装 满三满二拎包入住"
     total: "34625"
      */
-    async getAllData() {
+    async getAllData(date) {
         let { data } = await http.xianNewTotal('2019-5-7');
-        console.log(data.length);
-
         let allMoney = 0;
         let xixian = [];
         let gaoling = [];
@@ -126,6 +129,23 @@ export default class Xian extends Component {
 
     }
 
+    formatter(parmas) {
+        // return `${parmas.name}: ${parmas.data.value} ${parmas.percent}%`; {b|{b}：}{c}  {per|{d}%}
+        return ` ${parmas.name}: ${parmas.value} {per|${parmas.percent}%} 均价{per|${parmas.percent}%}`;
+    }
+
+    /**
+     *
+     * @param {* contrast or coordinate } parmas
+     * @param {*} value
+     */
+    setData(parmas, value) {
+        this.setState({ [parmas]: value });
+    }
+
+    search() {
+        console.log(this.state);
+    }
     render() {
         let { xianRegion } = this.state;
         let option = {
@@ -146,7 +166,7 @@ export default class Xian extends Component {
                     center: ['50%', '60%'],
                     label: {
                         normal: {
-                            formatter: ' {b|{b}：}{c}  {per|{d}%}  ',
+                            formatter: this.formatter.bind(this),
                             backgroundColor: '#eee',
                             borderColor: '#aaa',
                             borderWidth: 1,
@@ -221,6 +241,40 @@ export default class Xian extends Component {
         };
         return (
             <div className="xc-body-main-wrapper">
+                <div className='xc-community-designated'>
+                    <div className='xc-community-designated-search'>
+                        <span style={{ width: 200 }}>Coordinate :</span> <Input
+                            size="small"
+                            className='xc-community-designated-input'
+                            placeholder={'坐标日期'}
+                            value={this.state.coordinate}
+                            onChange={({ target: { value } }) => {
+                                this.setData.bind(this, 'coordinate')(value);
+                            }}
+                        />
+
+                        <span style={{ width: 200 }}>Contrast:</span> <Input
+                            size="small"
+                            className='xc-community-designated-input'
+                            value={this.state.contrast}
+                            placeholder={'对比日期'}
+                            onChange={({ target: { value } }) => {
+                                this.setData.bind(this, 'contrast')(value);
+                            }}
+                        />
+
+                        <Button
+                            className="xc-community-designated-input"
+                            type="primary"
+                            size="small"
+                            onClick={this.search.bind(this)}
+                        >
+                            {'查询'}
+                        </Button>
+                    </div>
+                </div>
+                <LineChart option={option} />
+                <Blank />
                 <LineChart option={option} />
             </div>
         );
