@@ -3,7 +3,6 @@ import http from '../../../http/http';
 import { Input, Button } from 'antd';
 import LineChart from '../../../components/LineChart/LineChart';
 import Blank from '../../../components/Blank';
-import { Counter, Number } from './hook';
 
 export default class Xian extends Component {
     constructor(props) {
@@ -32,7 +31,7 @@ export default class Xian extends Component {
     }
 
     componentWillMount() {
-        // !this.state.community.length && this.getAllData();
+        // this.getAllData();
     }
     /**
      * address: "华润二十四城"
@@ -48,7 +47,7 @@ export default class Xian extends Component {
     total: "34625"
      */
     async getAllData(date) {
-        let { data } = await http.xianNewTotal('2019-5-7');
+        let { data } = await http.xianNewTotal(this.state.coordinate);
         let allMoney = 0;
         let xixian = [];
         let gaoling = [];
@@ -111,27 +110,60 @@ export default class Xian extends Component {
         });
         this.setState({
             xianRegion: {
-                jingkai,
                 xixian,
-                gaoling,
-                gaoxin,
-                changan,
-                qujiang,
                 chanba,
-                chengxi,
-                data,
-                chengbei,
-                chengdong,
+                changan,
+                gaoxin,
                 chengnan,
+                qujiang,
+                chengxi,
+                chengbei,
                 chengnei,
+                chengdong,
+                jingkai,
+                gaoling,
+                data,
             }, allRegion: [...new Set(allRegion)], allMoney: allMoney.toFixed(2)
         });
 
     }
 
     formatter(parmas) {
+        let averagePrice = null;
+        // eslint-disable-next-line no-unused-vars
+        for (const [key, value] of Object.entries(this.state.xianRegion)) {
+            if (value.length === parmas.value) {
+                averagePrice = value.reduce((res, cur) => res === 0 ? Number(cur.price) : res + Number(cur.price), 0) / parmas.value;
+            }
+        }
+        // { value: xianRegion.xixian.length, name: '西咸' },0
+        // { value: xianRegion.chanba.length, name: '浐灞' },1
+        // { value: xianRegion.changan.length, name: '长安' },2
+        // { value: xianRegion.gaoxin.length, name: '高新' },3
+        // { value: xianRegion.chengnan.length, name: '城南' },4
+        // { value: xianRegion.qujiang.length, name: '曲江' },5
+        // { value: xianRegion.chengxi.length, name: '城西' },6
+        // { value: xianRegion.chengbei.length, name: '城北' },7
+        // { value: xianRegion.chengnei.length, name: '城内' },8
+        // { value: xianRegion.chengdong.length, name: '城东' },9
+        // { value: xianRegion.jingkai.length, name: '经开' },10
+        // { value: xianRegion.gaoling.length, name: '高陵' } 11
         // return `${parmas.name}: ${parmas.data.value} ${parmas.percent}%`; {b|{b}：}{c}  {per|{d}%}
-        return ` ${parmas.name}: ${parmas.value} {per|${parmas.percent}%} 均价{per|${parmas.percent}%}`;
+        // 521 - 421
+        // 行政区域:曲江 328.47 - 316.67  =  11.80
+        // 行政区域:浐灞 169.38 - 165.52  =  3.86
+        // 行政区域:长安 160.63 - 157.15  =  3.48
+        // 行政区域:城东 137.55 - 135.35  =  2.20
+        // 行政区域:城北 154.17 - 152.85  =  1.32
+        // 行政区域:经开 163.17 - 161.91  =  1.26
+        // 行政区域:高新 214.35 - 213.56  =  0.79
+        // 行政区域:城西 137.24 - 136.74  =  0.50
+        // 行政区域:城南 146.08 - 146.61  = -0.53
+        // 行政区域:高陵 63.48  - 65.94   = -2.46
+        // 行政区域:西咸 143.31 - 146.34  = -3.03
+        // 行政区域:城内 110.72 - 114.73  = -4.01
+        console.log(averagePrice.toFixed(2));
+        return ` ${parmas.name}: ${parmas.value} {per|${parmas.percent}%} 均价{per|${averagePrice.toFixed(2)}}`;
     }
 
     /**
@@ -144,13 +176,13 @@ export default class Xian extends Component {
     }
 
     search() {
-        console.log(this.state);
+        this.getAllData();
     }
     render() {
         let { xianRegion } = this.state;
         let option = {
             title: {
-                text: '某站点用户访问来源',
+                text: `数据简报:${this.state.coordinate}`
             },
             tooltip: {
                 trigger: 'item',
@@ -275,12 +307,6 @@ export default class Xian extends Component {
                 </div>
                 <LineChart option={option} />
                 <Blank />
-                <LineChart option={option} />
-                <Blank />
-                <div>
-                    <Counter />
-                    <Number />
-                </div>
             </div>
         );
     }

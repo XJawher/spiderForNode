@@ -13,7 +13,7 @@ export default class MonthToMonth extends Component {
     }
 
     /**
-     * 环比的数据从 3-29 号开始,然后 5-19 5-16 一直这么排列
+     * 环比的数据从 3-16 号开始,然后 5-21 5-16 一直这么排列
      * 环比的计算方法:
      * @param {*} nextProps
      * 一、同比和环比的区别
@@ -34,13 +34,13 @@ export default class MonthToMonth extends Component {
     componentWillReceiveProps(nextProps) {
         let resetDataFirst = [];
         let resetDataSecond = [];
-        let first = '03-29';
-        let second = '05-19';
+        let first = '03-16';
+        let second = '05-21';
         nextProps.city.forEach(element => {
             element.time.forEach((itemOfTime, indexTime) => {
-                if (/03-29/.test(itemOfTime)) {
+                if (/03-16/.test(itemOfTime)) {
                     resetDataFirst.push({ time: first, cityEN: element.cityEN, cityCH: element.cityCH, total: Number(element.total[indexTime]) });
-                } else if (/05-19/.test(itemOfTime)) {
+                } else if (/05-21/.test(itemOfTime)) {
                     let sortNumber = (a, b) => a.time < b.time ? -1 : 1;
                     let sourceData = element.modify;
                     if (element.cityCH === '上海') {
@@ -89,7 +89,7 @@ export default class MonthToMonth extends Component {
                 }
             },
             legend: {
-                data: ['3-29', '5-19', '月环比']
+                data: ['3-16', '5-21', '月环比']
             },
             xAxis: [
                 {
@@ -114,7 +114,7 @@ export default class MonthToMonth extends Component {
             ],
             series: [
                 {
-                    name: '3-29',
+                    name: '3-16',
                     type: 'bar',
                     data: this.state.resetDataFirst.length ? this.state.resetDataFirst.sort((a, b) => cityCH.findIndex(n => n === a.cityCH) - cityCH.findIndex(n => n === b.cityCH)).map(item => item.total) : [],
                     label: {
@@ -129,7 +129,7 @@ export default class MonthToMonth extends Component {
                     }
                 },
                 {
-                    name: '5-19',
+                    name: '5-21',
                     type: 'bar',
                     data: this.state.resetDataSecond.length ? this.state.resetDataSecond.sort((a, b) => cityCH.findIndex(n => n === a.cityCH) - cityCH.findIndex(n => n === b.cityCH)).map(item => item.total) : [],
                     label: {
