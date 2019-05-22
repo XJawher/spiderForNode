@@ -272,41 +272,39 @@ export default class Xian extends Component {
             ]
         };
         return (
-            <div className="xc-body-main-wrapper">
-                <div className='xc-community-designated'>
-                    <div className='xc-community-designated-search'>
-                        <span style={{ width: 200 }}>Coordinate :</span> <Input
-                            size="small"
-                            className='xc-community-designated-input'
-                            placeholder={'坐标日期'}
-                            value={this.state.coordinate}
-                            onChange={({ target: { value } }) => {
-                                this.setData.bind(this, 'coordinate')(value);
-                            }}
-                        />
+            <div className='xc-community-designated'>
+                <div className='xc-community-designated-search'>
+                    <span style={{ width: 200 }}>Coordinate :</span> <Input
+                        size="small"
+                        className='xc-community-designated-input'
+                        placeholder={'坐标日期'}
+                        value={this.state.coordinate}
+                        onChange={({ target: { value } }) => {
+                            this.setData.bind(this, 'coordinate')(value);
+                        }}
+                    />
 
-                        <span style={{ width: 200 }}>Contrast:</span> <Input
-                            size="small"
-                            className='xc-community-designated-input'
-                            value={this.state.contrast}
-                            placeholder={'对比日期'}
-                            onChange={({ target: { value } }) => {
-                                this.setData.bind(this, 'contrast')(value);
-                            }}
-                        />
+                    <span style={{ width: 200 }}>Contrast:</span> <Input
+                        size="small"
+                        className='xc-community-designated-input'
+                        value={this.state.contrast}
+                        placeholder={'对比日期'}
+                        onChange={({ target: { value } }) => {
+                            this.setData.bind(this, 'contrast')(value);
+                        }}
+                    />
 
-                        <Button
-                            className="xc-community-designated-input"
-                            type="primary"
-                            size="small"
-                            onClick={this.search.bind(this)}
-                        >
-                            {'查询'}
-                        </Button>
-                    </div>
+                    <Button
+                        className="xc-community-designated-input"
+                        type="primary"
+                        size="small"
+                        onClick={this.search.bind(this)}
+                    >
+                        {'查询'}
+                    </Button>
                 </div>
-                <LineChart option={option} />
                 <Blank />
+                <LineChart option={option} />
             </div>
         );
     }
