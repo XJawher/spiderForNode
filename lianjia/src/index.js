@@ -3,16 +3,18 @@ import ReactDOM from 'react-dom';
 import './style/index.less';
 import App from './view/App/App';
 import * as serviceWorker from './serviceWorker';
-
+import { StoreContext } from 'redux-react-hook';
+import store from './redux/index';
 // ReactDOM.render(<App />, document.getElementById('root'));
 (async () => {
-    // create app
     /**
      * @param {*} Component
      */
     const render = Component => {
         ReactDOM.render(
-            <Component />,
+            <StoreContext.Provider value={store}>
+                <Component />
+            </StoreContext.Provider>,
             document.getElementById('root')
         );
     };

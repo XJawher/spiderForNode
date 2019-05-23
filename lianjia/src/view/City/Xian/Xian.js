@@ -162,7 +162,7 @@ export default class Xian extends Component {
         // 行政区域:高陵 63.48  - 65.94   = -2.46
         // 行政区域:西咸 143.31 - 146.34  = -3.03
         // 行政区域:城内 110.72 - 114.73  = -4.01
-        console.log(averagePrice.toFixed(2));
+        // console.log(averagePrice.toFixed(2));
         return ` ${parmas.name}: ${parmas.value} {per|${parmas.percent}%} 均价{per|${averagePrice.toFixed(2)}}`;
     }
 
