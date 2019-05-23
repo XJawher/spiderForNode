@@ -1,42 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useMappedState } from "redux-react-hook";
-import warningAction from "../../../redux/actions/warningAction";
-import store from '../../../redux/index';
-
+import http from '../../../http/http';
 const mapState = (state) => {
-    console.log(state);
     return ({
-        language: state.language,
-        unRead: state.unRead,
+        xian: state.main.xian,
     });
 };
 
 
 
 export default function Number(props) {
-    const { language, unRead } = useMappedState(mapState);
-    console.log(props);
-    const [count, setCount] = useState(1);
-    if (unRead.unRead === 0) {
-        setUnRead();
-        setCount(count + 1);
-    }
-    function setUnRead() {
-        store.dispatch(warningAction.setUnRead(30));
+    const { xian } = useMappedState(mapState);
+    if (xian.length === 0) {
+        http.getCityByCondition();
     }
     useEffect(() => {
-        // setCount(count + 1);
-        setTimeout(() => {
-            console.log(language, unRead);
-        }, 3000);
+        console.log(xian);
+    }, [xian]);
 
-    }, [count, language, unRead]);
-
-    console.log(`Number components has run ${count} times`);
+    console.log(`Number components has run  times`);
 
     return (
         <div>
-            Number components has run {count} times
+            Number components has run times
         </div>
     );
 }

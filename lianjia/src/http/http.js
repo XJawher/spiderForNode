@@ -1,12 +1,16 @@
 import { fetchPost, fetchGet, } from './fetch';
+import store from '../redux/index';
+import generalAction from "../redux/actions/generalAction";
+
 const modal = {
     async getAllCity() {
         let data = await fetchPost('/api/city/sort');
         console.log(data);
     },
 
-    async getCityByCondition(name = '222', time = '', ) {
-        return await fetchPost('/api/city/condition', { name, time });
+    async getCityByCondition(name = '金叶新城', time = '2019-5-7', ) {
+        let { data } = await fetchPost('/api/city/condition', { name, time });
+        store.dispatch(generalAction.setXianData(data));
     },
 
     async testGet(name = 'test', time = 123, ) {

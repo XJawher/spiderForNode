@@ -13,7 +13,7 @@ export default class Blank extends Component {
     render() {
 
         return (
-            <div style={{ backgroundColor: '#f3f3f3', height: 20, width: 'auto' }} />
+            <div style={{ backgroundColor: '#f3f3f3', height: 10, width: 'auto' }} />
         );
     }
 }

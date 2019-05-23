@@ -1,4 +1,7 @@
 export default {
     language: 'chinese',
-    unRead: { unRead: 0 }
+    unRead: { unRead: 0 },
+    main: {
+        xian: []
+    }
 };
