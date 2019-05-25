@@ -8,7 +8,6 @@ const mapState = (state) => {
 };
 
 
-
 export default function Number(props) {
     const { xian } = useMappedState(mapState);
     if (xian.length === 0) {

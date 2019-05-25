@@ -17,7 +17,7 @@ export default class CommunityDayLine extends Component {
     }
 
     async search() {
-        let data = await http.getCityByCondition(this.state.name);
+        let data = await http.getCityByCondition(this.state.name, '');
         if (data.code === 0) {
             this.setState({ community: data.data });
         }

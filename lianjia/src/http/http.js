@@ -9,8 +9,9 @@ const modal = {
     },
 
     async getCityByCondition(name = '金叶新城', time = '2019-5-7', ) {
-        let { data } = await fetchPost('/api/city/condition', { name, time });
-        store.dispatch(generalAction.setXianData(data));
+        let data = await fetchPost('/api/city/condition', { name, time });
+        store.dispatch(generalAction.setXianData(data.data));
+        return data;
     },
 
     async testGet(name = 'test', time = 123, ) {
