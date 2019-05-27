@@ -9,6 +9,10 @@ export default combineReducers({
         return languageReducer(language, action);
     },
 
+    community: (community = State.main.community, action) => {
+        return generalReduce(community, action);
+    },
+
     main: (xian = State.main, action) => {
         return generalReduce(xian, action);
     },

@@ -123,7 +123,15 @@ const model = {
      */
     '/api/city/condition': async ctx => {
         let { name, time } = ctx.parma;
-        let data = await service.xianNewTotal(time ? { address: name, datasSring: time } : { address: name });
+        let searchParam = {};
+        if (name && time) {
+            searchParam = { address: name, datasSring: time };
+        } else if (name) {
+            searchParam = { address: name };
+        } else if (time) {
+            searchParam = { datasSring: time };
+        }
+        let data = await service.xianNewTotal(searchParam);
         ctx.body = {
             code: 0, data: data
         };
