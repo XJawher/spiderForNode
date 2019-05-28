@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ecStat from 'echarts-stat';
-import { Button, Input } from 'antd';
+import { Button } from 'antd';
 import { useMappedState } from "redux-react-hook";
 // import http from '../../../http/http';
+import WeekIncrease from './WeekIncrease';
+
 const mapState = (state) => {
     return ({
         xian: state.main.xian,
@@ -21,8 +23,8 @@ const mapState = (state) => {
 
 export default function Histogram(props) {
 
+    const [administrative, setAdministrativeByChoice] = useState('西咸');
     const { xian, community, weekIncrease } = useMappedState(mapState);
-    console.log(weekIncrease);
     let outliers = (area, price, datasSring, administrative) => {
         // let bins = ecStat.statistics.median(height.sort((a, b) => a - b)); // 中位数
         // let bins = ecStat.statistics.deviation(height.sort((a, b) => a - b)); // 返回输入数组 dataList 的标准差。如果 dataList 为空或者长度小于 2，返回 0 标准差就是为了描述数据集的波动大小而发明,越小数据波动越小,越集中
@@ -69,19 +71,20 @@ export default function Histogram(props) {
 
     useEffect(() => {
         let data = [];
-        let date = '';
+        // let date = '';
+        //do not delete those commit
         if (xian.length) {
             let splitData = setAdministrative(xian);
             splitData.forEach(item => {
                 if (item.data.length) {
-                    let { area, price, datasSring, administrative, averagePrice, averageArea } = insertData(item);
-                    date = datasSring;
-                    data.push(outliers(area, price, datasSring, administrative, averagePrice, averageArea));
+                    let { area, price, datasSring, administrative } = insertData(item);
+                    // date = datasSring;
+                    data.push(outliers(area, price, datasSring, administrative));
                 }
             });
-            console.log(JSON.stringify({ [date]: data }));
+            // console.log(JSON.stringify({ [date]: data }));
         }
-    }, [xian]);
+    }, [xian, weekIncrease]);
 
     /**
      * @param { {datasSring:'',addressSupplement:'xxx|x |xxx',price:''} } data
@@ -186,11 +189,18 @@ export default function Histogram(props) {
         ];
     };
 
+    let choseAdministrative = (administrative) => {
+        setAdministrativeByChoice(administrative);
+    };
     return (
         <div className="xc-histogram-dash">
-            {community.map(item => <span key={item.administrativeCH}><Button value={item.administrativeCH}> {item.administrative}</Button></span>)}
-            <span>输入日期:<Input style={{ width: 250 }} /></span>
-            <span><Button type='primary'>查询</Button></span>
+            <div>
+                {community.map(item => <span key={item.administrativeCH}><Button type={administrative === item.administrative ? 'primary' : ''} onClick={() => choseAdministrative(item.administrative)}> {item.administrative}</Button></span>)}
+            </div>
+            {/* <span>输入日期:<Input style={{ width: 250 }} /></span>
+            <span><Button type='primary'>查询</Button></span> */}
+
+            <WeekIncrease administrative={administrative} weekIncrease={weekIncrease} />
         </div>
     );
 }
