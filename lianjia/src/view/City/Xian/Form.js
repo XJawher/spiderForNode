@@ -1,12 +1,38 @@
 // Form.js
 import React, { useState } from 'react';
 import { Form, Select, Input } from 'antd';
+import { useMappedState } from "redux-react-hook";
+import http from '../../../http/http';
+
+const mapState = (state) => {
+    return ({
+        xian: state.main.xian,
+        community: state.main.community,
+    });
+};
+
 let Option = Select.Option;
 
 export default function FormComponent(props) {
 
     function lang(cn, em) {
         return cn;
+    }
+
+    const { xian } = useMappedState(mapState);
+    if (xian.length === 1111110) {
+        /**
+         *   2019-4-21
+         *  "2019-4-28": [],
+            "2019-5-5": [],
+            "2019-5-13": [],
+            "2019-5-19": [],
+            "2019-5-26": []
+         */
+        http.getCityByCondition('', '2019-5-10');
+
+
+
     }
 
     let [pool] = useState([{ name: 'pool', code: 1 }]);

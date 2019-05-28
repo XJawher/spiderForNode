@@ -13,6 +13,10 @@ export default combineReducers({
         return generalReduce(community, action);
     },
 
+    weekIncrease: (weekIncrease = State.main.weekIncrease, action) => {
+        return generalReduce(weekIncrease, action);
+    },
+
     main: (xian = State.main, action) => {
         return generalReduce(xian, action);
     },
