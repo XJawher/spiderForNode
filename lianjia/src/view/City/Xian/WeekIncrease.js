@@ -11,8 +11,27 @@ export default function WeekIncrease(props) {
     let seriesAveragePrice = [];
     let seriesAverageArea = [];
 
+    /**
+     * ?
+     * *
+     * !
+     *
+     * *
+     *
+     * TODO:
+     *
+     *
+     * @param {*} parma
+     */
     const showRacing = (parma) => {
-        return `${parma.value}`;
+        // let seriesName  Unit of measurement
+        let unitOfMeasurement = '';
+        if (parma.seriesName.includes('面积')) {
+            unitOfMeasurement = '\n平米';
+        } else {
+            unitOfMeasurement = '万';
+        }
+        return `${parma.value}${unitOfMeasurement}`;
     };
 
     for (const [key, values] of Object.entries(props.weekIncrease)) {
@@ -28,7 +47,9 @@ export default function WeekIncrease(props) {
     }
     let option = {
         color: colors,
-
+        title: {
+            text: `${props.administrative} 数据`
+        },
         tooltip: {
             trigger: 'axis',
             axisPointer: { type: 'cross' }
@@ -54,6 +75,7 @@ export default function WeekIncrease(props) {
                 name: '平均面积',
                 position: 'right',
                 min: 50,
+                offset: 80,
                 max: 280,
                 axisLine: {
                     lineStyle: {
@@ -70,7 +92,6 @@ export default function WeekIncrease(props) {
                 min: 50,
                 max: 280,
                 position: 'right',
-                offset: 80,
                 axisLine: {
                     lineStyle: {
                         color: colors[1]
@@ -86,6 +107,7 @@ export default function WeekIncrease(props) {
                 position: 'left',
                 min: 50,
                 max: 350,
+                offset: 60,
                 axisLine: {
                     lineStyle: {
                         color: colors[2]
@@ -98,9 +120,8 @@ export default function WeekIncrease(props) {
             {
                 type: 'value',
                 name: '中位数价格',
-                offset: 60,
-                min: 50,
-                max: 350,
+                min: 0,
+                max: 250,
                 position: 'left',
                 axisLine: {
                     lineStyle: {
@@ -121,6 +142,7 @@ export default function WeekIncrease(props) {
                     normal: {
                         show: true, //开启显示
                         position: 'inside', //在上方显示
+                        formatter: showRacing,
                         textStyle: { //数值样式
                             color: '#ffffff',
                             fontSize: 12,
@@ -147,6 +169,7 @@ export default function WeekIncrease(props) {
                     normal: {
                         show: true, //开启显示
                         position: 'inside', //在上方显示
+                        formatter: showRacing,
                         textStyle: { //数值样式
                             color: '#ffffff',
                             fontSize: 12,
@@ -168,6 +191,7 @@ export default function WeekIncrease(props) {
                     normal: {
                         show: true, //开启显示
                         position: 'top', //在上方显示
+                        formatter: showRacing,
                         textStyle: { //数值样式
                             color: 'black',
                             fontSize: 12,
