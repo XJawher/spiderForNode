@@ -53,7 +53,7 @@ export default class SideBar extends Component {
         return (
             <React.Fragment>
                 <Popover {...popoverConf}>
-                    <Icon type={icon} />
+                    <Icon type={icon} theme="filled" />
                 </Popover>
                 {content}
             </React.Fragment>
@@ -79,13 +79,16 @@ export default class SideBar extends Component {
                         {this.getPopoverIcon('dashboard', 'dashboard', '仪表盘')}
                     </Menu.Item>
                     <Menu.Item key={routerPath.DailyGrowth}>
-                        {this.getPopoverIcon('arrow-up', 'rase', '日增长率')}
+                        {this.getPopoverIcon('bank', 'rase', '日增长率')}
                     </Menu.Item>
                     <Menu.Item key={routerPath.Xian}>
-                        {this.getPopoverIcon('arrow-down', 'xian', '西安')}
+                        {this.getPopoverIcon('bulb', 'xian', '西安')}
                     </Menu.Item>
                     <Menu.Item key={routerPath.Shanghai}>
-                        {this.getPopoverIcon('shrink', 'shanghai', '上海')}
+                        {this.getPopoverIcon('api', 'shanghai', '上海')}
+                    </Menu.Item>
+                    <Menu.Item key={routerPath.Echart}>
+                        {this.getPopoverIcon('alert', 'Echart', 'Echart')}
                     </Menu.Item>
                 </Menu>
             </aside>
