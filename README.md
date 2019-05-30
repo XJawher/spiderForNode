@@ -268,3 +268,21 @@ app.use() 他的执行顺序是怎么设定的,将 **app.use(middleware.initRequ
 
 * 首先是获取全部的数据
 * 然后遍历,将数据 insert 到目标数据集
+
+## 性能差的问题
+
+当同时调用 8 个 echart 图的时候会出现一个问题就是帧数会很低,直接是就是有一部分会卡死,这是一个很严重的问题,通过性能分析可以得出整个的图是挂了的
+
+解决的方案是使用 requestIdleCallBack 方法,在浏览器空闲的时候依次去调用
+
+出现卡顿的原因是 useEffect 函数在一直的调用,所以会很卡.现在要解决的是为啥这玩意会一直去调用.
+
+卡顿的原因还有一个就是渲染了十二个 canvas ,造成了浏览器的卡顿
+
+如何封装:
+
+    _chartInstanceRef.current.setOptionInIdle = (option) => requestIdleCallback(() => {
+        _chartInstanceRef.current.setOption(generateOption(option));
+    });
+
+这个方法是在外面包了一层,这样的话就可以让新的函数去取代旧的函数,尽量的减少代码量.

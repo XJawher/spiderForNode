@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import echarts from 'echarts';
 
 export default class FSPieChart extends Component {
     constructor(props) {
         super(props);
-        let {option: {width = '100%', height = '100%', title, tooltip, legend = {}, series, resizeDelay = 16.67}} = this.props;
+        let { option: { width = '100%', height = '100%', title, tooltip, legend = {}, series, resizeDelay = 16.67 } } = this.props;
         this.state = {
             width,
             height,
@@ -26,7 +26,7 @@ export default class FSPieChart extends Component {
     // }
 
     async componentWillReceiveProps(nextProps) {
-        let {option: {series}} = nextProps;
+        let { option: { series } } = nextProps;
         await this.setState({
             series: this.makeSeries(series, nextProps)
         });
@@ -34,7 +34,7 @@ export default class FSPieChart extends Component {
     }
 
     makeSeries(series, props) {
-        let {option: {formatter = '',}} = props;
+        let { option: { formatter = '', } } = props;
         return series.map(series => {
             series['radius'] = ['70%', '100%'];
             series['hoverAnimation'] = false;
@@ -66,7 +66,7 @@ export default class FSPieChart extends Component {
         });
     }
 
-    generateOption({title, legend, tooltip}) {
+    generateOption({ title, legend, tooltip }) {
         return {
             title,
             tooltip,
@@ -91,7 +91,7 @@ export default class FSPieChart extends Component {
 
     resizeChart() {
         this.timer && clearTimeout(this.timer);
-        let {resizeDelay} = this.state;
+        let { resizeDelay } = this.state;
         // should do it after all animations that will affect the width calculation are done
         this.timer = setTimeout(this._chartInstance.resize, resizeDelay);
     }
@@ -100,7 +100,7 @@ export default class FSPieChart extends Component {
         return (
             <div
                 className="bd-chart-content"
-                style={{width: this.state.width, height: this.state.height + 'px'}}
+                style={{ width: this.state.width, height: this.state.height + 'px' }}
                 ref={chartWrapper => this.chartWrapper = chartWrapper}
             >
                 Sorry, your browser does not support canvas, so please replace it with modern browsers that support HTML5 standards.

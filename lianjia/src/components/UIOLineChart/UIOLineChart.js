@@ -1,72 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import echarts from 'echarts';
 import moment from 'moment';
 
-class FSLineChart extends Component {
-    constructor(props) {
-        super(props);
-        let { menuExpand, option: { title, width = '95%', height = '90%', x = 90, y = 50, yAxisUnit = '', yMin = null, yMax = null, labelTimeFormat, tooltipFormatter = '', yAxisLabelFormatter = '', legend = [], label = [], series, resizeDelay = 16.67 } } = this.props;
-        this.state = {
-            menuExpand,
-            title,
-            width,
-            x,
-            y,
-            height,
-            yAxisUnit,
-            yMin,
-            yMax,
-            labelTimeFormat,
-            tooltipFormatter,
-            yAxisLabelFormatter,
-            legend,
-            label: label.map(label => {
-                return moment(new Date(label * 1000)).format('HH:mm:ss');
-            }),
-            series: this.makeSeries(series),
-            resizeDelay,
-        };
-    }
+export default function UIOLineChart(props) {
+    let { option: { title, width = '95%', height = '90%', x = 90, y = 50, yAxisUnit = '', yMin = null, yMax = null, labelTimeFormat, tooltipFormatter = '', yAxisLabelFormatter = '', legend = [], label = [], series, resizeDelay = 16.67 } } = props;
+    // let timer = null;
+    const setOptionRef = useRef();
+    const chartWrapperRef = useRef();
+    const _chartInstanceRef = useRef();
+    const echartsRef = useRef();
 
-    componentDidMount() {
-        this.renderChart();
-        window.addEventListener('resize', this.resizeChart.bind(this));
-    }
-
-    // componentWillUnmount (){
-    //     window.removeEventListener('resize', this.resizeChart.bind(this));
-    // }
-
-    async componentWillReceiveProps(nextProps) {
-        let { menuExpand, option: { label, series, title, legend } } = nextProps;
-        await this.setState({
-            legend,
-            label: label.map(label => {
-                // format 'Wed Aug 16 2017 21:24:26 GMT+0800 (CST)' to '21:24:26'
-                return moment(new Date(label * 1000)).format('HH:mm:ss');
-            }),
-            series: series.map(series => {
-                if (series.type === 'line') {
-                    // curve smoothing
-                    series['smooth'] = true;
-                    // show all symbol
-                    series['showAllSymbol'] = true;
-                }
-                return series;
-            }),
-            title
-        });
-        this.updateChart(this.state);
-
-        // if sidebar menu expand/fold, should resize chart
-        if (menuExpand !== this.state.menuExpand) {
-            this.resizeChart();
-        }
-        this.setState({ menuExpand });
-    }
-
-    makeSeries(series) {
+    const makeSeries = (series) => {
         return series.map(series => {
             if (series.type === 'line') {
                 // curve smoothing
@@ -91,9 +35,31 @@ class FSLineChart extends Component {
             }
             return series;
         });
-    }
+    };
 
-    generateOption({ title, label, x, y, tooltipFormatter, yAxisLabelFormatter, yAxisUnit, yMin, yMax, legend }) {
+    let [state] = useState({
+        title,
+        width,
+        x,
+        y,
+        height,
+        yAxisUnit,
+        yMin,
+        yMax,
+        labelTimeFormat,
+        tooltipFormatter,
+        yAxisLabelFormatter,
+        legend,
+        label: label.map(label => {
+            return moment(new Date(label * 1000)).format('HH:mm:ss');
+        }),
+        series: makeSeries(series),
+        resizeDelay,
+    });
+
+    echartsRef.current = echarts;
+
+    let generateOption = useCallback(({ title, label, x, y, tooltipFormatter, yAxisLabelFormatter, yAxisUnit, yMin, yMax, legend }) => {
         return {
             title: title,
             tooltip: {
@@ -180,46 +146,57 @@ class FSLineChart extends Component {
                 },
                 splitArea: { show: false }
             }],
-            series: this.state.series
+            series: state.series
         };
-    }
+    }, [state.series]);
 
-    renderChart() {
-        this._chartInstance = echarts.init(this.chartWrapper);
-        this._chartInstance.setOption(this.generateOption(this.state));
-    }
+    useEffect(() => {
+        function renderChart() {
+            _chartInstanceRef.current = echartsRef.current.init(chartWrapperRef.current);
+            _chartInstanceRef.current.setOptionInIdle = (option) => requestIdleCallback(() => {
+                _chartInstanceRef.current.setOption(generateOption(option));
+            });
+            _chartInstanceRef.current.setOptionInIdle(state);
+        }
+        renderChart();
+    }, [generateOption, state, setOptionRef]);
 
-    updateChart(data) {
-        this._chartInstance.setOption(this.generateOption(data));
-    }
+    useEffect(() => {
+        const updateChart = (data) => {
+            _chartInstanceRef.current.setOptionInIdle(data);
+        };
 
-    resizeChart() {
-        this.timer && clearTimeout(this.timer);
-        let { resizeDelay } = this.state;
-        // should do it after all animations that will affect the width calculation are done
-        this.timer = setTimeout(this._chartInstance.resize, resizeDelay);
-    }
+        let { option: { label, series, title, legend } } = props;
+        updateChart({
+            legend,
+            label: label.map(label => {
+                // format 'Wed Aug 16 2017 21:24:26 GMT+0800 (CST)' to '21:24:26'
+                return moment(new Date(label * 1000)).format('HH:mm:ss');
+            }),
+            series: series.map(series => {
+                if (series.type === 'line') {
+                    // curve smoothing
+                    series['smooth'] = true;
+                    // show all symbol
+                    series['showAllSymbol'] = true;
+                }
+                return series;
+            }),
+            title
+        });
+    }, [generateOption, props]);
 
-    render() {
-        return (
-            <div
-                className="bd-chart-content"
-                style={{ width: this.state.width, height: this.state.height, marginTop: 15 }}
-                ref={chartWrapper => this.chartWrapper = chartWrapper}
-            >
-                Sorry, your browser does not support canvas, so please replace it with modern browsers that support HTML5 standards.
-            </div>
-        );
-    }
+    let resizeChart = () => window.requestIdleCallback(_chartInstanceRef.current.resize);
+    window.addEventListener('resize', () => resizeChart());
+
+    return (
+        <div
+            style={{ width: state.width, height: state.height }}
+            ref={wrapper => chartWrapperRef.current = wrapper}
+        >
+            Sorry, your browser does not support canvas, so please replace it with modern browsers that support HTML5 standards.
+        </div>
+    );
 }
 
-let mapStateToProps = state => {
-    let { main: { menuExpand } } = state;
-    return { menuExpand };
-};
 
-let mergeProps = (stateProps, dispatchProps, ownProps) => {
-    return Object.assign({}, stateProps, dispatchProps, ownProps);
-};
-
-export default connect(mapStateToProps, {}, mergeProps)(FSLineChart);
