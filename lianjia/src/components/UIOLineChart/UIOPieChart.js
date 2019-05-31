@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 import echarts from 'echarts';
 
-export default function UIOPieChart(props) {
-    let { option: { width = '100%', height = '100%', title, tooltip, legend = {}, series, resizeDelay = 16.67 } } = props;
+export default function UIOPieChart (props){
+    let {option: {width = '100%', height = '100%', title, tooltip, legend = {}, series, resizeDelay = 16.67}} = props;
 
     const chartWrapperRef = useRef();
     const _chartInstanceRef = useRef();
     const echartsRef = useRef();
 
     const makeSeries = (series, props) => {
-        let { option: { formatter = '', } } = props;
+        let {option: {formatter = '',}} = props;
         return series.map(series => {
             series['radius'] = ['70%', '100%'];
             series['hoverAnimation'] = false;
@@ -53,7 +53,7 @@ export default function UIOPieChart(props) {
 
     echartsRef.current = echarts;
 
-    let generateOption = useCallback(({ title, legend, tooltip }) => {
+    let generateOption = useCallback(({title, legend, tooltip}) => {
         return {
             title,
             tooltip,
@@ -68,7 +68,7 @@ export default function UIOPieChart(props) {
     }, [state.series]);
 
     useEffect(() => {
-        function renderChart() {
+        function renderChart (){
             _chartInstanceRef.current = echartsRef.current.init(chartWrapperRef.current);
             _chartInstanceRef.current.setOptionInIdle = (option) => requestIdleCallback(() => {
                 _chartInstanceRef.current.setOption(generateOption(option));
@@ -83,7 +83,7 @@ export default function UIOPieChart(props) {
             _chartInstanceRef.current.setOptionInIdle(data);
         };
 
-        let { option: { width = '100%', height = '100%', title, tooltip, legend = {}, series, resizeDelay = 16.67 } } = props;
+        let {option: {width = '100%', height = '100%', title, tooltip, legend = {}, series, resizeDelay = 16.67}} = props;
         updateChart({
             width,
             height,
@@ -99,11 +99,16 @@ export default function UIOPieChart(props) {
         window.requestIdleCallback(_chartInstanceRef.current.resize);
     };
 
-    window.addEventListener('resize', () => resizeChart());
+    useEffect(() => {
+        window.addEventListener('resize', () => resizeChart());
+        return () => {
+            window.removeEventListener('resize', () => resizeChart());
+        };
+    }, []);
 
     return (
         <div
-            style={{ width: state.width, height: state.height }}
+            style={{width: state.width, height: state.height}}
             ref={wrapper => chartWrapperRef.current = wrapper}
         >
             Sorry, your browser does not support canvas, so please replace it with modern browsers that support HTML5 standards.

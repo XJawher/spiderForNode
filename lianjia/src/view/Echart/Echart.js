@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 
 import UIO from '../../components/UIOLineChart/UIOLineChart';
 import UIOPieChart from '../../components/UIOLineChart/UIOPieChart';
 import UIOLineChart from '../../components/UIOLineChart/UIO';
 
-export default function Echart() {
+export default function Echart (){
     let option = {
         title: {
             text: '折线图堆叠'
@@ -134,7 +134,7 @@ export default function Echart() {
                 name: '直接访问',
                 type: 'line',
                 stack: '总量',
-                areaStyle: { normal: {} },
+                areaStyle: {normal: {}},
                 data: [320, 332, 301, 334, 390, 330, 320]
             },
             {
@@ -147,7 +147,7 @@ export default function Echart() {
                         position: 'top'
                     }
                 },
-                areaStyle: { normal: {} },
+                areaStyle: {normal: {}},
                 data: [820, 932, 901, 934, 1290, 1330, 1320]
             }
         ]
@@ -199,8 +199,8 @@ export default function Echart() {
                 dataZoom: {
                     yAxisIndex: 'none'
                 },
-                dataView: { readOnly: false },
-                magicType: { type: ['line', 'bar'] },
+                dataView: {readOnly: false},
+                magicType: {type: ['line', 'bar']},
                 restore: {},
                 saveAsImage: {}
             }
@@ -223,13 +223,13 @@ export default function Echart() {
                 data: [11, 11, 15, 13, 12, 13, 10],
                 markPoint: {
                     data: [
-                        { type: 'max', name: '最大值' },
-                        { type: 'min', name: '最小值' }
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
                     ]
                 },
                 markLine: {
                     data: [
-                        { type: 'average', name: '平均值' }
+                        {type: 'average', name: '平均值'}
                     ]
                 }
             },
@@ -239,12 +239,12 @@ export default function Echart() {
                 data: [1, -2, 2, 5, 3, 2, 0],
                 markPoint: {
                     data: [
-                        { name: '周最低', value: -2, xAxis: 1, yAxis: -1.5 }
+                        {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
                     ]
                 },
                 markLine: {
                     data: [
-                        { type: 'average', name: '平均值' },
+                        {type: 'average', name: '平均值'},
                         [{
                             symbol: 'none',
                             x: '90%',
@@ -277,7 +277,7 @@ export default function Echart() {
                 data: [22, 33, 44, 56],
                 name: '集群IOPS',
                 type: 'line',
-                itemStyle: { normal: { color: '#fff', lineStyle: { width: 1 } } },
+                itemStyle: {normal: {color: '#fff', lineStyle: {width: 1}}},
                 area: ['#ff7315', '#ff9752'],
             },
         ]
@@ -299,8 +299,8 @@ export default function Echart() {
                 data: [lang('已使用容量', 'Used Disk Capacity'), lang('可用容量', 'Available Disk Capacity')]
             },
             data: [
-                { value: 20, name: lang('已使用容量', 'Used Disk Capacity') },
-                { value: 80, name: lang('可用容量', 'Available Disk Capacity') },
+                {value: 20, name: lang('已使用容量', 'Used Disk Capacity')},
+                {value: 80, name: lang('可用容量', 'Available Disk Capacity')},
             ]
         }],
     };
@@ -311,30 +311,22 @@ export default function Echart() {
 
     return (
         <div className="xc-body-main-wrapper">
-            {/* <div className='xc-echart-split'>
+            <div className='xc-echart-split'>
                 <UIOLineChart option={option} />
                 <UIOLineChart option={option1} />
             </div>
             <div className='xc-echart-split'>
                 <UIOLineChart option={option2} />
                 <UIOLineChart option={option3} />
+            </div>
+            {/* <div className='xc-echart-split'>
+                <UIO option={option4} />
+                <UIO option={option4} />
+            </div>
+            <div className='xc-echart-split'>
+                <UIOPieChart option={chartOption} />
+                <UIOPieChart option={chartOption} />
             </div> */}
-            <div className='xc-echart-split'>
-                <UIO option={option4} />
-                <UIO option={option4} />
-            </div>
-            <div className='xc-echart-split'>
-                <UIOPieChart option={chartOption} />
-                <UIOPieChart option={chartOption} />
-            </div>
-            <div className='xc-echart-split'>
-                <UIO option={option4} />
-                <UIO option={option4} />
-            </div>
-            <div className='xc-echart-split'>
-                <UIO option={option4} />
-                <UIO option={option4} />
-            </div>
         </div>
     );
 }

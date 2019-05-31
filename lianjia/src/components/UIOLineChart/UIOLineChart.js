@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 import echarts from 'echarts';
 import moment from 'moment';
 
-export default function UIOLineChart(props) {
-    let { option: { title, width = '95%', height = '90%', x = 90, y = 50, yAxisUnit = '', yMin = null, yMax = null, labelTimeFormat, tooltipFormatter = '', yAxisLabelFormatter = '', legend = [], label = [], series, resizeDelay = 16.67 } } = props;
+export default function UIOLineChart (props){
+    let {option: {title, width = '95%', height = '90%', x = 90, y = 50, yAxisUnit = '', yMin = null, yMax = null, labelTimeFormat, tooltipFormatter = '', yAxisLabelFormatter = '', legend = [], label = [], series, resizeDelay = 16.67}} = props;
     // let timer = null;
     const setOptionRef = useRef();
     const chartWrapperRef = useRef();
@@ -24,8 +24,8 @@ export default function UIOLineChart(props) {
                             color: new echarts.graphic.LinearGradient(
                                 0, 0, 0, 1,
                                 [
-                                    { offset: 0, color: series.area[0] },
-                                    { offset: 1, color: series.area[1] }
+                                    {offset: 0, color: series.area[0]},
+                                    {offset: 1, color: series.area[1]}
                                 ],
                                 false
                             )
@@ -59,7 +59,7 @@ export default function UIOLineChart(props) {
 
     echartsRef.current = echarts;
 
-    let generateOption = useCallback(({ title, label, x, y, tooltipFormatter, yAxisLabelFormatter, yAxisUnit, yMin, yMax, legend }) => {
+    let generateOption = useCallback(({title, label, x, y, tooltipFormatter, yAxisLabelFormatter, yAxisUnit, yMin, yMax, legend}) => {
         return {
             title: title,
             tooltip: {
@@ -118,7 +118,7 @@ export default function UIOLineChart(props) {
                         color: '#e5e5e5'
                     }
                 },
-                splitArea: { show: false },
+                splitArea: {show: false},
                 data: label
             }],
             yAxis: [{
@@ -132,7 +132,7 @@ export default function UIOLineChart(props) {
                 },
                 axisLabel: {
                     formatter: yAxisLabelFormatter ? yAxisLabelFormatter : '{value}' + yAxisUnit,
-                    textStyle: { color: '#5f5f5f' },
+                    textStyle: {color: '#5f5f5f'},
                     margin: 15
                 },
                 axisTick: {
@@ -144,14 +144,14 @@ export default function UIOLineChart(props) {
                         color: '#e5e5e5'
                     }
                 },
-                splitArea: { show: false }
+                splitArea: {show: false}
             }],
             series: state.series
         };
     }, [state.series]);
 
     useEffect(() => {
-        function renderChart() {
+        function renderChart (){
             _chartInstanceRef.current = echartsRef.current.init(chartWrapperRef.current);
             _chartInstanceRef.current.setOptionInIdle = (option) => requestIdleCallback(() => {
                 _chartInstanceRef.current.setOption(generateOption(option));
@@ -166,7 +166,7 @@ export default function UIOLineChart(props) {
             _chartInstanceRef.current.setOptionInIdle(data);
         };
 
-        let { option: { label, series, title, legend } } = props;
+        let {option: {label, series, title, legend}} = props;
         updateChart({
             legend,
             label: label.map(label => {
@@ -187,11 +187,17 @@ export default function UIOLineChart(props) {
     }, [generateOption, props]);
 
     let resizeChart = () => window.requestIdleCallback(_chartInstanceRef.current.resize);
-    window.addEventListener('resize', () => resizeChart());
+
+    useEffect(() => {
+        window.addEventListener('resize', () => resizeChart());
+        return () => {
+            window.removeEventListener('resize', () => resizeChart());
+        };
+    }, []);
 
     return (
         <div
-            style={{ width: state.width, height: state.height }}
+            style={{width: state.width, height: state.height}}
             ref={wrapper => chartWrapperRef.current = wrapper}
         >
             Sorry, your browser does not support canvas, so please replace it with modern browsers that support HTML5 standards.

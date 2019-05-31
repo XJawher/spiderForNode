@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import ecStat from 'echarts-stat';
-import { Button } from 'antd';
-import { useMappedState } from "redux-react-hook";
+import {Button} from 'antd';
+import {useMappedState} from "redux-react-hook";
 // import http from '../../../http/http';
 import WeekIncrease from './WeekIncrease';
 
@@ -21,10 +21,10 @@ const mapState = (state) => {
  * Completed data preparation for weekly house price growth
  */
 
-export default function Histogram(props) {
+export default function Histogram (props){
 
     const [administrative, setAdministrativeByChoice] = useState('西咸');
-    const { xian, community, weekIncrease } = useMappedState(mapState);
+    const {xian, community, weekIncrease} = useMappedState(mapState);
     let outliers = (area, price, datasSring, administrative) => {
         // let bins = ecStat.statistics.median(height.sort((a, b) => a - b)); // 中位数
         // let bins = ecStat.statistics.deviation(height.sort((a, b) => a - b)); // 返回输入数组 dataList 的标准差。如果 dataList 为空或者长度小于 2，返回 0 标准差就是为了描述数据集的波动大小而发明,越小数据波动越小,越集中
@@ -66,7 +66,7 @@ export default function Histogram(props) {
 
         });
 
-        return { administrative, datasSring, priceMiddle, areaMiddle, averagePrice, averageArea };
+        return {administrative, datasSring, priceMiddle, areaMiddle, averagePrice, averageArea};
     };
 
     useEffect(() => {
@@ -77,7 +77,7 @@ export default function Histogram(props) {
             let splitData = setAdministrative(xian);
             splitData.forEach(item => {
                 if (item.data.length) {
-                    let { area, price, datasSring, administrative } = insertData(item);
+                    let {area, price, datasSring, administrative} = insertData(item);
                     // date = datasSring;
                     data.push(outliers(area, price, datasSring, administrative));
                 }
@@ -90,7 +90,7 @@ export default function Histogram(props) {
      * @param { {datasSring:'',addressSupplement:'xxx|x |xxx',price:''} } data
      */
     const insertData = (data) => {
-
+        ///单价12701元/平米
         let flood = [];
         let price = [];
         let address = [];
@@ -109,7 +109,7 @@ export default function Histogram(props) {
             flood.push(item.flood);
         });
 
-        return { area, price, datasSring, administrative: data.administrative };
+        return {area, price, datasSring, administrative: data.administrative};
     };
 
     // 设置行政区划的数据
@@ -174,18 +174,18 @@ export default function Histogram(props) {
         });
 
         return [
-            { administrativeCH: 'xixian', administrative: '西咸', datasSring: datasSring, data: xixian },
-            { administrativeCH: 'qujiang', administrative: '曲江', datasSring: datasSring, data: qujiang },
-            { administrativeCH: 'gaoling', administrative: '高陵', datasSring: datasSring, data: gaoling },
-            { administrativeCH: 'changan', administrative: '长安', datasSring: datasSring, data: changan },
-            { administrativeCH: 'chanba', administrative: '浐灞', datasSring: datasSring, data: chanba },
-            { administrativeCH: 'chengxi', administrative: '城西', datasSring: datasSring, data: chengxi },
-            { administrativeCH: 'gaoxin', administrative: '高新', datasSring: datasSring, data: gaoxin },
-            { administrativeCH: 'chengnan', administrative: '城南', datasSring: datasSring, data: chengnan },
-            { administrativeCH: 'chengdong', administrative: '城北', datasSring: datasSring, data: chengdong },
-            { administrativeCH: 'chengbei', administrative: '城东', datasSring: datasSring, data: chengbei },
-            { administrativeCH: 'jingkai', administrative: '经开', datasSring: datasSring, data: jingkai },
-            { administrativeCH: 'chengnei', administrative: '城内', datasSring: datasSring, data: chengnei },
+            {administrativeCH: 'xixian', administrative: '西咸', datasSring: datasSring, data: xixian},
+            {administrativeCH: 'qujiang', administrative: '曲江', datasSring: datasSring, data: qujiang},
+            {administrativeCH: 'gaoling', administrative: '高陵', datasSring: datasSring, data: gaoling},
+            {administrativeCH: 'changan', administrative: '长安', datasSring: datasSring, data: changan},
+            {administrativeCH: 'chanba', administrative: '浐灞', datasSring: datasSring, data: chanba},
+            {administrativeCH: 'chengxi', administrative: '城西', datasSring: datasSring, data: chengxi},
+            {administrativeCH: 'gaoxin', administrative: '高新', datasSring: datasSring, data: gaoxin},
+            {administrativeCH: 'chengnan', administrative: '城南', datasSring: datasSring, data: chengnan},
+            {administrativeCH: 'chengdong', administrative: '城北', datasSring: datasSring, data: chengdong},
+            {administrativeCH: 'chengbei', administrative: '城东', datasSring: datasSring, data: chengbei},
+            {administrativeCH: 'jingkai', administrative: '经开', datasSring: datasSring, data: jingkai},
+            {administrativeCH: 'chengnei', administrative: '城内', datasSring: datasSring, data: chengnei},
         ];
     };
 
