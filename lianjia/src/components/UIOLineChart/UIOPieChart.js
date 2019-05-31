@@ -4,7 +4,6 @@ import echarts from 'echarts';
 export default function UIOPieChart(props) {
     let { option: { width = '100%', height = '100%', title, tooltip, legend = {}, series, resizeDelay = 16.67 } } = props;
 
-    let timer = null;
     const chartWrapperRef = useRef();
     const _chartInstanceRef = useRef();
     const echartsRef = useRef();
@@ -97,10 +96,7 @@ export default function UIOPieChart(props) {
     }, [props]);
 
     let resizeChart = () => {
-        timer && clearTimeout(timer);
-        let { resizeDelay } = state;
         window.requestIdleCallback(_chartInstanceRef.current.resize);
-        timer = setTimeout(_chartInstanceRef.current.resize, resizeDelay);
     };
 
     window.addEventListener('resize', () => resizeChart());
