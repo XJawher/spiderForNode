@@ -25,7 +25,7 @@ export default function Histogram (props){
 
     const [administrative, setAdministrativeByChoice] = useState('西咸');
     const {xian, community, weekIncrease} = useMappedState(mapState);
-    let outliers = (area, price, datasSring, administrative) => {
+    let outliers = (area, price, priceSign, datasSring, administrative) => {
         // let bins = ecStat.statistics.median(height.sort((a, b) => a - b)); // 中位数
         // let bins = ecStat.statistics.deviation(height.sort((a, b) => a - b)); // 返回输入数组 dataList 的标准差。如果 dataList 为空或者长度小于 2，返回 0 标准差就是为了描述数据集的波动大小而发明,越小数据波动越小,越集中
         // let bins = ecStat.statistics.sampleVariance(height.sort((a, b) => a - b)); // 返回输入数组 dataList 的样本方差。如果 dataList 为空或者长度小于 2，返回 0.
@@ -38,7 +38,9 @@ export default function Histogram (props){
         let areaMiddle = '';
         let averageArea = '';
         let averagePrice = '';
-        [area, price].forEach((ele, index) => {
+        let priceSignMiddle = '';
+        let priceSignAverage = '';
+        [area, price, priceSign].forEach((ele, index) => {
             // let name = ['area', 'price'];
             // let quantile1 = ecStat.statistics.quantile(ele.sort((a, b) => a - b), 0.25).toFixed(2);
             let quantile2 = ecStat.statistics.quantile(ele.sort((a, b) => a - b), 0.5).toFixed(2);
@@ -49,12 +51,25 @@ export default function Histogram (props){
             // let IQR = quantile3 - quantile1;
             // let max = quantile3 + 3 * IQR;
             // let min = quantile1 - 3 * IQR;
-            if (index === 0) {
-                areaMiddle = quantile2;
-                averageArea = average;
-            } else {
-                priceMiddle = quantile2;
-                averagePrice = average;
+            switch (index) {
+                case 0:
+                    areaMiddle = quantile2;
+                    averageArea = average;
+                    break;
+
+                case 1:
+                    priceMiddle = quantile2;
+                    averagePrice = average;
+                    break;
+
+                case 2:
+                    priceSignMiddle = quantile2;
+                    priceSignAverage = average;
+
+                    break;
+
+                default:
+                    break;
             }
             // console.log(`${[datasSring, administrative].join(',')} ${name[index]} 标准差 ${ecStat.statistics.deviation(ele.sort((a, b) => a - b)).toFixed(2)}`);
             // console.log(`${[datasSring, administrative].join(',')} ${name[index]} 第1四分位数 ${quantile1}`);
@@ -66,25 +81,25 @@ export default function Histogram (props){
 
         });
 
-        return {administrative, datasSring, priceMiddle, areaMiddle, averagePrice, averageArea};
+        return {administrative, datasSring, priceMiddle, areaMiddle, averagePrice, averageArea, priceSignMiddle, priceSignAverage};
     };
 
     useEffect(() => {
         let data = [];
-        // let date = '';
+        let date = '';
         //do not delete those commit
         if (xian.length) {
             let splitData = setAdministrative(xian);
             splitData.forEach(item => {
                 if (item.data.length) {
-                    let {area, price, datasSring, administrative} = insertData(item);
-                    // date = datasSring;
-                    data.push(outliers(area, price, datasSring, administrative));
+                    let {area, price, priceSign, datasSring, administrative} = insertData(item);
+                    date = datasSring;
+                    data.push(outliers(area, price, priceSign, datasSring, administrative));
                 }
             });
-            // console.log(JSON.stringify({ [date]: data }));
+            console.log(JSON.stringify({[date]: data}));
         }
-    }, [xian, weekIncrease]);
+    }, [xian]);
 
     /**
      * @param { {datasSring:'',addressSupplement:'xxx|x |xxx',price:''} } data
@@ -96,11 +111,13 @@ export default function Histogram (props){
         let address = [];
         let area = [];
         let datasSring = '';
+        let priceSign = [];
         data.data.forEach(item => {
             price.push(Number(item.price));
             address.push(item.address);
             datasSring = item.datasSring;
             let areaSign = item.addressSupplement.replace('平米', '').split('|');
+            priceSign.push(Number(item.priceSign.replace(/单价|元|\/|平米/g, '')));
             areaSign.forEach(item => {
                 if (Number(item.trim())) {
                     area.push(Number(item.trim()));
@@ -109,7 +126,7 @@ export default function Histogram (props){
             flood.push(item.flood);
         });
 
-        return {area, price, datasSring, administrative: data.administrative};
+        return {area, price, priceSign, datasSring, administrative: data.administrative};
     };
 
     // 设置行政区划的数据

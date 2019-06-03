@@ -1,7 +1,7 @@
 // Form.js
-import React, { useState } from 'react';
-import { Form, Select, Input } from 'antd';
-import { useMappedState } from "redux-react-hook";
+import React, {useState} from 'react';
+import {Form, Select, Input} from 'antd';
+import {useMappedState} from "redux-react-hook";
 import http from '../../../http/http';
 
 const mapState = (state) => {
@@ -13,42 +13,43 @@ const mapState = (state) => {
 
 let Option = Select.Option;
 
-export default function FormComponent(props) {
+export default function FormComponent (props){
 
-    function lang(cn, em) {
+    function lang (cn, em){
         return cn;
     }
 
-    const { xian } = useMappedState(mapState);
-    if (xian.length === 1111110) {
+    const {xian} = useMappedState(mapState);
+    if (xian.length === 1110) {
         /**
-         *   2019-4-21
-         *  "2019-4-28": [],
-            "2019-5-5": [],
-            "2019-5-13": [],
-            "2019-5-19": [],
-            "2019-5-26": []
+         *
+            "2019-4-21":
+            "2019-4-28":
+            "2019-5-5":
+            "2019-5-13":
+            "2019-5-19":
+            "2019-5-26":
+            "2019-5-30":[]
+            const date = ["2019-4-21","2019-4-28","2019-5-5","2019-5-13","2019-5-26","2019-5-30",]
          */
-        http.getCityByCondition('', '2019-5-10');
-
-
-
+        const date = ["2019-4-21", "2019-4-28", "2019-5-5", "2019-5-13", "2019-5-26", "2019-5-30",];
+        date.forEach(item => http.getCityByCondition('', item));
     }
 
-    let [pool] = useState([{ name: 'pool', code: 1 }]);
-    let [blockData, setBlock] = useState({ name: '111' });
+    let [pool] = useState([{name: 'pool', code: 1}]);
+    let [blockData, setBlock] = useState({name: '111'});
     let [formValid, setFormValid] = useState(true);
     let [validation, setValidation] = useState(
-        { name: { status: '', help: '' } }
+        {name: {status: '', help: ''}}
     );
 
     let formValueChange = (key, value) => {
-        setBlock(Object.assign({}, blockData, { [key]: value }));
+        setBlock(Object.assign({}, blockData, {[key]: value}));
     };
 
 
     let validateForm = (key, value) => {
-        setValidation(Object.assign({}, validation, { [key]: { status: '', help: '', valid: true } }));
+        setValidation(Object.assign({}, validation, {[key]: {status: '', help: '', valid: true}}));
         if (key === 'name') {
             if (value.includes('s')) {
                 validationUpdateState('name', {
@@ -78,19 +79,19 @@ export default function FormComponent(props) {
         }));
     };
 
-    let onDeviceName = ({ target: { value } }) => {
+    let onDeviceName = ({target: {value}}) => {
         formValueChange('name', value);
         validateForm('name', value);
     };
 
     return (
         <div>
-            <Form id='FormInCreateBlock' layout="vertical" style={{ width: '100%' }}>
+            <Form id='FormInCreateBlock' layout="vertical" style={{width: '100%'}}>
                 <Form.Item
                     label={`formValid === ${formValid}`}
                     required={true}
                 >
-                    <Select style={{ width: '100%' }} placeholder='请下拉选择存储池'
+                    <Select style={{width: '100%'}} placeholder='请下拉选择存储池'
                         value={'请下拉选择存储池'}
                         className='bd-create-block-device-pool-select'
                         onChange={value => {
@@ -111,7 +112,7 @@ export default function FormComponent(props) {
                     help={validation.name.help}
                     required={true}
                 >
-                    <Input style={{ height: 40 }}
+                    <Input style={{height: 40}}
                         placeholder={lang('请输入块设备名称', 'please enter snapshot name')}
                         id='inputBLOCKStorageName'
                         className='bd-create-block-device-name-input'

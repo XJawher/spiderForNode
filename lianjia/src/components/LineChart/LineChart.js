@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 // import {connect} from 'react-redux';
 import echarts from 'echarts';
 // import moment from 'moment';
 
 class LineChart extends Component {
-    constructor(props) {
+    constructor (props){
         super(props);
-        let { title, tooltip, legend, grid, toolbox, xAxis, yAxis, series, backgroundColor, dataZoom } = this.props.option;
-        let { width = 1300, height = 500 } = this.props;
+        let {title, tooltip, legend, grid, toolbox, xAxis, yAxis, series, backgroundColor, dataZoom} = this.props.option;
+        let {width = '100%', height = 500} = this.props;
         this.state = {
             height, width,
             option: {
@@ -25,26 +25,26 @@ class LineChart extends Component {
         };
     }
 
-    componentDidMount() {
+    componentDidMount (){
         this.renderChart();
     }
 
-    renderChart() {
+    renderChart (){
         this._chartInstance = echarts.init(this.chartWrapper);
         this._chartInstance.setOption(this.generateOption(this.state));
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps (nextProps){
         this._chartInstance.setOption(this.generateOption(nextProps));
     }
 
-    generateOption(data) {
+    generateOption (data){
         return data.option;
     }
 
-    render() {
+    render (){
         return (
-            <div style={{ width: this.state.width, height: this.state.height }} ref={chartWrapper => this.chartWrapper = chartWrapper}></div>
+            <div style={{width: this.state.width, height: this.state.height}} ref={chartWrapper => this.chartWrapper = chartWrapper}></div>
         );
     }
 }

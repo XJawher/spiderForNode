@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import http from '../../../http/http';
-import { Input, Button } from 'antd';
+import {Input, Button} from 'antd';
 import LineChart from '../../../components/LineChart/LineChart';
 import Blank from '../../../components/Blank';
 
 export default class Xian extends Component {
-    constructor(props) {
+    constructor (props){
         super(props);
         this.state = {
             xianRegion: {
@@ -30,7 +30,7 @@ export default class Xian extends Component {
         };
     }
 
-    componentWillMount() {
+    componentWillMount (){
         // this.getAllData();
     }
     /**
@@ -46,8 +46,8 @@ export default class Xian extends Component {
     title: "华润二十四城 两室精装 满三满二拎包入住"
     total: "34625"
      */
-    async getAllData(date) {
-        let { data } = await http.xianNewTotal(this.state.coordinate);
+    async getAllData (date){
+        let {data} = await http.xianNewTotal(this.state.coordinate);
         let allMoney = 0;
         let xixian = [];
         let gaoling = [];
@@ -128,7 +128,7 @@ export default class Xian extends Component {
 
     }
 
-    formatter(parmas) {
+    formatter (parmas){
         let averagePrice = null;
         // eslint-disable-next-line no-unused-vars
         for (const [key, value] of Object.entries(this.state.xianRegion)) {
@@ -171,15 +171,15 @@ export default class Xian extends Component {
      * @param {* contrast or coordinate } parmas
      * @param {*} value
      */
-    setData(parmas, value) {
-        this.setState({ [parmas]: value });
+    setData (parmas, value){
+        this.setState({[parmas]: value});
     }
 
-    search() {
+    search (){
         this.getAllData();
     }
-    render() {
-        let { xianRegion } = this.state;
+    render (){
+        let {xianRegion} = this.state;
         let option = {
             title: {
                 text: `数据简报:${this.state.coordinate}`
@@ -255,18 +255,18 @@ export default class Xian extends Component {
                     //     chengnei,
                     // }
                     data: xianRegion.jingkai.length ? [
-                        { value: xianRegion.xixian.length, name: '西咸' },
-                        { value: xianRegion.chanba.length, name: '浐灞' },
-                        { value: xianRegion.changan.length, name: '长安' },
-                        { value: xianRegion.gaoxin.length, name: '高新' },
-                        { value: xianRegion.chengnan.length, name: '城南' },
-                        { value: xianRegion.qujiang.length, name: '曲江' },
-                        { value: xianRegion.chengxi.length, name: '城西' },
-                        { value: xianRegion.chengbei.length, name: '城北' },
-                        { value: xianRegion.chengnei.length, name: '城内' },
-                        { value: xianRegion.chengdong.length, name: '城东' },
-                        { value: xianRegion.jingkai.length, name: '经开' },
-                        { value: xianRegion.gaoling.length, name: '高陵' }
+                        {value: xianRegion.xixian.length, name: '西咸'},
+                        {value: xianRegion.chanba.length, name: '浐灞'},
+                        {value: xianRegion.changan.length, name: '长安'},
+                        {value: xianRegion.gaoxin.length, name: '高新'},
+                        {value: xianRegion.chengnan.length, name: '城南'},
+                        {value: xianRegion.qujiang.length, name: '曲江'},
+                        {value: xianRegion.chengxi.length, name: '城西'},
+                        {value: xianRegion.chengbei.length, name: '城北'},
+                        {value: xianRegion.chengnei.length, name: '城内'},
+                        {value: xianRegion.chengdong.length, name: '城东'},
+                        {value: xianRegion.jingkai.length, name: '经开'},
+                        {value: xianRegion.gaoling.length, name: '高陵'}
                     ] : []
                 }
             ]
@@ -274,22 +274,22 @@ export default class Xian extends Component {
         return (
             <div className='xc-community-designated'>
                 <div className='xc-community-designated-search'>
-                    <span style={{ width: 200 }}>Coordinate :</span> <Input
+                    <span style={{width: 200}}>Coordinate :</span> <Input
                         size="small"
                         className='xc-community-designated-input'
                         placeholder={'坐标日期'}
                         value={this.state.coordinate}
-                        onChange={({ target: { value } }) => {
+                        onChange={({target: {value}}) => {
                             this.setData.bind(this, 'coordinate')(value);
                         }}
                     />
 
-                    <span style={{ width: 200 }}>Contrast:</span> <Input
+                    <span style={{width: 200}}>Contrast:</span> <Input
                         size="small"
                         className='xc-community-designated-input'
                         value={this.state.contrast}
                         placeholder={'对比日期'}
-                        onChange={({ target: { value } }) => {
+                        onChange={({target: {value}}) => {
                             this.setData.bind(this, 'contrast')(value);
                         }}
                     />
