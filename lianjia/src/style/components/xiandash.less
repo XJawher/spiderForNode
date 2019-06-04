@@ -16,3 +16,201 @@
         width: calc(100% / 2);
     }
 }
+
+.io-dash-row {
+    display: flex;
+    flex-direction: row;
+    max-width: 100%; // common
+
+    .io-dash-chart,
+    .io-dash-arbitration,
+    .io-dash-disk,
+    .io-dash-cluster {
+        .io-common-height-block();
+        .io-box-shadow();
+
+        &>header {
+            .head();
+        }
+    }
+
+    .io-dash-amplification,
+    .io-dash-iops,
+    .io-dash-throughput,
+    .io-dash-deduplication {
+        margin-left: 10px
+    }
+
+    // io-dash-chart cluster healthy , pie chert line chart
+    .io-dash-chart {
+        height: 240px;
+        flex: 1.24;
+    }
+
+    .io-diskinfo-arbitration {
+        height: 249px;
+        flex: 2.5;
+        display: flex;
+        flex-direction: column;
+        margin-left: 10px;
+
+        // dashboard disk part
+        .io-dash-disk {
+            height: 115px;
+            display: flex;
+            padding: 32px 0 37px 60px;
+
+            .detailed-quantity {
+                font-size: 18px;
+                margin-left: 25px;
+            }
+
+            .detailed-introduce {
+                font-size: 12px;
+            }
+
+            .io-cluster-disk-content {
+                display: flex;
+                flex: 1;
+
+                .io-cluster-disk-title {
+                    margin-left: 20px;
+                    margin-top: 7px;
+
+                    p {
+                        margin-bottom: 0;
+                    }
+
+                    .hard-disk-management {
+                        font-size: 18px;
+                        color: #121212;
+                    }
+
+                    .hard-disk-number {
+                        font-size: 12px;
+                        color: #777777;
+                    }
+                }
+
+                .io-cluster-disk-number-information {
+                    margin-left: 20px;
+                    width: 50%;
+                    padding-right: 30px;
+                    border-right: 1px solid #f3f3f3;
+
+                    .detailed-quantity {
+                        margin-left: 0px;
+                        margin-top: 5px;
+                    }
+
+                    .detailed-introduce {
+                        margin-top: -16px;
+                    }
+                }
+            }
+        }
+
+        .io-dash-cluster {
+            flex: 1;
+            height: 115px;
+            display: flex;
+            padding: 32px 0 37px 60px;
+
+            .io-cluster-arbitration-title {
+                font-size: 14px;
+                margin-left: 25px;
+            }
+
+            .io-cluster-arbitration-subtitle {
+                font-size: 12px;
+            }
+
+            .io-cluster-arbitration-content {
+                display: flex;
+                flex: 1;
+
+                .io-cluster-arbitration-introduce {
+                    margin-left: 20px;
+                    margin-top: 7px;
+
+                    p {
+                        margin-bottom: 0em;
+                    }
+
+                    .arbitration {
+                        font-size: 18px;
+                        color: #121212;
+                    }
+
+                    .node {
+                        font-size: 12px;
+                        color: #777777;
+                    }
+                }
+
+                .io-cluster-arbitration-number {
+                    margin-left: 20px;
+                    width: 50%;
+                    padding-right: 30px;
+                    border-right: 1px solid #f3f3f3;
+
+                    .io-cluster-arbitration-title {
+                        margin-left: 0px;
+                        margin-top: 5px;
+                        font-size: 18px;
+                        color: #121212;
+                    }
+
+                    .io-cluster-arbitration-subtitle {
+                        margin-top: -16px;
+                        font-size: 12px;
+                        color: #777777;
+                    }
+                }
+            }
+        }
+    }
+
+    .io-dash-usage-rate {
+
+
+        .usage-rate-content {
+            display: flex;
+            flex-direction: row;
+
+            .chart-part {
+                flex: 1;
+                padding: 21px 0 0px 20px;
+            }
+
+            .content-part {
+                flex: 1.2;
+                margin-top: 18px;
+
+                .block-color {
+                    height: 16px;
+                    display: block;
+                    width: 16px;
+                    border: 1px solid #fafafa;
+                }
+
+                div {
+                    margin-top: 10px;
+                    display: flex;
+                    flex-direction: row;
+
+                    span {
+                        margin: 0 2px;
+                    }
+                }
+
+                div:nth-child(1) {
+                    span:first-child {
+                        background-color: red;
+                        margin-top: 3px;
+                    }
+                }
+            }
+        }
+    }
+}

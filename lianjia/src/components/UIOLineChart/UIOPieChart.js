@@ -57,11 +57,6 @@ export default function UIOPieChart (props){
         return {
             title,
             tooltip,
-            legend: {
-                orient: 'vertical',
-                x: 'left',
-                data: legend.data
-            },
             calculable: true,
             series: state.series
         };

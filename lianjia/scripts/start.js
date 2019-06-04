@@ -31,15 +31,15 @@ const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
-if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])){
+if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
     process.exit(1);
 }
 
 // Tools like Cloud9 rely on this.
-const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 4000;
 const HOST = process.env.HOST || '0.0.0.0';
 
-if (process.env.HOST){
+if (process.env.HOST) {
     console.log(chalk.cyan(`Attempting to bind to HOST environment variable: ${chalk.yellow(chalk.bold(process.env.HOST))}\n`));
     console.log(`If this was unintentional, check that you haven't mistakenly set it in your shell.\n`);
     console.log(`Learn more here: ${chalk.yellow('https://bit.ly/CRA-advanced-config')}\n`);
@@ -55,7 +55,7 @@ checkBrowsers(paths.appPath, isInteractive)
         return choosePort(HOST, DEFAULT_PORT);
     })
     .then(port => {
-        if (port == null){
+        if (port == null) {
             // We have not found a port.
             return;
         }
@@ -81,18 +81,18 @@ checkBrowsers(paths.appPath, isInteractive)
         const devServer = new WebpackDevServer(compiler, serverConfig);
         // Launch WebpackDevServer.
         devServer.listen(port, HOST, err => {
-            if (err){
-              return console.log(err);
+            if (err) {
+                return console.log(err);
             }
-            if (isInteractive){
-              clearConsole();
+            if (isInteractive) {
+                clearConsole();
             }
 
             // We used to support resolving modules according to `NODE_PATH`.
             // This now has been deprecated in favor of jsconfig/tsconfig.json
             // This lets you use absolute paths in imports inside large monorepos:
             if (process.env.NODE_PATH) {
-              console.log(chalk.yellow('Setting NODE_PATH to resolve modules absolutely has been deprecated in favor of setting baseUrl in jsconfig.json (or tsconfig.json if you are using TypeScript) and will be removed in a future major release of create-react-app.\n'));
+                console.log(chalk.yellow('Setting NODE_PATH to resolve modules absolutely has been deprecated in favor of setting baseUrl in jsconfig.json (or tsconfig.json if you are using TypeScript) and will be removed in a future major release of create-react-app.\n'));
             }
 
             console.log(chalk.cyan('Starting the development server...\n'));
@@ -107,7 +107,7 @@ checkBrowsers(paths.appPath, isInteractive)
         });
     })
     .catch(err => {
-        if (err && err.message){
+        if (err && err.message) {
             console.log(err.message);
         }
         process.exit(1);

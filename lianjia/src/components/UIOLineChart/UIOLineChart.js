@@ -166,9 +166,11 @@ export default function UIOLineChart (props){
             _chartInstanceRef.current.setOptionInIdle(data);
         };
 
-        let {option: {label, series, title, legend}} = props;
+        let {option: {title, width = '95%', height = '90%', x = 90, y = 50, yAxisUnit = '', yMin = null, yMax = null, labelTimeFormat, tooltipFormatter = '', yAxisLabelFormatter = '', legend = [], label = [], series, resizeDelay = 16.67}} = props;
         updateChart({
-            legend,
+            width, height, x, y,
+            yAxisUnit, yAxisLabelFormatter,
+            legend, yMin, yMax, labelTimeFormat, tooltipFormatter, resizeDelay,
             label: label.map(label => {
                 // format 'Wed Aug 16 2017 21:24:26 GMT+0800 (CST)' to '21:24:26'
                 return moment(new Date(label * 1000)).format('HH:mm:ss');

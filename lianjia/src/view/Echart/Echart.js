@@ -1,9 +1,15 @@
 /* eslint-disable no-unused-vars */
 import React, {useEffect} from 'react';
 
-import UIO from '../../components/UIOLineChart/UIOLineChart';
-import UIOPieChart from '../../components/UIOLineChart/UIOPieChart';
-import UIOLineChart from '../../components/UIOLineChart/UIO';
+import DashHealthy from './Healthy';
+import DashUsageRate from './UsageRate';
+import DashIPOS from './IPOS';
+import DashLatency from './Latency';
+import DashThroughput from './Throughput';
+import DashDeduplication from './Deduplication';
+import DashAmplification from './Amplification';
+import DashDisk from './Disk';
+import DashCluster from './Cluster';
 
 export default function Echart (){
     let option = {
@@ -271,10 +277,10 @@ export default function Echart (){
         y: 10,
         legend: [],
         labelTimeFormat: 'HH:mm:ss',
-        label: [1, 2, 3, 4],
+        label: [0, 1, 2, 3, 4, 5, 6, 7],
         series: [
             {
-                data: [22, 33, 44, 56],
+                data: [0, 1, 2, 1, 5, 6, 3, 2],
                 name: '集群IOPS',
                 type: 'line',
                 itemStyle: {normal: {color: '#fff', lineStyle: {width: 1}}},
@@ -286,47 +292,64 @@ export default function Echart (){
     let lang = (cn, en) => cn;
 
     let chartOption = {
+        width: 160,
+        height: 160,
+        title: {
+            text: 7789,
+            textStyle: {
+                color: '#ff9d19',
+                fontSize: 12,
+                align: 'center'
+            },
+            x: 'center',
+            y: 'center',
+        },
         tooltip: {
             trigger: 'item',
             formatter: '{b}: {d}%'
         },
-        formatter: `${lang('使用率', 'Usage Rate')} \n\n ${20}`,
+        legend: {
+            tooltip: {
+                show: false
+            }
+        },
+        // formatter: `${lang('使用率', 'Usage Rate')} \n\n ${'20%'}`,
         series: [{
             name: lang('集群容量状态', 'Cluster Capacity Status'),
             type: 'pie',
-            color: ['#f6b93f', '#b5df79'],
-            legend: {
-                data: [lang('已使用容量', 'Used Disk Capacity'), lang('可用容量', 'Available Disk Capacity')]
-            },
+            color: ['#f6b93f', '#b5df79', '#b5ff79', '#bf2c2c'],
             data: [
                 {value: 20, name: lang('已使用容量', 'Used Disk Capacity')},
-                {value: 80, name: lang('可用容量', 'Available Disk Capacity')},
+                {value: 30, name: lang('可用容量1', 'Available Disk Capacity')},
+                {value: 10, name: lang('可用容量2', 'Available Disk Capacity')},
+                {value: 40, name: lang('可用容量3', 'Available Disk Capacity')},
             ]
         }],
     };
 
     useEffect(() => {
-        console.log(option);
+        // console.log(option);
     });
 
     return (
-        <div className="xc-body-main-wrapper">
-            <div className='xc-echart-split'>
-                <UIOLineChart option={option} />
-                <UIOLineChart option={option1} />
+        <div >
+            <div className="io-dash-row">
+                <DashHealthy />
+                <div className='io-diskinfo-arbitration'>
+                    <DashDisk />
+                    <DashCluster />
+                </div>
             </div>
-            <div className='xc-echart-split'>
-                <UIOLineChart option={option2} />
-                <UIOLineChart option={option3} />
+            <div className="io-dash-row">
+                <DashUsageRate option={chartOption} />
+                <DashAmplification option={option4} />
+                <DashDeduplication option={option4} />
             </div>
-            {/* <div className='xc-echart-split'>
-                <UIO option={option4} />
-                <UIO option={option4} />
+            <div className="io-dash-row">
+                <DashLatency option={option4} />
+                <DashIPOS option={option4} />
+                <DashThroughput option={option4} />
             </div>
-            <div className='xc-echart-split'>
-                <UIOPieChart option={chartOption} />
-                <UIOPieChart option={chartOption} />
-            </div> */}
         </div>
     );
 }

@@ -1,6 +1,7 @@
-.xc-clear-fix (){
+.xc-clear-fix () {
     display: block;
     zoom: 1;
+
     &:after {
         content: " ";
         display: block;
@@ -10,12 +11,71 @@
     }
 }
 
-.xc-box-shadow (@h: 0, @v: 0, @blur: 1px, @spread: 1px, @color: #e1e1e1){
+.xc-box-shadow (@h: 0, @v: 0, @blur: 1px, @spread: 1px, @color: #e1e1e1) {
     box-shadow: @h @v @blur @spread @color;
 }
 
-.xc-text-overflow-ellipsis (){
+.xc-text-overflow-ellipsis () {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis
+}
+
+.io-clear-fix () {
+    display: block;
+    zoom: 1;
+
+    &:after {
+        content: " ";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+}
+
+.io-box-shadow (@h: 0, @v: 0, @blur: 1px, @spread: 1px, @color: #e1e1e1) {
+    box-shadow: @h @v @blur @spread @color;
+}
+
+.io-common-height-block(@color: @white, @border: none, @borderR: 5px, @marginTop: 10px) {
+    border: @border;
+    border-radius: @borderR;
+    margin-top: @marginTop;
+    background: @color;
+}
+
+.head() {
+    padding: 9px 15px;
+    font-size: @normalFont;
+    color: @title;
+    border-bottom: 1px solid @light-border;
+
+    i {
+        margin-right: 12px;
+    }
+
+    .io-header-button-box {
+        float: right;
+    }
+}
+
+.run-blue(@n, @i: 1) when (@i =< @n) {
+    @j : ((@n)-(@i));
+
+    &:nth-child(@{j}) {
+        animation: (@n)*0.4s run-blue infinite ((@n)-(@i))*0.5s;
+    }
+
+    .run-blue(@n, (@i + 1));
+}
+
+.run-red(@n, @i: 1) when (@i=<@n) {
+    @j: ((@n)-(@i));
+
+    &:nth-child(@{j}) {
+        animation: (@n)*0.4s run-red infinite ((@n)-(@i))*0.5s;
+    }
+
+    .run-red(@n, (@i+1));
 }
