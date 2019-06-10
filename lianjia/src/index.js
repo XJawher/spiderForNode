@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './style/index.less';
 import App from './view/App/App';
 import * as serviceWorker from './serviceWorker';
-import { StoreContext } from 'redux-react-hook';
+import {StoreContext} from 'redux-react-hook';
 import store from './redux/index';
 // ReactDOM.render(<App />, document.getElementById('root'));
 (async () => {

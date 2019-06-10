@@ -1,10 +1,10 @@
 // MonthToMonth
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import LineChart from '../../components/LineChart/LineChart';
 
 export default class MonthToMonth extends Component {
 
-    constructor(props) {
+    constructor (props){
         super(props);
         this.state = {
             resetDataSecond: [],
@@ -31,7 +31,7 @@ export default class MonthToMonth extends Component {
         说明：（1）如果计算值为正值（+），则称增长率；如果计算值为负值（-），则称下降率。
         （2）如果本期指本日、本周、本月和本年，则上期相应指上日、上周、上月和上年。
      */
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps (nextProps){
         let resetDataFirst = [];
         let resetDataSecond = [];
         let first = '03-16';
@@ -39,35 +39,35 @@ export default class MonthToMonth extends Component {
         nextProps.city.forEach(element => {
             element.time.forEach((itemOfTime, indexTime) => {
                 if (/03-16/.test(itemOfTime)) {
-                    resetDataFirst.push({ time: first, cityEN: element.cityEN, cityCH: element.cityCH, total: Number(element.total[indexTime]) });
+                    resetDataFirst.push({time: first, cityEN: element.cityEN, cityCH: element.cityCH, total: Number(element.total[indexTime])});
                 } else if (/05-21/.test(itemOfTime)) {
                     let sortNumber = (a, b) => a.time < b.time ? -1 : 1;
                     let sourceData = element.modify;
                     if (element.cityCH === '上海') {
                         sourceData.sort(sortNumber);
                     }
-                    resetDataSecond.push({ time: second, cityEN: element.cityEN, cityCH: element.cityCH, total: Number(sourceData[indexTime].total) });
+                    resetDataSecond.push({time: second, cityEN: element.cityEN, cityCH: element.cityCH, total: Number(sourceData[indexTime].total)});
                 }
             });
         });
         let sortNumber = () => (a, b) => b.total - a.total;
-        this.setState({ resetDataSecond: resetDataSecond.sort(sortNumber()), resetDataFirst: resetDataFirst.sort(sortNumber()) });
+        this.setState({resetDataSecond: resetDataSecond.sort(sortNumber()), resetDataFirst: resetDataFirst.sort(sortNumber())});
     }
 
-    showRacing(params) {
-        let { resetDataSecond, resetDataFirst } = this.state;
+    showRacing (params){
+        let {resetDataSecond, resetDataFirst} = this.state;
         let race = (resetDataSecond[params.dataIndex].total / resetDataFirst[params.dataIndex].total) - 1;
         race = race * 100;
         return `${params.name}${params.data}\n 环比:${race.toFixed(2)}%`;
     }
 
-    render() {
+    render (){
         let cityCH = ["成都", '重庆', '武汉', '上海', '郑州', '广州', '天津', '深圳', '西安'];
         let firstMarkPoint = [];
         if (this.state.resetDataFirst.length) {
             this.state.resetDataFirst.sort((a, b) => cityCH.findIndex(n => n === a.cityCH) - cityCH.findIndex(n => n === b.cityCH)).forEach((item, index) => {
                 let value = (this.state.resetDataSecond[index].total / item.total) - 1;
-                firstMarkPoint.push({ name: item.cityCH, value: value });
+                firstMarkPoint.push({name: item.cityCH, value: value});
             });
         }
         let option = {
@@ -82,10 +82,10 @@ export default class MonthToMonth extends Component {
             },
             toolbox: {
                 feature: {
-                    dataView: { show: true, readOnly: false },
-                    magicType: { show: true, type: ['line', 'bar'] },
-                    restore: { show: true },
-                    saveAsImage: { show: true }
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
                 }
             },
             legend: {

@@ -2,10 +2,10 @@ import State from '../state';
 import {languageActionTypes} from '../actions/languageAction';
 
 let languageReducer = (state = State.language, action) => {
-    switch (action.type){
+    switch (action.type) {
         case languageActionTypes.CHANGE_LANGUAGE:
             return action.language;
-            
+
         default:
             return state;
     }

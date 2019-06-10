@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 // import Province from './Province/Province';
 export default class Blank extends Component {
-    constructor(props) {
+    constructor (props){
         super(props);
         this.state = {
 
@@ -10,10 +10,10 @@ export default class Blank extends Component {
 
 
 
-    render() {
+    render (){
 
         return (
-            <div style={{ backgroundColor: '#f3f3f3', height: 10, width: 'auto' }} />
+            <div style={{backgroundColor: '#f3f3f3', height: 10, width: 'auto'}} />
         );
     }
 }

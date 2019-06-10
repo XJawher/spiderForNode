@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import http from '../../http/http';
 import LineChart from '../../components/LineChart/LineChart';
 import MonthToMonth from './MonthToMonth';
-import { Button } from 'antd';
+import {Button} from 'antd';
 export default class DailyGrowth extends Component {
 
-    constructor(props) {
+    constructor (props){
         super(props);
         this.state = {
             data: {
@@ -19,12 +19,12 @@ export default class DailyGrowth extends Component {
         };
     }
 
-    componentWillMount() {
+    componentWillMount (){
         this.cityRankings();
     }
 
-    async cityRankings() {
-        let { data } = await http.cityRankings();
+    async cityRankings (){
+        let {data} = await http.cityRankings();
         let series = [];
         let legend = [];
         let sortNumber = (a, b) => a.time < b.time ? -1 : 1;
@@ -33,23 +33,23 @@ export default class DailyGrowth extends Component {
             if (element.cityCH === '上海') {
                 sourceData.sort(sortNumber);
             }
-            series.push({ name: element.cityCH, type: 'line', data: sourceData.map(item => item.total.trim()) });
+            series.push({name: element.cityCH, type: 'line', data: sourceData.map(item => item.total.trim())});
             legend.push(element.cityCH);
         });
         // console.log([... new Set(data[0].time.map(item => item.split('T')[0]))]);
         let time = data[0].time.map(item => item.split('T')[0]);
-        this.setState({ series, time: time, legend: legend, city: data });
+        this.setState({series, time: time, legend: legend, city: data});
     }
 
-    yAxis(value) {
+    yAxis (value){
         return value;
     }
 
-    insertXian() {
+    insertXian (){
         http.insertXian();
     }
 
-    render() {
+    render (){
         let option = {
             title: {
                 text: '中心城市每日数据'
@@ -89,7 +89,7 @@ export default class DailyGrowth extends Component {
                         color: '#e5e5e5'
                     }
                 },
-                splitArea: { show: false }
+                splitArea: {show: false}
             },
             series: this.state.series
         };

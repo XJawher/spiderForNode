@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 import State from '../state';
 import languageReducer from './languageReducer';
 import warningReducer from './warningReducer';

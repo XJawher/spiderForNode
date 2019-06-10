@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import LineChart from '../../../components/LineChart/LineChart';
 
 
 export default class DaysLine extends Component {
-    constructor(props) {
+    constructor (props){
         super(props);
         this.state = {
             data: {
@@ -26,7 +26,7 @@ export default class DaysLine extends Component {
         };
     }
 
-    async  componentWillReceiveProps(nextProps) {
+    async  componentWillReceiveProps (nextProps){
         if (this.state.community.length !== nextProps.community.length) {
             await this.setState({
                 data: {
@@ -45,7 +45,7 @@ export default class DaysLine extends Component {
             });
             let community = [];
             community = nextProps.community;
-            let { time, legend, series, nameOfSeries } = this.state;
+            let {time, legend, series, nameOfSeries} = this.state;
             community.forEach(element => {
                 time.push(element.datasSring);
             });
@@ -104,12 +104,12 @@ export default class DaysLine extends Component {
                 },
                 data: this.forLineData(community)
             });
-            this.setState({ community, series, legend, time });
+            this.setState({community, series, legend, time});
         }
     }
 
-    getIndex(price) {
-        let { mockPrice } = this.state;
+    getIndex (price){
+        let {mockPrice} = this.state;
         return mockPrice.reduce((price, curMockPrice, index) => {
             if (price >= curMockPrice[0] && price <= curMockPrice[1]) {
                 return index;
@@ -119,7 +119,7 @@ export default class DaysLine extends Component {
         }, Number(price.toFixed(0)));
     }
 
-    rangePrice(price) {
+    rangePrice (price){
         return this.state.nameOfSeries.find(priceRange => {
             let [min, max = Infinity] = priceRange.replace('万', '').split('-');
             if (Number(price.toFixed(0) >= min && Number(price.toFixed(0) <= max))) {
@@ -136,13 +136,13 @@ export default class DaysLine extends Component {
      * 这里要返回一个 [全部时间的一个数组,对应着每个日期都要有数据]
      * 这里要返回一个 [这里的数组是该价格段每个日期对应有几个,比如200万,每个日期有几个]
      */
-    seriesDate(priceRange, community) {
+    seriesDate (priceRange, community){
         const flattenArray = (arr, depth = 1) => arr.reduce((a, v) => a.concat(depth > 1 && Array.isArray(v) ? flattenArray(v, depth - 1) : v), []);
         let allPriceRange = [];
         community.forEach(item => {
             let [min, max = Infinity] = priceRange.replace('万', '').split('-');
             if (Number(item.price) >= min && Number(item.price) <= max) {
-                return allPriceRange.push({ [item.datasSring]: item });
+                return allPriceRange.push({[item.datasSring]: item});
             }
         });
         /**
@@ -150,19 +150,19 @@ export default class DaysLine extends Component {
          * 现在需要做的是做个对象 {'2019-4-21':3,'2019-4-22':1,'2019-4-24':1,'2019-4-25':1}
          */
         let datasSringArray = flattenArray(allPriceRange).map(item => Object.keys(item));
-        let initData = community.reduce((res, cur) => Object.assign(res, { [cur.datasSring]: 0 }), {});
-        return Object.values(datasSringArray.reduce((res, cur) => res[cur] ? Object.assign(res, { [cur]: res[cur] + 1 }) : Object.assign(res, { [cur]: 1 }), initData));
+        let initData = community.reduce((res, cur) => Object.assign(res, {[cur.datasSring]: 0}), {});
+        return Object.values(datasSringArray.reduce((res, cur) => res[cur] ? Object.assign(res, {[cur]: res[cur] + 1}) : Object.assign(res, {[cur]: 1}), initData));
     }
 
     /**
      *
      * @param {* 全部的小区数据 作图全部小区总数没问题} community
      */
-    forLineData(community) {
-        return Object.values(community.reduce((res, cur) => res[cur.datasSring] ? Object.assign(res, { [cur.datasSring]: res[cur.datasSring] + 1 }) : Object.assign(res, { [cur.datasSring]: 1 }), {}));
+    forLineData (community){
+        return Object.values(community.reduce((res, cur) => res[cur.datasSring] ? Object.assign(res, {[cur.datasSring]: res[cur.datasSring] + 1}) : Object.assign(res, {[cur.datasSring]: 1}), {}));
     }
 
-    render() {
+    render (){
         let option = {
             // backgroundColor: "#344b58",
             "title": {

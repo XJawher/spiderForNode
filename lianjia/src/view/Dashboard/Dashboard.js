@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 // import Province from './Province/Province';
 import Blank from '../../components/Blank';
 import Community from './Community/Community';
 import CommunityDesignated from './Community/CommunityDesignated'; // 指定的小区数据
 import CommunityDayLine from './Community/CommunityDayLine'; // 指定小区的line数据
 export default class Dashboard extends Component {
-    constructor(props) {
+    constructor (props){
         super(props);
         this.state = {
 
@@ -14,7 +14,7 @@ export default class Dashboard extends Component {
 
 
 
-    render() {
+    render (){
 
         return (
             <div className="xc-body-main-wrapper">

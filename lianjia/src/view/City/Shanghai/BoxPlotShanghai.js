@@ -1,28 +1,28 @@
 /* eslint-disable no-unused-expressions */
 // BoxPlotShanghai
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ecStat from 'echarts-stat';
 import echarts from 'echarts';
 import LineChart from '../../../components/LineChart/LineChart';
 require('echarts/dist/extension/dataTool');
 
 export default class BoxPlotShanghai extends Component {
-    constructor(props) {
+    constructor (props){
         super(props);
         this.state = {
             area: []
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        let { area } = nextProps;
+    componentWillReceiveProps (nextProps){
+        let {area} = nextProps;
         // if (area.length) {
         //     this.outliers(area);
         // }
-        this.setState({ area });
+        this.setState({area});
     }
 
-    outliers(area) {
+    outliers (area){
         // let bins = ecStat.statistics.median(height.sort((a, b) => a - b)); // 中位数
         // let bins = ecStat.statistics.deviation(height.sort((a, b) => a - b)); // 返回输入数组 dataList 的标准差。如果 dataList 为空或者长度小于 2，返回 0 标准差就是为了描述数据集的波动大小而发明,越小数据波动越小,越集中
         // let bins = ecStat.statistics.sampleVariance(height.sort((a, b) => a - b)); // 返回输入数组 dataList 的样本方差。如果 dataList 为空或者长度小于 2，返回 0.
@@ -47,11 +47,11 @@ export default class BoxPlotShanghai extends Component {
         console.log(`min ${min}`);
     }
 
-    getNumberInNormalDistribution(mean, stdDev) {
+    getNumberInNormalDistribution (mean, stdDev){
         return mean + (this.randomNormalDistribution() * stdDev);
     }
 
-    randomNormalDistribution() {
+    randomNormalDistribution (){
         let u = 0.0, v = 0.0, w = 0.0, c = 0.0;
         do {
             //获得两个（-1,1）的独立随机变量
@@ -67,8 +67,8 @@ export default class BoxPlotShanghai extends Component {
         return u * c;
     }
 
-    render() {
-        let heightArray = Array.from({ length: 1000 }, () => 10);
+    render (){
+        let heightArray = Array.from({length: 1000}, () => 10);
         let height = [];
         heightArray.forEach(item => height.push(Number(this.getNumberInNormalDistribution(item, 15).toFixed(0))));
         this.state.area.length > 0 ? height = this.state.area : '';
@@ -132,7 +132,7 @@ export default class BoxPlotShanghai extends Component {
                     type: 'boxplot',
                     data: data.boxData,
                     tooltip: {
-                        formatter: function (param) {
+                        formatter: function (param){
                             return [
                                 'Experiment ' + param.name + ': ',
                                 'upper: ' + param.data[5],

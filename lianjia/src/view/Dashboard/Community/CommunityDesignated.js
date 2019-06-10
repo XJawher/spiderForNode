@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Button, Input, Table } from 'antd';
+import React, {Component} from 'react';
+import {Button, Input, Table} from 'antd';
 import http from '../../../http/http';
 export default class CommunityDesignated extends Component {
-    constructor(props) {
+    constructor (props){
         super(props);
         this.state = {
             name: '',
@@ -15,24 +15,24 @@ export default class CommunityDesignated extends Component {
         };
     }
 
-    setData(parma, value) {
-        let state = Object.assign({}, { [parma]: value });
+    setData (parma, value){
+        let state = Object.assign({}, {[parma]: value});
         this.setState(state);
     }
 
-    async search() {
+    async search (){
         let data = await http.getCityByCondition(this.state.name, this.state.date);
         console.log(this.state);
         console.log(data);
         if (data.code === 0) {
             // administrative
-            this.setState({ administrative: data.data });
+            this.setState({administrative: data.data});
         }
     }
 
-    pageChange(pagination) {
-        this.setState({ pageChangeLoading: true });
-        this.setState({ pageChangeLoading: false, current: pagination });
+    pageChange (pagination){
+        this.setState({pageChangeLoading: true});
+        this.setState({pageChangeLoading: false, current: pagination});
     }
 
     /**
@@ -53,7 +53,7 @@ export default class CommunityDesignated extends Component {
         total: "34625"
      *
      */
-    render() {
+    render (){
         let tableProps = {
             dataSource: this.state.administrative,
             rowKey: '_id',
@@ -92,22 +92,22 @@ export default class CommunityDesignated extends Component {
         return (
             <div className='xc-community-designated'>
                 <div className='xc-community-designated-search'>
-                    <span style={{ width: 200 }}>小区名字:</span> <Input
+                    <span style={{width: 200}}>小区名字:</span> <Input
                         size="small"
                         className='xc-community-designated-input'
                         placeholder={'小区名称'}
                         value={this.state.name}
-                        onChange={({ target: { value } }) => {
+                        onChange={({target: {value}}) => {
                             this.setData.bind(this, 'name')(value);
                         }}
                     />
 
-                    <span style={{ width: 200 }}>输入日期:</span> <Input
+                    <span style={{width: 200}}>输入日期:</span> <Input
                         size="small"
                         className='xc-community-designated-input'
                         value={this.state.date}
                         placeholder={'输入日期'}
-                        onChange={({ target: { value } }) => {
+                        onChange={({target: {value}}) => {
                             this.setData.bind(this, 'date')(value);
                         }}
                     />

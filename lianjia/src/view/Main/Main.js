@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import routerPath from '../routerPath';
 
 // bar
@@ -21,14 +21,14 @@ import Echart from '../Echart/Echart';
 
 
 export default class Main extends Component {
-    constructor(props) {
+    constructor (props){
         super(props);
         this.state = {
         };
     }
 
-    render() {
-        const { Main } = routerPath;
+    render (){
+        const {Main} = routerPath;
         return (
             <div className="xc-body-wrapper">
                 <SideBar history={this.props.history} />

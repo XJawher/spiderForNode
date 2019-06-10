@@ -1,10 +1,10 @@
 /* eslint-disable camelcase */
-import React, { Component } from 'react';
-import { Table } from 'antd';
+import React, {Component} from 'react';
+import {Table} from 'antd';
 import http from '../../../http/http';
 
 export default class Community extends Component {
-    constructor(props) {
+    constructor (props){
         super(props);
         this.state = {
             community: [],// 筛选全部小区
@@ -29,27 +29,27 @@ export default class Community extends Component {
     total: "34625"
      */
 
-    componentDidMount() {
+    componentDidMount (){
         // !this.state.community.length && this.getAllData();
     }
 
-    time(text, record) {
+    time (text, record){
         return text;
     }
 
-    pageChange(pagination) {
-        this.setState({ pageChangeLoading: true });
-        this.setState({ pageChangeLoading: false, current: pagination });
+    pageChange (pagination){
+        this.setState({pageChangeLoading: true});
+        this.setState({pageChangeLoading: false, current: pagination});
     }
 
-    async  getAllData() {
+    async  getAllData (){
         let myDate = new Date();
         let fullYear = myDate.toLocaleDateString();
         fullYear.replace(/\//g, '-');
         // let data4_23 = null;
         // let data5_3 = null;
-        let { data: data4_23 } = await http.updateTime('2019-4-23');
-        let { data: data5_3 } = await http.updateTime('2019-5-8');
+        let {data: data4_23} = await http.updateTime('2019-4-23');
+        let {data: data5_3} = await http.updateTime('2019-5-8');
         let community = [];
         let flood = [];
         let price = [];
@@ -70,11 +70,11 @@ export default class Community extends Component {
             community.push(element.address);
         });
         let administrativeData = await this.setAdministrativeDate([... new Set(community)], data4_23.data);
-        await this.setState({ community: [... new Set(community)], allData: data4_23, administrative: administrativeData });
+        await this.setState({community: [... new Set(community)], allData: data4_23, administrative: administrativeData});
     }
 
     // 设置行政区划的数据
-    async setAdministrativeDate(community, data) {
+    async setAdministrativeDate (community, data){
         /**
          * administrative : [{administrative:'西咸',datasSring:datasSring,community:community.join(',')}]
          */
@@ -137,22 +137,22 @@ export default class Community extends Component {
         });
 
         return [
-            { administrativeCH: 'xixian', administrative: '西咸', datasSring: '2019-4-23', community: [... new Set(xixian)] },
-            { administrativeCH: 'qujiang', administrative: '曲江', datasSring: '2019-4-23', community: [... new Set(qujiang)] },
-            { administrativeCH: 'gaoling', administrative: '高陵', datasSring: '2019-4-23', community: [... new Set(gaoling)] },
-            { administrativeCH: 'changan', administrative: '长安', datasSring: '2019-4-23', community: [... new Set(changan)] },
-            { administrativeCH: 'chanba', administrative: '浐灞', datasSring: '2019-4-23', community: [... new Set(chanba)] },
-            { administrativeCH: 'chengxi', administrative: '城西', datasSring: '2019-4-23', community: [... new Set(chengxi)] },
-            { administrativeCH: 'gaoxin', administrative: '高新', datasSring: '2019-4-23', community: [... new Set(gaoxin)] },
-            { administrativeCH: 'chengnan', administrative: '城南', datasSring: '2019-4-23', community: [... new Set(chengnan)] },
-            { administrativeCH: 'chengdong', administrative: '城北', datasSring: '2019-4-23', community: [... new Set(chengdong)] },
-            { administrativeCH: 'chengbei', administrative: '城东', datasSring: '2019-4-23', community: [... new Set(chengbei)] },
-            { administrativeCH: 'jingkai', administrative: '经开', datasSring: '2019-4-23', community: [... new Set(jingkai)] },
-            { administrativeCH: 'chengnei', administrative: '城内', datasSring: '2019-4-23', community: [... new Set(chengnei)] },
+            {administrativeCH: 'xixian', administrative: '西咸', datasSring: '2019-4-23', community: [... new Set(xixian)]},
+            {administrativeCH: 'qujiang', administrative: '曲江', datasSring: '2019-4-23', community: [... new Set(qujiang)]},
+            {administrativeCH: 'gaoling', administrative: '高陵', datasSring: '2019-4-23', community: [... new Set(gaoling)]},
+            {administrativeCH: 'changan', administrative: '长安', datasSring: '2019-4-23', community: [... new Set(changan)]},
+            {administrativeCH: 'chanba', administrative: '浐灞', datasSring: '2019-4-23', community: [... new Set(chanba)]},
+            {administrativeCH: 'chengxi', administrative: '城西', datasSring: '2019-4-23', community: [... new Set(chengxi)]},
+            {administrativeCH: 'gaoxin', administrative: '高新', datasSring: '2019-4-23', community: [... new Set(gaoxin)]},
+            {administrativeCH: 'chengnan', administrative: '城南', datasSring: '2019-4-23', community: [... new Set(chengnan)]},
+            {administrativeCH: 'chengdong', administrative: '城北', datasSring: '2019-4-23', community: [... new Set(chengdong)]},
+            {administrativeCH: 'chengbei', administrative: '城东', datasSring: '2019-4-23', community: [... new Set(chengbei)]},
+            {administrativeCH: 'jingkai', administrative: '经开', datasSring: '2019-4-23', community: [... new Set(jingkai)]},
+            {administrativeCH: 'chengnei', administrative: '城内', datasSring: '2019-4-23', community: [... new Set(chengnei)]},
         ];
     }
 
-    render() {
+    render (){
         let tableProps = {
             dataSource: this.state.administrative,
             rowKey: 'administrative',

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import http from '../../../http/http';
 import LinearShanghai from './LinearShanghai';
 import BoxPlotShanghai from './BoxPlotShanghai';
@@ -6,18 +6,18 @@ import Blank from '../../../components/Blank';
 
 
 export default class Shanghai extends Component {
-    constructor(props) {
+    constructor (props){
         super(props);
         this.state = {
             area: []
         };
     }
 
-    componentWillMount() {
+    componentWillMount (){
         // this.getAllData();
     }
 
-    async getAllData() {
+    async getAllData (){
         /**
          * address: "呼玛二村"
             addressSupplement: "| 1室1厅 | 42.22平米 | 南 | 简装 | 无电梯"
@@ -54,11 +54,11 @@ export default class Shanghai extends Component {
         // console.log(eval(area.join("+")));
         // console.log(eval(price.join("+")));
         // console.log(address);
-        this.setState({ area: area });
+        this.setState({area: area});
 
     }
 
-    render() {
+    render (){
         return (
             <div className="xc-body-main-wrapper">
                 <LinearShanghai area={this.state.area} />

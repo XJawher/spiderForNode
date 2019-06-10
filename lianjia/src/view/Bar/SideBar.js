@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Menu, Popover, Icon } from 'antd';
+import React, {Component} from 'react';
+import {Menu, Popover, Icon} from 'antd';
 import routerPath from '../routerPath';
 
 export default class SideBar extends Component {
-    constructor(props) {
+    constructor (props){
         super(props);
         this.state = {
             dashboard: false,
@@ -11,38 +11,38 @@ export default class SideBar extends Component {
         };
         this.changeActivePageAndMenu = this.changeActivePageAndMenu.bind(this);
     }
-    forwardPage({ key }) {
-        let { pathname: currentPath } = this.props.history.location;
+    forwardPage ({key}){
+        let {pathname: currentPath} = this.props.history.location;
         let selectedMenu = [];
         let targetPath = routerPath.Main + key;
         if (currentPath !== targetPath) {
             selectedMenu.push(key);
-            this.setState({ selectedMenu });
+            this.setState({selectedMenu});
             // this.props.changeActivePage(this.menuKeyCorrect(key));
             this.props.history.push(targetPath);
         }
     }
 
-    componentWillMount() {
+    componentWillMount (){
         this.changeActivePageAndMenu();
     }
 
-    changeActivePageAndMenu() {
-        let { Main } = routerPath;
+    changeActivePageAndMenu (){
+        let {Main} = routerPath;
         let selectedMenu = [];
-        let { pathname } = this.props.history.location;
+        let {pathname} = this.props.history.location;
         let key = pathname.replace(Main, '');
         selectedMenu.push(key);
-        this.setState({ selectedMenu });
+        this.setState({selectedMenu});
     }
 
-    menuIconPopoverVisibleChange(type) {
+    menuIconPopoverVisibleChange (type){
         return value => {
-            this.setState({ [type]: value });
+            this.setState({[type]: value});
         };
     }
 
-    getPopoverIcon(icon, type, content) {
+    getPopoverIcon (icon, type, content){
         let popoverConf = {
             trigger: 'hover',
             placement: 'right',
@@ -60,7 +60,7 @@ export default class SideBar extends Component {
         );
     }
 
-    render() {
+    render (){
         return (
             <aside className={`xc-sidebar-wrapper un-expand  `}>
                 <div className="xc-sidebar-logo-wrapper un-expand ">

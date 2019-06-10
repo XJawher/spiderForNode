@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Affix } from 'antd';
+import React, {Component} from 'react';
+import {Affix} from 'antd';
 export default class TopBar extends Component {
 
-    render() {
+    render (){
         return (
             <Affix /*style={{minWidth: 1168}}*/>
                 <header className={`xc-top-bar-wrapper`}>

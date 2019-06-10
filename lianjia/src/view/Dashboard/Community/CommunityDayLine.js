@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Button, Input } from 'antd';
+import React, {Component} from 'react';
+import {Button, Input} from 'antd';
 import http from '../../../http/http';
 import DaysLine from "./DaysLine";
 export default class CommunityDayLine extends Component {
-    constructor(props) {
+    constructor (props){
         super(props);
         this.state = {
             name: '金叶新城',
@@ -11,15 +11,15 @@ export default class CommunityDayLine extends Component {
         };
     }
 
-    setData(parma, value) {
-        let state = Object.assign({}, { [parma]: value });
+    setData (parma, value){
+        let state = Object.assign({}, {[parma]: value});
         this.setState(state);
     }
 
-    async search() {
+    async search (){
         let data = await http.getCityByCondition(this.state.name, '');
         if (data.code === 0) {
-            this.setState({ community: data.data });
+            this.setState({community: data.data});
         }
     }
 
@@ -30,27 +30,27 @@ export default class CommunityDayLine extends Component {
      * add numbers in the search community EG:4-21 the community has 20's house,and alert this number in
      *
      */
-    render() {
+    render (){
         return (
             <div className='xc-community-designated'>
                 <div className='xc-community-designated-search'>
-                    <span style={{ width: 200 }}>小区名字:</span> <Input
+                    <span style={{width: 200}}>小区名字:</span> <Input
                         size="small"
                         className='xc-community-designated-input'
                         placeholder={'小区名称'}
                         value={this.state.name}
-                        onChange={({ target: { value } }) => {
+                        onChange={({target: {value}}) => {
                             this.setData.bind(this, 'name')(value);
                         }}
                     />
 
-                    <span style={{ width: 200 }}>输入日期:</span> <Input
+                    <span style={{width: 200}}>输入日期:</span> <Input
                         size="small"
                         className='xc-community-designated-input'
                         value={this.state.date}
                         placeholder={'输入日期'}
                         disabled
-                        onChange={({ target: { value } }) => {
+                        onChange={({target: {value}}) => {
                             this.setData.bind(this, 'date')(value);
                         }}
                     />
