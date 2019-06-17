@@ -20,7 +20,7 @@ export default function FormComponent (props){
     }
 
     const {xian} = useMappedState(mapState);
-    if (xian.length === 990) {
+    if (xian.length === 1110) {
         /**
          *
             "2019-4-21":
@@ -30,9 +30,9 @@ export default function FormComponent (props){
             "2019-5-19":
             "2019-5-26":
             "2019-5-30":[]
-            const date = ["2019-4-21","2019-4-28","2019-5-5","2019-5-13","2019-5-26","2019-5-30","2019-6-6"]
+            const date = ["2019-4-21","2019-4-28","2019-5-5","2019-5-13","2019-5-26","2019-5-30","2019-6-6","2019-6-14"]
          */
-        const date = ["2019-6-6"];
+        const date = ["2019-6-14"];
         date.forEach(item => http.getCityByCondition('', item));
     }
 
