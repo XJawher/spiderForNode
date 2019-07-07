@@ -5,7 +5,7 @@ import MonthToMonth from './MonthToMonth';
 import {Button} from 'antd';
 export default class DailyGrowth extends Component {
 
-    constructor (props){
+    constructor(props) {
         super(props);
         this.state = {
             data: {
@@ -19,11 +19,11 @@ export default class DailyGrowth extends Component {
         };
     }
 
-    componentWillMount (){
-        this.cityRankings();
+    componentWillMount() {
+        // this.cityRankings();
     }
 
-    async cityRankings (){
+    async cityRankings() {
         let {data} = await http.cityRankings();
         let series = [];
         let legend = [];
@@ -41,15 +41,15 @@ export default class DailyGrowth extends Component {
         this.setState({series, time: time, legend: legend, city: data});
     }
 
-    yAxis (value){
+    yAxis(value) {
         return value;
     }
 
-    insertXian (){
-        http.insertXian();
+    insertXian() {
+        http.modify();
     }
 
-    render (){
+    render() {
         let option = {
             title: {
                 text: '中心城市每日数据'
@@ -79,7 +79,7 @@ export default class DailyGrowth extends Component {
             yAxis: {
                 type: 'value',
                 min: '25000',
-                max: '95000',
+                max: '100000',
                 axisTick: {
                     show: false
                 },

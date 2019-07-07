@@ -11,6 +11,8 @@ module.exports = mongoose.model(`xiandata`,
         price: String,
         priceSign: String,
         total: String,
+        datasSring: String,
+        newPush: String,
         time: Date,
     })
 );

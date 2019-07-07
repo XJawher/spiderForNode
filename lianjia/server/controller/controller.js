@@ -2,6 +2,7 @@ const xian = require('../service/xian');
 const database = require('../service/database');
 // const chengdu = require('../service/chengdu');
 const service = require('../service/index');
+const modify = require('../service/modify');
 const updateTime = require('../service/updateTime');
 const model = {
     '/api/testapi': async ctx => {
@@ -39,6 +40,16 @@ const model = {
                 code: 1, data: 'get data from city is failed'
             };
         }
+    },
+
+    /*
+     * 2019-7-7 链家更新了数据结构,开始进行数据扒取的代码重构
+     * 中心思想是去除大量的报错,以及设计可以复用的代码
+     * 添加字段 新上
+     */
+    '/api/city/modify': async ctx => {
+        let data = await modify.modify();
+        ctx.body = data;
     },
 
     /**
@@ -109,8 +120,8 @@ const model = {
      * 获取数据库中存入的省份二手房数据二手房数据
      */
     '/api/city/xianNewTotal': async ctx => {
-        let { datasSring } = ctx.parma;
-        let data = await service.xianNewTotal({ datasSring: datasSring });
+        let {datasSring} = ctx.parma;
+        let data = await service.xianNewTotal({datasSring: datasSring});
         ctx.body = {
             code: 0, data: data
         };
@@ -122,14 +133,14 @@ const model = {
      * @param {time 指定日期的城市名字,如果为空则是该城市的全部数据}
      */
     '/api/city/condition': async ctx => {
-        let { name, time } = ctx.parma;
+        let {name, time} = ctx.parma;
         let searchParam = {};
         if (name && time) {
-            searchParam = { address: name, datasSring: time };
+            searchParam = {address: name, datasSring: time};
         } else if (name) {
-            searchParam = { address: name };
+            searchParam = {address: name};
         } else if (time) {
-            searchParam = { datasSring: time };
+            searchParam = {datasSring: time};
         }
         let data = await service.xianNewTotal(searchParam);
         ctx.body = {
@@ -161,17 +172,17 @@ const model = {
             //  { province: '安徽', cityEN: 'mas', cityCH: '马鞍山' },
             //  { province: '安徽', cityEN: 'wuhu', cityCH: '芜湖' },
             // { province: '北京', cityEN: 'bj', cityCH: '北京' },
-            { province: '重庆', cityEN: 'cq', cityCH: '重庆' },
+            {province: '重庆', cityEN: 'cq', cityCH: '重庆'},
             // { province: '福建', cityEN: 'fz', cityCH: '福州' },
             // { province: '福建', cityEN: 'quanzhou', cityCH: '泉州' },
             // { province: '福建', cityEN: 'xm', cityCH: '厦门' },
             // { province: '广东', cityEN: 'dg', cityCH: '东莞' },
             // { province: '广东', cityEN: 'fs', cityCH: '佛山' },
-            { province: '广东', cityEN: 'gz', cityCH: '广州' },
+            {province: '广东', cityEN: 'gz', cityCH: '广州'},
             //   { province: '广东', cityEN: 'hui', cityCH: '惠州' },
             //   { province: '广东', cityEN: 'jiangmen', cityCH: '江门' },
             //   { province: '广东', cityEN: 'qy', cityCH: '清远' },
-            { province: '广东', cityEN: 'sz', cityCH: '深圳' },
+            {province: '广东', cityEN: 'sz', cityCH: '深圳'},
             // { province: '广东', cityEN: 'zh', cityCH: '珠海' },
             //   { province: '广东', cityEN: 'zhanjiang', cityCH: '湛江' },
             //   { province: '广东', cityEN: 'zs', cityCH: '中山' },
@@ -183,7 +194,7 @@ const model = {
             // { province: '甘肃', cityEN: 'lz', cityCH: '兰州' },
             // { province: '湖北', cityEN: 'huangshi', cityCH: '黄石' },
             // { province: '湖北', cityEN: 'hg', cityCH: '黄冈' },
-            { province: '湖北', cityEN: 'wh', cityCH: '武汉' },
+            {province: '湖北', cityEN: 'wh', cityCH: '武汉'},
             // { province: '湖北', cityEN: 'xy', cityCH: '襄阳' },
             // { province: '湖北', cityEN: 'xn', cityCH: '咸宁' },
             // { province: '湖北', cityEN: 'yichang', cityCH: '宜昌' },
@@ -219,7 +230,7 @@ const model = {
             // { province: '河南', cityEN: 'luoyang', cityCH: '洛阳' },
             // { province: '河南', cityEN: 'xinxiang', cityCH: '新乡' },
             // { province: '河南', cityEN: 'xc', cityCH: '许昌' },
-            { province: '河南', cityEN: 'zz', cityCH: '郑州' },
+            {province: '河南', cityEN: 'zz', cityCH: '郑州'},
             // { province: '黑龙江', cityEN: 'hrb', cityCH: '哈尔滨' },
             // { province: '江苏', cityEN: 'changzhou', cityCH: '常州' },
             // { province: '江苏', cityEN: 'ha', cityCH: '淮安' },
@@ -242,8 +253,8 @@ const model = {
             // { province: '辽宁', cityEN: 'sy', cityCH: '沈阳' },
             // { province: '内蒙古', cityEN: 'hhht', cityCH: '呼和浩特' },
             // { province: '宁夏', cityEN: 'yinchuan', cityCH: '银川' },
-            { province: '上海', cityEN: 'sh', cityCH: '上海' },
-            { province: '四川', cityEN: 'cd', cityCH: '成都' },
+            {province: '上海', cityEN: 'sh', cityCH: '上海'},
+            {province: '四川', cityEN: 'cd', cityCH: '成都'},
             // { province: '四川', cityEN: 'dy', cityCH: '德阳' },
             // { province: '四川', cityEN: 'dazhou', cityCH: '达州' },
             //  { province: '四川', cityEN: 'leshan', cityCH: '乐山' },
@@ -261,10 +272,10 @@ const model = {
             // { province: '陕西', cityEN: 'xianyang', cityCH: '咸阳' },
             // { province: '陕西', cityEN: 'hanzhong', cityCH: '汉中' },
             // { province: '陕西', cityEN: 'baoji', cityCH: '宝鸡' },
-            { province: '陕西', cityEN: 'xa', cityCH: '西安' },
+            {province: '陕西', cityEN: 'xa', cityCH: '西安'},
             // { province: '山西', cityEN: 'jz', cityCH: '晋中' },
             // { province: '山西', cityEN: 'ty', cityCH: '太原' },
-            { province: '天津', cityEN: 'tj', cityCH: '天津' },
+            {province: '天津', cityEN: 'tj', cityCH: '天津'},
             // { province: '云南', cityEN: 'dali', cityCH: '大理' },
             // { province: '云南', cityEN: 'km', cityCH: '昆明' },
             // { province: '云南', cityEN: 'xsbn', cityCH: '西双版纳' },
@@ -288,7 +299,7 @@ const model = {
                 if (cityTotal.cityEN === item.cityEN) {
                     cityTotal.total.push(item.total);
                     cityTotal.time.push(item.time);
-                    cityTotal.modify.push({ total: item.total, time: JSON.stringify(item.time).split('T')[0].replace('"', '') });
+                    cityTotal.modify.push({total: item.total, time: JSON.stringify(item.time).split('T')[0].replace('"', '')});
                 }
             });
         });
@@ -298,15 +309,15 @@ const model = {
     },
 
     '/api/update/gettime': async ctx => {
-        let { datasSring } = ctx.parma;
-        let data = await updateTime.xianNewTotal({ datasSring: datasSring });
-        ctx.body = { code: 0, data: data };
+        let {datasSring} = ctx.parma;
+        let data = await updateTime.xianNewTotal({datasSring: datasSring});
+        ctx.body = {code: 0, data: data};
     },
 
     '/api/update/settime': async ctx => {
-        let { data } = ctx.parma;
+        let {data} = ctx.parma;
         let res = await updateTime.batchUpdate(data);
-        ctx.body = { code: 0, data: res };
+        ctx.body = {code: 0, data: res};
     },
 
     '/api/get/city': async ctx => {
@@ -317,9 +328,9 @@ const model = {
          *
          * findByCity
          */
-        let { city, datasSring } = ctx.parma;
-        let data = await database.findByCity(city, { datasSring: datasSring });
-        ctx.body = { code: 0, data: data };
+        let {city, datasSring} = ctx.parma;
+        let data = await database.findByCity(city, {datasSring: datasSring});
+        ctx.body = {code: 0, data: data};
     },
 
 };

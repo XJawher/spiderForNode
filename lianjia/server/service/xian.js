@@ -1,7 +1,6 @@
 const superagent = require('superagent');
 const database = require('./database');
 const cheerio = require('cheerio');
-
 const model = {
     async lianjia() {
         let total = '';
@@ -13,10 +12,10 @@ const model = {
             gaoling1: [],
             xinchengqu: [], // 1438
             changan4: [], // 2549
-            weiyang: ['l1l4l5l6', 'l2', 'l3'],
+            weiyang: ['a2a6a7a8', 'a1a3', 'a4', 'a5'], // a2a6a7a8 ==>2423
             baqiao: ['l1l4l5l6', 'l2l3'],
             lianhu: ['l1l4l5l6', 'l2l3'],
-            yanta: ['l1', 'l2', 'l3', 'l4l5l6'],
+            yanta: ['a1a7', 'a2a8', 'a3', 'ba90ea100', 'ba101ea125', 'ba126ea150', 'a6'],
         };
         /**
          * https://xa.lianjia.com/ershoufang/beilin/
@@ -58,7 +57,7 @@ const model = {
         for (let [key, value] of Object.entries(xianRegion)) {
             if (value.length === 0) {
                 for (let i = 0; i < 100; i++) {
-                    (function () {
+                    (function() {
                         setTimeout(async () => {
                             await superagent.get(`https://xa.lianjia.com/ershoufang/${key}/pg${i + 1}/`).end(async (err, res) => {
                                 let $ = null;
@@ -152,7 +151,7 @@ const model = {
                 }
             } else {
                 for (let i = 0; i < 100; i++) {
-                    (function () {
+                    (function() {
                         setTimeout(async () => {
                             value.forEach(async (item) => {
                                 await superagent.get(`https://xa.lianjia.com/ershoufang/${key}/${item}/pg${i + 1}/`).end(async (err, res) => {
