@@ -2,7 +2,7 @@ const xian = require('../service/xian');
 const database = require('../service/database');
 // const chengdu = require('../service/chengdu');
 const service = require('../service/index');
-const modify = require('../service/modify');
+const restructureCity = require('../restructure/city');
 const updateTime = require('../service/updateTime');
 const model = {
     '/api/testapi': async ctx => {
@@ -48,7 +48,7 @@ const model = {
      * 添加字段 新上
      */
     '/api/city/modify': async ctx => {
-        let data = await modify.modify();
+        let data = await restructureCity.xian();
         ctx.body = data;
     },
 

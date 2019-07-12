@@ -1,24 +1,22 @@
 const superagent = require('superagent');
-const database = require('./database');
+const database = require('../service/database');
 const cheerio = require('cheerio');
-// 6=B,8=B,10=A,11=C,16=A,17=B,19=C
-// 7=B,
 
 const model = {
-    async modify() {
+    async modify(city, region) {
         let total = '';
-        let xianRegion = {
-            beilin: [],
-            xixian1: [],
-            gaoling1: [],
-            xinchengqu: [], // 1438
-            changan4: [], // 2549
-            weiyang: ['a2a6a7a8', 'a1a3', 'a4', 'a5'], // a2a6a7a8 ==>2423
-            baqiao: ['l1l4l5l6', 'l2l3'],
-            lianhu: ['l1l4l5l6', 'l2l3'],
-            yanta: ['a1a7', 'a2a8', 'a3', 'ba90ea100', 'ba101ea125', 'ba126ea150', 'a6'],
-        };
-        await superagent.get(`https://xa.lianjia.com/ershoufang/pg1/`).end(async (err, res) => {
+        // let xianRegion = {
+        //     beilin: [],
+        //     xixian1: [],
+        //     gaoling1: [],
+        //     xinchengqu: [], // 1438
+        //     changan4: [], // 2549
+        //     weiyang: ['a2a6a7a8', 'a1a3', 'a4', 'a5'], // a2a6a7a8 ==>2423
+        //     baqiao: ['l1l4l5l6', 'l2l3'],
+        //     lianhu: ['l1l4l5l6', 'l2l3'],
+        //     yanta: ['a1a7', 'a2a8', 'a3', 'ba90ea100', 'ba101ea125', 'ba126ea150', 'a6'],
+        // };
+        await superagent.get(`https://${city}.lianjia.com/ershoufang/pg1/`).end(async (err, res) => {
             let $ = null;
             try {
                 $ = await cheerio.load(res.text);
@@ -36,9 +34,9 @@ const model = {
         });
         await model.waitSeconds(1);
         for (let i = 0; i < 100; i++) {
-            for (let [key, value] of Object.entries(xianRegion)) {
+            for (let [key, value] of Object.entries(region)) {
                 if (value.length === 0) {  // 数据较少的部分
-                    await superagent.get(`https://xa.lianjia.com/ershoufang/${key}/${i === 0 ? '' : `pg${i + 1}`}/`).end(async (err, res) => {
+                    await superagent.get(`https://${city}.lianjia.com/ershoufang/${key}/${i === 0 ? '' : `pg${i + 1}`}/`).end(async (err, res) => {
                         let $ = null;
                         try {
                             $ = await cheerio.load(res.text);
