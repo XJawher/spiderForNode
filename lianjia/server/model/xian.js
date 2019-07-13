@@ -14,5 +14,6 @@ module.exports = mongoose.model(`xiantotal`,
         total: String,
         time: Date,
         datasSring: String,
+        newPush: String,
     })
 );

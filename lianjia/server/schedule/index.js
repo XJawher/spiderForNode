@@ -1,6 +1,6 @@
 const cron = require('cron');
 const city = require('../service/city');
-const xian = require('../service/xian');
+const restructureCity = require('../restructure/city');
 const shanghai = require('../service/shanghai');
 const shenzhen = require('../service/shenzhen');
 
@@ -19,20 +19,24 @@ const shenzhen = require('../service/shenzhen');
 
 /**
  * 每天定时去请求数据,11:01:01 去请求所有的二手房数据
+ * 优化数据结构, 全局的数据可以忽略
  */
 new cron.CronJob('01 23 22 * * 4', async () => {
     city.lianjia();
 }, null, true);
 
 /**
- * 每天定时去请求数据,11:01:01 去请求西安二手房数据
+ * 周四定时请求西安数据,新增加了新上数据字段,
+ * 更新了全局的数据结构
+ *
  */
 new cron.CronJob('01 50 22 * * 4', async () => {
-    xian.lianjia();
+    restructureCity.xian();
 }, null, true);
 
-/**
- * 每天定时去请求数据,11:01:01 去请求 合肥hf 二手房数据
+/*
+ * 周四定时请求 合肥hf 数据,新增加了新上数据字段,
+ * 更新了全局的数据结构
  */
 new cron.CronJob('01 29 22 * * 4', async () => {
     city.hf();

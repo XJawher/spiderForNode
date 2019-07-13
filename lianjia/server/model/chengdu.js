@@ -18,5 +18,7 @@ module.exports = mongoose.model(`chengdu_${fullYear.replace(/-/g, '_')}_${timeSe
         priceSign: String,
         total: String,
         time: Date,
+        datasSring: String,
+        newPush: String,
     })
 );

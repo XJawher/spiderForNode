@@ -1,6 +1,7 @@
 const mongoose = require('../module/mongoose');
 module.exports = mongoose.model(`yinchuan`,
     new mongoose.Schema({
+       totle: Number,
         title: String,
         address: String,
         addressSupplement: String,
@@ -12,5 +13,7 @@ module.exports = mongoose.model(`yinchuan`,
         priceSign: String,
         total: String,
         time: Date,
+        datasSring: String,
+        newPush: String,
     })
 );

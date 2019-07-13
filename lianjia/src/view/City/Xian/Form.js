@@ -13,9 +13,9 @@ const mapState = (state) => {
 
 let Option = Select.Option;
 
-export default function FormComponent (props){
+export default function FormComponent(props) {
 
-    function lang (cn, em){
+    function lang(cn, em) {
         return cn;
     }
 
@@ -34,7 +34,7 @@ export default function FormComponent (props){
             "2019-5-13","2019-5-26","2019-5-30","2019-6-6",
             "2019-6-14","2019-6-20","2019-6-30","2019-7-4","2019-7-7"]
          */
-        const date = ["2019-7-7"];
+        const date = ["2019-7-11"];
         date.forEach(item => http.getCityByCondition('', item));
     }
 

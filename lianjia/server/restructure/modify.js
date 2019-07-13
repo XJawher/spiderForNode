@@ -3,19 +3,8 @@ const database = require('../service/database');
 const cheerio = require('cheerio');
 
 const model = {
-    async modify(city, region) {
+    async modify(city, region, cityDataBase) {
         let total = '';
-        // let xianRegion = {
-        //     beilin: [],
-        //     xixian1: [],
-        //     gaoling1: [],
-        //     xinchengqu: [], // 1438
-        //     changan4: [], // 2549
-        //     weiyang: ['a2a6a7a8', 'a1a3', 'a4', 'a5'], // a2a6a7a8 ==>2423
-        //     baqiao: ['l1l4l5l6', 'l2l3'],
-        //     lianhu: ['l1l4l5l6', 'l2l3'],
-        //     yanta: ['a1a7', 'a2a8', 'a3', 'ba90ea100', 'ba101ea125', 'ba126ea150', 'a6'],
-        // };
         await superagent.get(`https://${city}.lianjia.com/ershoufang/pg1/`).end(async (err, res) => {
             let $ = null;
             try {
@@ -36,7 +25,7 @@ const model = {
         for (let i = 0; i < 100; i++) {
             for (let [key, value] of Object.entries(region)) {
                 if (value.length === 0) {  // 数据较少的部分
-                    await superagent.get(`https://${city}.lianjia.com/ershoufang/${key}/${i === 0 ? '' : `pg${i + 1}`}/`).end(async (err, res) => {
+                    await superagent.get(`https://${city}.lianjia.com/ershoufang/${key === 'empty' ? '' : key}${i === 0 ? '' : `pg${i + 1}`}/`).end(async (err, res) => {
                         let $ = null;
                         try {
                             $ = await cheerio.load(res.text);
@@ -48,28 +37,28 @@ const model = {
                         } else {
                             let modifyData = await model.commonPart($, total);
                             if (modifyData !== 'noResult') {
-                                await database.xianData([...modifyData]);
+                                await database[cityDataBase]([...modifyData]);
                             }
                             i === 99 && console.log(`西安 ${key} 写入结束`);
                         }
                     });
                 } else {
                     value.forEach(async (item) => {
-                        await superagent.get(`https://xa.lianjia.com/ershoufang/${key}/${item}/${i === 0 ? '' : `pg${i + 1}`}/`).end(async (err, res) => {
+                        await superagent.get(`https://${city}.lianjia.com/ershoufang/${key}${i === 0 ? '' : `pg${i + 1}`}${item}/`).end(async (err, res) => {
                             let $ = null;
                             try {
                                 $ = await cheerio.load(res.text);
                             } catch (error) {
-                                console.log(`解析出错位置${key}/${item}/pg${i + 1}/`);
+                                console.log(`解析出错位置${city}/${key}${item}/pg${i + 1}/`);
                             }
                             if (err) {
                                 console.log(`the function is take error  ${err}`);
                             } else {
                                 let modifyData = await model.commonPart($, total);
                                 if (modifyData !== 'noResult') {
-                                    await database.xianData([...modifyData]);
+                                    await database[cityDataBase]([...modifyData]);
                                 }
-                                i === 99 && console.log(`西安 ${key}/${item}/ 写入结束`);
+                                i === 99 && console.log(`西安 ${key}${item}/ 写入结束`);
                             }
                         });
                     });
