@@ -39,7 +39,7 @@ const model = {
                             if (modifyData !== 'noResult') {
                                 await database[cityDataBase]([...modifyData]);
                             }
-                            i === 99 && console.log(`西安 ${key} 写入结束`);
+                            i === 99 && console.log(`${city} ${key} 写入结束`);
                         }
                     });
                 } else {
@@ -58,7 +58,7 @@ const model = {
                                 if (modifyData !== 'noResult') {
                                     await database[cityDataBase]([...modifyData]);
                                 }
-                                i === 99 && console.log(`西安 ${key}${item}/ 写入结束`);
+                                i === 99 && console.log(`${city} ${key}${item}/ 写入结束`);
                             }
                         });
                     });

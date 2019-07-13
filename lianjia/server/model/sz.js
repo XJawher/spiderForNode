@@ -13,5 +13,6 @@ module.exports = mongoose.model(`sz`,
         total: String,
         datasSring: String,
         time: Date,
+        newPush: String,
     })
 );

@@ -21,7 +21,7 @@ const mapState = (state) => {
  * Completed data preparation for weekly house price growth
  */
 
-export default function Histogram (props){
+export default function Histogram(props) {
 
     const [administrative, setAdministrativeByChoice] = useState('西咸');
     const {xian, community, weekIncrease} = useMappedState(mapState);
@@ -144,9 +144,8 @@ export default function Histogram (props){
         let chengdong = [];
         let jingkai = [];
         let chengnei = [];
-        let datasSring = '';
+        let datasSring = data[0].datasSring;
         data.forEach(element => {
-            datasSring = element.datasSring;
             switch (element.flood) {
                 case '西咸':
                     xixian.push(element);

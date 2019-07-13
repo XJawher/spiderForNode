@@ -77,11 +77,21 @@ export default function WeekIncrease(props) {
             });
             current.forEach((element, index) => {
                 if (element.administrative === props.administrative) {
+                    const priceChanged = (changded) => {
+                        if (changded > 0) {
+                            return `上涨 ${(changded * 100).toFixed(1)}%`;
+                        } else if (changded < 0) {
+                            return `下跌 ${(changded * 100).toFixed(1)}%`;
+                        } else {
+                            return `持平 ${(changded * 100).toFixed(1)}%`;
+                        }
+                    };
+                    let priceFluctuations = (Number(element.priceSignMiddle) - Number(previous[index].priceSignMiddle)) / Number(previous[index].priceSignMiddle);
                     let print = `${props.administrative} ${element.datasSring} 号每套房价格 ${element.priceMiddle}w,面积 ${element.areaMiddle} 平米,每平米价格 ${element.priceSignMiddle} 元/平米`;
                     const printSummary = `${props.administrative}本周 ${element.datasSring} 相比上周 ${previous[index].datasSring}
                     ${props.administrative}本周每套房房屋总价格变动 ${(Number(element.priceMiddle) - Number(previous[index].priceMiddle)).toFixed(2)}w,
                     ${props.administrative}本周面积变动 ${(Number(element.areaMiddle) - Number(previous[index].areaMiddle)).toFixed(2)} 平米,
-                    ${props.administrative}本周每平米价格变动 ${(Number(element.priceSignMiddle) - Number(previous[index].priceSignMiddle)).toFixed(2)} 元/平米`;
+                    ${props.administrative}本周每平米价格变动 ${(Number(element.priceSignMiddle) - Number(previous[index].priceSignMiddle)).toFixed(2)} 元/平米,价格${priceChanged(priceFluctuations)}`;
                     console.log(print);
                     console.log(printSummary);
                 }
