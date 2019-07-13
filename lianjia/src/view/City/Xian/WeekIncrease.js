@@ -1,7 +1,7 @@
 import React, {} from 'react';
 import LineChart from '../../../components/LineChart/LineChart';
 
-export default function WeekIncrease (props){
+export default function WeekIncrease(props) {
 
     let colors = ['#5793f3', '#d14a61', '#675bba', '#1eb7d0', '#980eef', '#08b34c'];
     let xAxisData = [];
@@ -70,6 +70,7 @@ export default function WeekIncrease (props){
         if (previous.length) {
             previous.forEach(element => {
                 if (element.administrative === props.administrative) {
+                    console.log(props.administrative);
                     let print = `${props.administrative} ${element.datasSring} 号每套房价格 ${element.priceMiddle}w,面积 ${element.areaMiddle} 平米,每平米价格 ${element.priceSignMiddle} 元/平米`;
                     console.log(print);
                 }
