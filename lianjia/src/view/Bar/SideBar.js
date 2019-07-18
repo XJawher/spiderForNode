@@ -3,7 +3,7 @@ import {Menu, Popover, Icon} from 'antd';
 import routerPath from '../routerPath';
 
 export default class SideBar extends Component {
-    constructor (props){
+    constructor(props) {
         super(props);
         this.state = {
             dashboard: false,
@@ -11,7 +11,7 @@ export default class SideBar extends Component {
         };
         this.changeActivePageAndMenu = this.changeActivePageAndMenu.bind(this);
     }
-    forwardPage ({key}){
+    forwardPage({key}) {
         let {pathname: currentPath} = this.props.history.location;
         let selectedMenu = [];
         let targetPath = routerPath.Main + key;
@@ -23,11 +23,11 @@ export default class SideBar extends Component {
         }
     }
 
-    componentWillMount (){
+    componentWillMount() {
         this.changeActivePageAndMenu();
     }
 
-    changeActivePageAndMenu (){
+    changeActivePageAndMenu() {
         let {Main} = routerPath;
         let selectedMenu = [];
         let {pathname} = this.props.history.location;
@@ -36,13 +36,13 @@ export default class SideBar extends Component {
         this.setState({selectedMenu});
     }
 
-    menuIconPopoverVisibleChange (type){
+    menuIconPopoverVisibleChange(type) {
         return value => {
             this.setState({[type]: value});
         };
     }
 
-    getPopoverIcon (icon, type, content){
+    getPopoverIcon(icon, type, content) {
         let popoverConf = {
             trigger: 'hover',
             placement: 'right',
@@ -60,7 +60,7 @@ export default class SideBar extends Component {
         );
     }
 
-    render (){
+    render() {
         return (
             <aside className={`xc-sidebar-wrapper un-expand  `}>
                 <div className="xc-sidebar-logo-wrapper un-expand ">
@@ -86,9 +86,6 @@ export default class SideBar extends Component {
                     </Menu.Item>
                     <Menu.Item key={routerPath.Shanghai}>
                         {this.getPopoverIcon('api', 'shanghai', '上海')}
-                    </Menu.Item>
-                    <Menu.Item key={routerPath.Echart}>
-                        {this.getPopoverIcon('alert', 'Echart', 'Echart')}
                     </Menu.Item>
                 </Menu>
             </aside>

@@ -163,7 +163,7 @@ Node Schedule 及其强大的一点就是这个,可以通过 * 号位置的不�
 
     export let fetchPost = (url, param) => (httpServer(url, { method: 'POST', body: JSON.stringify(param) }));
 
-    export let fetchMock = (data) => new Promise(resolve => setTimeout(() => resolve(data || true), 500));
+    export let fetchMock = (data) => new Promise(resolve => setTimeout(() => resolve(data || true), 500));// 这是为了 UT 做的准备
 
 基本上就是一个很简单的 fetch 的结构,这里只做了 post 和 get,至于说 delete 之类的暂时用不到就没再做了.fetchMock 是为了之后的 UT 所做的准备,看后续的时间吧,有时间了就继续做
 
@@ -286,6 +286,7 @@ app.use() 他的执行顺序是怎么设定的,将 **app.use(middleware.initRequ
     });
 
 这个方法是在外面包了一层,这样的话就可以让新的函数去取代旧的函数,尽量的减少代码量.
+这里还有一个问题,就是要及时检查 hook 方式的代码,因为在 hook 中很容易会出现代码死循环的现象,有可能会溢出的
 
 ## 重构后端代码,修复出现的大量报错问题
 
@@ -302,6 +303,8 @@ app.use() 他的执行顺序是怎么设定的,将 **app.use(middleware.initRequ
 
 经过重构以后的代码结构复用性更加的优秀,把爬虫逻辑全部抽出来放到一个组件之中,然后通过别的组件去传入不同的城市参数去爬取数据
 
-## 新增加上海和深圳数据
+## 指定日期获取某个城市的全部数据
 
 设计一个通用的组件,获取传入的城市的加工模板数据
+首先要设计一个接口,参数是城市,日期,返回的结果是这个城市的当日的全部数据,然后再返回这个城市的全部新上数量,不过也可以把全部的数据返回以后在前端处理,
+还是要在后端处理,因为在后端可以直接去调用数据集的数据,直接返回一个 number,前端的话还要通过计算,这样就会造成不必要的数据浪费

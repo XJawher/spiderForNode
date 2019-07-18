@@ -17,17 +17,16 @@ import Xian from '../City/Xian/XianDash';
 
 import Shanghai from '../City/Shanghai/Shanghai';
 
-import Echart from '../Echart/Echart';
 
 
 export default class Main extends Component {
-    constructor (props){
+    constructor(props) {
         super(props);
         this.state = {
         };
     }
 
-    render (){
+    render() {
         const {Main} = routerPath;
         return (
             <div className="xc-body-wrapper">
@@ -43,8 +42,6 @@ export default class Main extends Component {
                             <Route path={`${Main}${routerPath.Xian}`} component={Xian} />
 
                             <Route path={`${Main}${routerPath.Shanghai}`} component={Shanghai} />
-
-                            <Route path={`${Main}${routerPath.Echart}`} component={Echart} />
 
                             <Redirect from={routerPath.Root} to={`${Main}${routerPath.Dashboard}`} />
                         </Switch>

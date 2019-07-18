@@ -3,7 +3,7 @@ import LineChart from '../../../components/LineChart/LineChart';
 
 
 export default class DaysLine extends Component {
-    constructor (props){
+    constructor(props) {
         super(props);
         this.state = {
             data: {
@@ -26,7 +26,7 @@ export default class DaysLine extends Component {
         };
     }
 
-    async  componentWillReceiveProps (nextProps){
+    async  componentWillReceiveProps(nextProps) {
         if (this.state.community.length !== nextProps.community.length) {
             await this.setState({
                 data: {
@@ -108,7 +108,7 @@ export default class DaysLine extends Component {
         }
     }
 
-    getIndex (price){
+    getIndex(price) {
         let {mockPrice} = this.state;
         return mockPrice.reduce((price, curMockPrice, index) => {
             if (price >= curMockPrice[0] && price <= curMockPrice[1]) {
@@ -119,7 +119,7 @@ export default class DaysLine extends Component {
         }, Number(price.toFixed(0)));
     }
 
-    rangePrice (price){
+    rangePrice(price) {
         return this.state.nameOfSeries.find(priceRange => {
             let [min, max = Infinity] = priceRange.replace('万', '').split('-');
             if (Number(price.toFixed(0) >= min && Number(price.toFixed(0) <= max))) {
@@ -136,7 +136,7 @@ export default class DaysLine extends Component {
      * 这里要返回一个 [全部时间的一个数组,对应着每个日期都要有数据]
      * 这里要返回一个 [这里的数组是该价格段每个日期对应有几个,比如200万,每个日期有几个]
      */
-    seriesDate (priceRange, community){
+    seriesDate(priceRange, community) {
         const flattenArray = (arr, depth = 1) => arr.reduce((a, v) => a.concat(depth > 1 && Array.isArray(v) ? flattenArray(v, depth - 1) : v), []);
         let allPriceRange = [];
         community.forEach(item => {
@@ -158,15 +158,15 @@ export default class DaysLine extends Component {
      *
      * @param {* 全部的小区数据 作图全部小区总数没问题} community
      */
-    forLineData (community){
+    forLineData(community) {
         return Object.values(community.reduce((res, cur) => res[cur.datasSring] ? Object.assign(res, {[cur.datasSring]: res[cur.datasSring] + 1}) : Object.assign(res, {[cur.datasSring]: 1}), {}));
     }
 
-    render (){
+    render() {
         let option = {
             // backgroundColor: "#344b58",
             "title": {
-                "text": "最近30日内本车出行时段统计",
+                "text": "小区房价分布图",
                 "subtext": '阿米丢制图',
                 x: "4%",
                 textStyle: {
