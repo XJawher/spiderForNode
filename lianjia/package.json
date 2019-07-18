@@ -1,15 +1,11 @@
 {
-    "name": "uniio-gui",
+    "name": "spider",
     "version": "0.1.0",
-    "description": "gui for uniio",
+    "description": "spider",
     "contributors": [
-        "Hao Yang <hao.yang@orcadt.com> Visual Designer",
-        "Pengcheng Li <pengchen.li@orcadt.com> FE Developer",
-        "Xiaoyu Liu <xiaoyu.liu@orcadt.com> FE Developer",
-        "Yang Yu <yang.yu@orcadt.com> BE Developer",
-        "Yang Xiang <yang.xiang@orcadt.com> BE Developer"
+        "Pengcheng Li <lplee7830@gmail.com> FE Developer"
     ],
-    "author": "Orcadt-UI",
+    "author": "Pengcheng Li",
     "private": true,
     "dependencies": {
         "@babel/core": "7.4.3",
@@ -179,14 +175,7 @@
         "coveragePathIgnorePatterns": [
             "<rootDir>/node_modules/",
             "<rootDir>/src/index.js",
-            "<rootDir>/src/http/",
-            "<rootDir>/src/socket/",
-            "<rootDir>/src/services/keyPressFilter/",
-            "<rootDir>/src/components/DiskConfiguration/",
-            "<rootDir>/src/components/FSTransfer/",
-            "<rootDir>/src/views/ServiceAndClient/",
-            "<rootDir>/src/views/Initialize/InitializeRaw.js",
-            "<rootDir>/src/views/StoragePool/CreateTarget.js"
+            "<rootDir>/src/http/"
         ],
         "setupFiles": [
             "<rootDir>/config/polyfills.js",
@@ -210,19 +199,7 @@
         ],
         "modulePaths": [],
         "moduleNameMapper": {
-            "^react-native$": "react-native-web",
-            "^StyleSheets$": "<rootDir>/src/styleSheets/index.less",
-            "^Images/(.*)$": "<rootDir>/src/images/$1",
-            "^Components/(.*)$": "<rootDir>/src/components/$1",
-            "^RouterPath$": "<rootDir>/src/routerPath/index.js",
-            "^Views/(.*)$": "<rootDir>/src/views/$1",
-            "^Redux/(.*)$": "<rootDir>/src/redux/$1",
-            "^Store$": "<rootDir>/src/redux/index.js",
-            "^Actions/(.*)$": "<rootDir>/src/redux/actions/$1",
-            "^Reducers$": "<rootDir>/src/redux/reducers/index.js",
-            "^Services$": "<rootDir>/src/services/index.js",
-            "^Http/(.*)$": "<rootDir>/src/http/$1",
-            "^Socket$": "<rootDir>/src/socket/index.js"
+            "^react-native$": "react-native-web"
         },
         "moduleFileExtensions": [
             "web.js",
