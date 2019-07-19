@@ -7,13 +7,15 @@ const index = {
 
     Dashboard: '/dashboard',
 
-    DailyGrowth: '/dailygrowth',
+    DailyGrowth: '/daily-growth',
 
     Xian: '/xian',
 
-    Shanghai: '/Shanghai',
+    Shanghai: '/shang-hai',
 
-    Echart: '/Echart',
+    Echart: '/echart',
+
+    CommonCities: '/common-cities', // this page is for diffrent city data,you can input diff city,and get the city's data
 };
 
 export default index;
@@ -24,4 +26,5 @@ export const pathToMenu = {
     Xian: [index.Xian],
     Shanghai: [index.Shanghai],
     Echart: [index.Echart],
+    CommonCities: [index.CommonCities],
 };

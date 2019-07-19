@@ -87,6 +87,9 @@ export default class SideBar extends Component {
                     <Menu.Item key={routerPath.Shanghai}>
                         {this.getPopoverIcon('api', 'shanghai', '上海')}
                     </Menu.Item>
+                    <Menu.Item key={routerPath.CommonCities}>
+                        {this.getPopoverIcon('bank', 'diff city', '各个城市')}
+                    </Menu.Item>
                 </Menu>
             </aside>
         );

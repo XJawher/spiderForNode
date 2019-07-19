@@ -17,6 +17,8 @@ import Xian from '../City/Xian/XianDash';
 
 import Shanghai from '../City/Shanghai/Shanghai';
 
+import CommonCities from '../CommonCities/CommonCities';
+
 
 
 export default class Main extends Component {
@@ -42,6 +44,8 @@ export default class Main extends Component {
                             <Route path={`${Main}${routerPath.Xian}`} component={Xian} />
 
                             <Route path={`${Main}${routerPath.Shanghai}`} component={Shanghai} />
+
+                            <Route path={`${Main}${routerPath.CommonCities}`} component={CommonCities} />
 
                             <Redirect from={routerPath.Root} to={`${Main}${routerPath.Dashboard}`} />
                         </Switch>
