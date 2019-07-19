@@ -100,7 +100,7 @@ new cron.CronJob('01 56 15 * * 4', async () => {
 /**
  * 每天定时去请求数据,11:01:01 去请求 深圳sz  二手房数据
  */
-new cron.CronJob('01 55 19 * * 4', async () => {
+new cron.CronJob('01 17 15 * * 4', async () => {
     restructureCity.shenzhen();
 }, null, true);
 
