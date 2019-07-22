@@ -12,7 +12,7 @@ const modal = {
         let res = [];
         let data = await fetchPost('/api/city/condition', {name, time});
         res = data.data;
-        store.dispatch(generalAction.setXianData(res));
+        store.dispatch(generalAction.xian(res));
         return data;
     },
 
@@ -41,8 +41,20 @@ const modal = {
         return await fetchPost('api/update/settime', {data});
     },
 
-    async getSelectCity(city, datasSring) {
-        return await fetchPost('/api/get/city', {city, datasSring});
+    /*
+     * @param {shanghai,shenzhen,xian} city
+     * @param {*} datasSring
+     */
+    async getSelectCityData(city, param) {
+        let data = await fetchPost('/api/get/city', {city, param});
+        // let flood = [];
+        // data.data.data.forEach(element => {
+        //     flood.push(element.flood);
+        // });
+        if (data.code === 0) {
+            store.dispatch(generalAction[city](data.data));
+        }
+        return data;
     },
 };
 

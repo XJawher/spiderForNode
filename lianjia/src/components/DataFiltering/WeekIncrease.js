@@ -1,5 +1,5 @@
 import React, {} from 'react';
-import LineChart from '../../../components/LineChart/LineChart';
+import LineChart from '../LineChart/LineChart';
 
 export default function WeekIncrease(props) {
 
@@ -76,7 +76,7 @@ export default function WeekIncrease(props) {
                 }
             });
             current.forEach((element, index) => {
-                if (element.administrative === props.administrative) {
+                if (element.administrative === props.administrative && element.administrative === previous[index].administrative) {
                     const priceChanged = (changded) => {
                         if (changded > 0) {
                             return `上涨 ${(changded * 100).toFixed(1)}%`;
@@ -86,6 +86,10 @@ export default function WeekIncrease(props) {
                             return `持平 ${(changded * 100).toFixed(1)}%`;
                         }
                     };
+                    if (element.administrative === '黄木岗') {
+                        console.log(element);
+                        console.log(previous[index]);
+                    }
                     let priceFluctuations = (Number(element.priceSignMiddle) - Number(previous[index].priceSignMiddle)) / Number(previous[index].priceSignMiddle);
                     let print = `${props.administrative} ${element.datasSring} 号每套房价格 ${element.priceMiddle}w,面积 ${element.areaMiddle} 平米,每平米价格 ${element.priceSignMiddle} 元/平米`;
                     const printSummary = `${props.administrative}本周 ${element.datasSring} 相比上周 ${previous[index].datasSring}
@@ -167,7 +171,7 @@ export default function WeekIncrease(props) {
                 position: 'left',
                 splitLine: {show: false},//去除网格线
                 min: 50,
-                max: 350,
+                max: 1000,
                 offset: 60,
                 axisLine: {
                     lineStyle: {
@@ -181,9 +185,9 @@ export default function WeekIncrease(props) {
             {
                 type: 'value',
                 name: '中位数价格',
-                min: 0,
+                min: 50,
                 splitLine: {show: false},//去除网格线
-                max: 250,
+                max: 1000,
                 position: 'left',
                 axisLine: {
                     lineStyle: {
@@ -198,9 +202,9 @@ export default function WeekIncrease(props) {
                 type: 'value',
                 name: '平均单价',
                 position: 'left',
-                min: 3000,
+                min: 30000,
                 splitLine: {show: false},//去除网格线
-                max: 20000,
+                max: 100000,
                 offset: 270,
                 axisLine: {
                     lineStyle: {
@@ -214,8 +218,8 @@ export default function WeekIncrease(props) {
             {
                 type: 'value',
                 name: '中位数单价',
-                min: 3000,
-                max: 20000,
+                min: 30000,
+                max: 100000,
                 position: 'right',
                 offset: 160,
                 axisLine: {

@@ -1,7 +1,6 @@
 import {combineReducers} from 'redux';
 import State from '../state';
 import languageReducer from './languageReducer';
-import warningReducer from './warningReducer';
 import generalReduce from './generalReduce';
 
 export default combineReducers({
@@ -20,8 +19,4 @@ export default combineReducers({
     main: (xian = State.main, action) => {
         return generalReduce(xian, action);
     },
-
-    unRead: (unRead = State.unRead, action) => {
-        return warningReducer(unRead, action);
-    }
 });

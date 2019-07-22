@@ -324,12 +324,11 @@ const model = {
         /**
          * @todo
          * @param city which city's data you wanted to get,city is database city
-         * @param datasSring  you wanted to query the time of city
-         *
-         * findByCity
+         * @param param    you wanted to query the time of city
+         *  this api will calculate number of the newPush / allData
          */
-        let {city, datasSring} = ctx.parma;
-        let data = await database.findByCity(city, {datasSring: datasSring});
+        let {city, param} = ctx.parma;
+        let data = await database.findByCity(city, param);
         ctx.body = {code: 0, data: data};
     },
 

@@ -52,19 +52,31 @@ const model = {
 
     async findByCity(city, param) {
         let data = null;
+        let allDataCount = 1;
+        let newPushCount = 1;
         switch (city) {
             case 'shanghai':
                 data = await dao.findAll(sh, param);
+                newPushCount = await dao.findAll(sh, {newPush: '新上', datasSring: param.datasSring});
+                allDataCount = data.length;
                 break;
 
             case 'shenzhen':
                 data = await dao.findAll(sz, param);
+                newPushCount = await dao.findAll(sz, {newPush: '新上', datasSring: param.datasSring});
+                allDataCount = data.length;
+                break;
+
+            case 'xian':
+                data = await dao.findAll(xian, param);
+                newPushCount = await dao.findAll(xian, {newPush: '新上', datasSring: param.datasSring});
+                allDataCount = data.length;
                 break;
 
             default:
                 break;
         }
-        return data;
+        return {data, newPushCount: newPushCount.length, allDataCount};
     },
 
     async xianData(param) {
