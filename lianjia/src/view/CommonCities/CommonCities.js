@@ -31,7 +31,10 @@ export default function CommonCities() {
     const onSelectCityClick = async (city) => {
         setSelectCity(city);
         await setLoading(true);
-        await http.getSelectCityData(city, {datasSring: '2019-7-19'});
+        /**
+         * 2019-7-19,2019-7-25
+         */
+        await http.getSelectCityData(city, {datasSring: '2019-7-25'});
         setLoading(false);
     };
 

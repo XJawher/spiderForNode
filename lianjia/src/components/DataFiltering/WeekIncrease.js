@@ -1,4 +1,4 @@
-import React, {} from 'react';
+import React from 'react';
 import LineChart from '../LineChart/LineChart';
 
 export default function WeekIncrease(props) {
@@ -27,8 +27,6 @@ export default function WeekIncrease(props) {
         }
         return `${parma.value}${unitOfMeasurement}`;
     };
-
-    //  "priceSignMiddle": "14131.00", "priceSignAverage": "14609.01" seriesPriceSignMiddle  seriesPriceSignAverage
     /**
      * * 西咸 5-26 号每套房价格 130w,面积 94 平米,每平米价格 14402 元/平米
      * * 西咸 5-30 号每套房价格 130w,面积 94 平米,每平米价格 14390 元/平米
@@ -51,10 +49,8 @@ export default function WeekIncrease(props) {
             }
         });
     }
-
     const compareDate = [xAxisData[xAxisData.length - 1], xAxisData[xAxisData.length - 2]];
     const compareDateInfo = [];
-
     for (const [key, values] of Object.entries(props.weekIncrease)) {
         compareDate.forEach(item => {
             if (key === item) {
@@ -62,10 +58,10 @@ export default function WeekIncrease(props) {
             }
         });
     }
-
     /**
      * this function is for compare previous week and current week house price
      */
+    // let [riseAdministrative,setRiseAdministrative] = useState([])
     compareDateInfo.reduce((previous, current) => {
         if (previous.length) {
             previous.forEach(element => {
@@ -86,10 +82,6 @@ export default function WeekIncrease(props) {
                             return `持平 ${(changded * 100).toFixed(1)}%`;
                         }
                     };
-                    if (element.administrative === '黄木岗') {
-                        console.log(element);
-                        console.log(previous[index]);
-                    }
                     let priceFluctuations = (Number(element.priceSignMiddle) - Number(previous[index].priceSignMiddle)) / Number(previous[index].priceSignMiddle);
                     let print = `${props.administrative} ${element.datasSring} 号每套房价格 ${element.priceMiddle}w,面积 ${element.areaMiddle} 平米,每平米价格 ${element.priceSignMiddle} 元/平米`;
                     const printSummary = `${props.administrative}本周 ${element.datasSring} 相比上周 ${previous[index].datasSring}
@@ -104,7 +96,6 @@ export default function WeekIncrease(props) {
             return current;
         }
     }, []);
-
     let option = {
         color: colors,
         title: {

@@ -241,9 +241,15 @@ export default function CityShenzhen(props) {
     let choseAdministrative = (administrative) => {
         setAdministrativeByChoice(administrative);
     };
+
+    const style = {
+        height: '220px',
+        width: '100%',
+        padding: '10px 20px',
+    };
     return (
         <div className="xc-histogram-dash">
-            <div>
+            <div style={style}>
                 {pureFlood.map(item => <span key={item.administrative}><Button type={administrative === item.administrative ? 'primary' : ''} onClick={() => choseAdministrative(item.administrative)}> {item.administrative}</Button></span>)}
             </div>
             <WeekIncrease administrative={administrative} weekIncrease={weekIncreaseShenzhen} />
