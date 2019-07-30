@@ -11,22 +11,6 @@ const mapState = (state) => {
     });
 };
 
-/**
- let region = {
-            'dongmen/': [],
-            'chunfenglu/': [],
-            'dapengxinqu/': [],
-            'yantianqu/': [],
-            'luohuqu/': ['p1p5', 'p2p6', 'p3p7', 'p4'],
-            'futianqu/': ['p1p2p3', 'p5', 'p4p6p7'],
-            'nanshanqu/': ['p1p2p3p4', 'p5', 'p6p7'],
-            'baoanqu/': ['p1p2p3p4', 'p5p6p7'],
-            'longhuaqu/': ['p1p2p3p4', 'p5p6p7'],
-            'longgangqu/': ['p1p6p7', 'p2', 'bp300ep350', 'bp350ep400', 'p4', 'p5'],
-
-        };
- */
-
 export default function CityShenzhen(props) {
 
     const [administrative, setAdministrativeByChoice] = useState('东门');
