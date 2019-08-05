@@ -3,7 +3,6 @@ import {Button} from 'antd';
 import {useMappedState} from "redux-react-hook";
 import WeekIncrease from '../../components/DataFiltering/WeekIncrease';
 import {outliers, insertData} from '../../components/DataFiltering/DataFiltering';
-import fs from 'fs';
 const mapState = (state) => {
     return ({
         shanghai: state.main.shanghai,
@@ -61,6 +60,11 @@ export default function CityShangHai(props) {
     let choseAdministrative = (administrative) => {
         setAdministrativeByChoice(administrative);
     };
+
+    // const shallowCopy = () => {
+
+    // };
+
     return (
         <div className="xc-histogram-dash">
             <div className='xc-histogram-dash-shanghai'>
