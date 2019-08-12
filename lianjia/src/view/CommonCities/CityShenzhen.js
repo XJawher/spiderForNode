@@ -3,6 +3,7 @@ import {Button} from 'antd';
 import {useMappedState} from "redux-react-hook";
 import WeekIncrease from '../../components/DataFiltering/WeekIncrease';
 import {outliers, insertData} from '../../components/DataFiltering/DataFiltering';
+import {diffValueOfPrice} from '../../components/utils/index';
 
 const mapState = (state) => {
     return ({
@@ -225,6 +226,7 @@ export default function CityShenzhen(props) {
     let choseAdministrative = (administrative) => {
         setAdministrativeByChoice(administrative);
     };
+    diffValueOfPrice(weekIncreaseShenzhen);
 
     const style = {
         height: '220px',
