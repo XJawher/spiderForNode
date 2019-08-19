@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import LineChart from '../LineChart/LineChart';
 
@@ -66,9 +67,9 @@ export default function WeekIncrease(props) {
         if (previous.length) {
             previous.forEach(element => {
                 if (element.administrative === props.administrative) {
-                    console.log(props.administrative);
+                    props.log && console.log(props.administrative);
                     let print = `${props.administrative} ${element.datasSring} 号每套房价格 ${element.priceMiddle}w,面积 ${element.areaMiddle} 平米,每平米价格 ${element.priceSignMiddle} 元/平米`;
-                    console.log(print);
+                    props.log && console.log(print);
                 }
             });
             current.forEach((element, index) => {
@@ -88,8 +89,8 @@ export default function WeekIncrease(props) {
                     ${props.administrative}本周每套房房屋总价格变动 ${(Number(element.priceMiddle) - Number(previous[index].priceMiddle)).toFixed(2)}w,
                     ${props.administrative}本周面积变动 ${(Number(element.areaMiddle) - Number(previous[index].areaMiddle)).toFixed(2)} 平米,
                     ${props.administrative}本周每平米价格变动 ${(Number(element.priceSignMiddle) - Number(previous[index].priceSignMiddle)).toFixed(2)} 元/平米,价格${priceChanged(priceFluctuations)}`;
-                    console.log(print);
-                    console.log(printSummary);
+                    props.log && console.log(print);
+                    props.log && console.log(printSummary);
                 }
             });
         } else {

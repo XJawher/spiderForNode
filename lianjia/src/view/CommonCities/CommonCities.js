@@ -34,7 +34,7 @@ export default function CommonCities() {
         /**
          * 2019-7-19,2019-7-25,2019-8-4,2019-8-11,
          */
-        await http.getSelectCityData(city, {datasSring: '2019-7-11'});
+        await http.getSelectCityData(city, {datasSring: '2019-8-18'});
         setLoading(false);
     };
 

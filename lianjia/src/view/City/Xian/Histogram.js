@@ -131,7 +131,7 @@ export default function Histogram(props) {
             {/* <span>输入日期:<Input style={{ width: 250 }} /></span>
             <span><Button type='primary'>查询</Button></span> */}
 
-            <WeekIncrease administrative={administrative} weekIncrease={weekIncrease} />
+            <WeekIncrease administrative={administrative} weekIncrease={weekIncrease} log={true} />
         </div>
     );
 }
