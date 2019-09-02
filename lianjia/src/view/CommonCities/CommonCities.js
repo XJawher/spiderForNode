@@ -13,13 +13,14 @@ const mapState = (state) => {
         shenzhen: state.main.shenzhen,
         weekIncreaseShangHai: state.main.weekIncreaseShangHai,
         weekIncreaseShenZhen: state.main.weekIncreaseShenZhen,
+        weekIncrease: state.main.weekIncrease,
     });
 };
 
 export default function CommonCities() {
 
     const [selectCity, setSelectCity] = useState('shenzhen');
-    const {xian, shanghai, shenzhen, weekIncreaseShangHai, weekIncreaseShenZhen} = useMappedState(mapState);
+    const {xian, shanghai, shenzhen, weekIncreaseShangHai, weekIncreaseShenZhen, weekIncrease} = useMappedState(mapState);
     const [loading, setLoading] = useState(false);
     // console.log({xian, shanghai, shenzhen});
 
@@ -32,9 +33,9 @@ export default function CommonCities() {
         setSelectCity(city);
         await setLoading(true);
         /**
-         * 2019-7-19,2019-7-25,2019-8-4,2019-8-11,
+         * 2019-7-19,2019-7-25,2019-8-4,2019-8-11,2019-8-29.
          */
-        await http.getSelectCityData(city, {datasSring: '2019-8-18'});
+        await http.getSelectCityData(city, {datasSring: '2019-9-2'});
         setLoading(false);
     };
 
@@ -47,7 +48,7 @@ export default function CommonCities() {
             </header>
             {selectCity === 'shenzhen' && <CityShenzhen weekIncrease={weekIncreaseShenZhen} data={shenzhen} />}
             {selectCity === 'shanghai' && <CityShangHai weekIncrease={weekIncreaseShangHai} data={shanghai} />}
-            {selectCity === 'xian' && <CityXian weekIncrease={weekIncreaseShangHai} data={xian} />}
+            {selectCity === 'xian' && <CityXian weekIncrease={weekIncrease} data={xian} />}
         </div>
     );
 }
