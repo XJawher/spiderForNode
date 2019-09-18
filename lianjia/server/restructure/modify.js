@@ -5,10 +5,10 @@ const cheerio = require('cheerio');
 const model = {
     async modify(city, region, cityDataBase) {
         let total = '';
-        await superagent.get(`https://${city}.lianjia.com/ershoufang/pg1/`).end(async (err, res) => {
+        superagent.get(`https://${city}.lianjia.com/ershoufang/pg1/`).end(async (err, res) => {
             let $ = null;
             try {
-                $ = await cheerio.load(res.text);
+                $ = cheerio.load(res.text);
             } catch (error) {
                 console.log(error);
             }
@@ -25,10 +25,10 @@ const model = {
         for (let i = 0; i < 100; i++) {
             for (let [key, value] of Object.entries(region)) {
                 if (value.length === 0) {  // 数据较少的部分
-                    await superagent.get(`https://${city}.lianjia.com/ershoufang/${key === 'empty' ? '' : key}${i === 0 ? '' : `pg${i + 1}`}/`).end(async (err, res) => {
+                    superagent.get(`https://${city}.lianjia.com/ershoufang/${key === 'empty' ? '' : key}${i === 0 ? '' : 'pg' + (i + 1)}/`).end(async (err, res) => {
                         let $ = null;
                         try {
-                            $ = await cheerio.load(res.text);
+                            $ = cheerio.load(res.text);
                         } catch (error) {
                             console.log(error);
                         }
@@ -43,17 +43,20 @@ const model = {
                         }
                     });
                 } else {
-                    value.forEach(async (item) => {
-                        await superagent.get(`https://${city}.lianjia.com/ershoufang/${key}${i === 0 ? '' : `pg${i + 1}`}${item}/`).end(async (err, res) => {
+                    for (let index = 0; index < value.length; index++) {
+                        const item = value[index];
+                        superagent.get(`https://${city}.lianjia.com/ershoufang/${key}${i === 0 ? '' : 'pg' + (i + 1)}${item}/`).end(async (err, res) => {
                             let $ = null;
                             try {
-                                $ = await cheerio.load(res.text);
-                            } catch (error) {
+                                $ = cheerio.load(res.text);
+                            }
+                            catch (error) {
                                 console.log(`解析出错位置${city}/${key}${item}/pg${i + 1}/`);
                             }
                             if (err) {
                                 console.log(`the function is take error  ${err}`);
-                            } else {
+                            }
+                            else {
                                 let modifyData = await model.commonPart($, total);
                                 if (modifyData !== 'noResult') {
                                     await database[cityDataBase]([...modifyData]);
@@ -61,7 +64,7 @@ const model = {
                                 i === 99 && console.log(`${city} ${key}${item}/ 写入结束`);
                             }
                         });
-                    });
+                    }
                 }
             }
         }
