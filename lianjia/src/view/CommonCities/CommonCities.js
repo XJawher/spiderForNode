@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, {useState} from 'react';
 import {Button} from 'antd';
 import {useMappedState} from "redux-react-hook";
@@ -33,9 +34,9 @@ export default function CommonCities() {
         setSelectCity(city);
         await setLoading(true);
         /**
-         * 2019-7-19,2019-7-25,2019-8-4,2019-8-11,2019-8-29,2019-9-2,2019-9-17
+         * 2019-7-19,2019-7-25,2019-8-4,2019-8-11,2019-8-29,2019-9-2,2019-9-17,2019-9-24,
          */
-        await http.getSelectCityData(city, {datasSring: '2019-9-171'});
+        // await http.getSelectCityData(city, {datasSring: '2019-9-24'});
         setLoading(false);
     };
 
