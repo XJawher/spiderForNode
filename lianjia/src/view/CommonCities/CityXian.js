@@ -67,7 +67,7 @@ export default function Cityxian(props) {
         ];
         data.forEach(element => {
             pureFlood.forEach(item => {
-                if (element.flood === item.administrative) {
+                if (element.address === item.administrative) {
                     item.data.push(element);
                 }
             });

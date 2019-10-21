@@ -107,6 +107,7 @@ export default function CityShenzhen(props) {
         //do not delete those commit
         if (shenzhen.data && shenzhen.data.length) {
             let splitData = setAdministrative(shenzhen.data);
+            console.log(splitData);
             splitData.forEach(item => {
                 if (item.data.length) {
                     let {area, price, priceSign, datasSring, administrative} = insertData(item);
@@ -129,6 +130,7 @@ export default function CityShenzhen(props) {
         // "红山","上塘","莲花","赤尾","福田保税区","松岗","福永","沙井","华强南","八卦岭","上步","未知商圈","华强北",
         // "大鹏半岛","园岭","石岩","黄木岗","公明"
         let datasSring = data[0].datasSring;
+        console.log(data);
         let pureFlood = [
             {administrative: '东门', datasSring: datasSring, data: []},
             {administrative: '春风路', datasSring: datasSring, data: []},
@@ -214,7 +216,7 @@ export default function CityShenzhen(props) {
         ];
         data.forEach(element => {
             pureFlood.forEach(item => {
-                if (element.flood === item.administrative) {
+                if (element.address === item.administrative) {
                     item.data.push(element);
                 }
             });

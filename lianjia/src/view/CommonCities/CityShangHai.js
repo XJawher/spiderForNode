@@ -430,7 +430,7 @@ export default function CityShangHai(props) {
         data.forEach(element => {
             flood.push(element.flood);
             pureFlood.forEach(item => {
-                if (element.flood === item.administrative) {
+                if (element.address === item.administrative) {
                     item.data.push(element);
                 }
             });

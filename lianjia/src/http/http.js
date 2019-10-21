@@ -51,6 +51,8 @@ const modal = {
         // data.data.data.forEach(element => {
         //     flood.push(element.flood);
         // });
+        console.log(data);
+
         if (data.code === 0) {
             store.dispatch(generalAction[city](data.data));
         }
