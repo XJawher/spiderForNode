@@ -107,14 +107,17 @@ export default function CityShenzhen(props) {
         //do not delete those commit
         if (shenzhen.data && shenzhen.data.length) {
             let splitData = setAdministrative(shenzhen.data);
-            console.log(splitData);
+            const allPrice = [];
             splitData.forEach(item => {
                 if (item.data.length) {
                     let {area, price, priceSign, datasSring, administrative} = insertData(item);
                     date = datasSring;
+                    allPrice.push(...price);
                     data.push(outliers(area, price, priceSign, datasSring, administrative));
                 }
             });
+            // console.log(allPrice);
+            // console.log(allPrice.reduce((pre, cur) => pre === 0 ? cur : pre + cur, 0));
             console.log(JSON.stringify({[date]: data}));
         }
     }, [shenzhen]);
@@ -130,7 +133,6 @@ export default function CityShenzhen(props) {
         // "红山","上塘","莲花","赤尾","福田保税区","松岗","福永","沙井","华强南","八卦岭","上步","未知商圈","华强北",
         // "大鹏半岛","园岭","石岩","黄木岗","公明"
         let datasSring = data[0].datasSring;
-        console.log(data);
         let pureFlood = [
             {administrative: '东门', datasSring: datasSring, data: []},
             {administrative: '春风路', datasSring: datasSring, data: []},
