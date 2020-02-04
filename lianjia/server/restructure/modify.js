@@ -59,7 +59,7 @@ const model = {
                             else {
                                 let modifyData = await model.commonPart($, total);
                                 if (modifyData !== 'noResult') {
-                                    await database[cityDataBase]([...modifyData]);
+                                    database[cityDataBase]([...modifyData]);
                                 }
                                 i === 99 && console.log(`${city} ${key}${item}/ 写入结束`);
                             }
@@ -107,8 +107,11 @@ const model = {
                             if (item.name === 'a') {
                                 address = item.children[0].data;
                             }
-                            if (item.type === 'text') {
-                                addressSupplement = item.data;
+                            // attribs: { href: 'javascript:;', class: 'no_resblock_a' }
+                            if (item.attribs && item.attribs.class === 'no_resblock_a') {
+                                addressSupplement = item.children[0].data;
+                                // console.log(`this is for address info data`);
+                                // console.log(addressSupplement);
                             }
                         });
                         break;
@@ -158,7 +161,7 @@ const model = {
                 }
             );
         });
-        return data;
+        return 'noResult';
     },
 
     waitSeconds(time) {

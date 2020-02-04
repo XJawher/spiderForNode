@@ -15,6 +15,12 @@ const model = {
         };
         return modify.modify('xa', xianRegion, 'xianLianjia');
     },
+    async xianDataStruction() {
+        let xianRegion = {
+            'beilin/': [],
+        };
+        return modify.modify('xa', xianRegion, 'xianLianjia');
+    },
     async sh() {
         let region = {
             'pudong/': ['p1', 'bp200ep250', 'bp250ep300', 'bp300ep350', 'bp350ep400', 'p4', 'p5', 'p6', 'p7'], // 浦东 18734

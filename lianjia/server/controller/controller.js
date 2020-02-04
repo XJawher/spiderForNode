@@ -48,7 +48,7 @@ const model = {
      * 添加字段 新上
      */
     '/api/city/modify': async ctx => {
-        let data = await restructureCity.xian();
+        let data = await restructureCity.xianDataStruction();
         ctx.body = data;
     },
 
