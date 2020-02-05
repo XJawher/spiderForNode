@@ -161,7 +161,7 @@ const model = {
                 }
             );
         });
-        return 'noResult';
+        return data;
     },
 
     waitSeconds(time) {
