@@ -105,11 +105,11 @@ const model = {
                     case 1:
                         item.children[0].children.forEach(item => {
                             if (item.name === 'a') {
-                                address = item.children[0].data;
+                                flood = item.children[0].data;
                             }
                             // attribs: { href: 'javascript:;', class: 'no_resblock_a' }
                             if (item.attribs && item.attribs.class === 'no_resblock_a') {
-                                addressSupplement = item.children[0].data;
+                                address = item.children[0].data;
                                 // console.log(`this is for address info data`);
                                 // console.log(addressSupplement);
                             }
@@ -118,11 +118,9 @@ const model = {
 
                     case 2:
                         item.children[0].children.forEach(item => {
-                            if (item.name === 'a') {
-                                flood = item.children[0].data;
-                            }
+
                             if (item.type === 'text') {
-                                floodSupplement = item.data;
+                                addressSupplement = item.data;
                             }
                         });
                         break;
