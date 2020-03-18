@@ -37,7 +37,11 @@ export default function Cityxian(props) {
         //do not delete those commit
         if (xian.data && xian.data.length) {
             let splitData = setAdministrative(xian.data);
-            splitData.forEach(item => {
+            splitData.forEach((item,index) => {
+                if(index === 10) {
+                    console.log(`item ==================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.`);
+                    console.log(item);
+                }
                 if (item.data.length) {
                     let {area, price, priceSign, datasSring, administrative} = insertData(item);
                     date = datasSring;
@@ -67,7 +71,7 @@ export default function Cityxian(props) {
         ];
         data.forEach(element => {
             pureFlood.forEach(item => {
-                if (element.address === item.administrative) {
+                if (element.flood === item.administrative) {
                     item.data.push(element);
                 }
             });
