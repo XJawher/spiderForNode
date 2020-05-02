@@ -336,3 +336,4 @@ app.use() 他的执行顺序是怎么设定的,将 **app.use(middleware.initRequ
 
 目前已经完成的：
 当 mongod 的服务不论是启动的或者是关闭的情况下都可一键启动，启动以后再到 term 中手动打开 mongo server ，因为 mongo 的 server 是需要查询数据的因此就手动去打开它，反正已经是配了全局的了，因此就手动开。
+开启方法：在本地的项目目录下执行  **`node oneButtonStart/index.js`** 补充 supplement
