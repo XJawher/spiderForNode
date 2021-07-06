@@ -1,3 +1,5 @@
 {
-    "commentTranslate.targetLanguage": "zh-CN"
+    "commentTranslate.targetLanguage": "zh-CN",
+    "editor.tabSize": 2,
+    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false
 }
