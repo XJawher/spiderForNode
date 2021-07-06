@@ -1,4 +1,5 @@
-# node 应用爬虫部分
+# 重构项目
+使用 nest 将爬虫进行重构，参见 [Nest README](./nest-spider/README.md)
 
 ## 项目结构
 
