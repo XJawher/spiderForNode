@@ -42,3 +42,27 @@ export class AppModule {}
 
 ### 新增加路由
 删除了 app.controller 以后，再新增一个 tags 的 controller 发现一直是 404 。
+
+### get 方法获取参数
+按照下面的方法，一直是获取不到参数。
+```js
+ @Get('test')
+  name2(@Param() params: string): string {
+    console.log(params);
+    return 'test'
+  }
+
+// 使用这个方案就可以拿到 get 的参数了。
+  @Get('test')
+  name2(@Request() req): string {
+    const { params, query } = req;
+    console.log(params, query);
+    return 'test'
+  }
+  // 下面的这个是更简单的方案
+  @Get('get2')
+  get2(@Query() query) {
+    console.log(query);
+    return 'test'
+  }
+```
