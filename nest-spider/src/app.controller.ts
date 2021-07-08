@@ -23,6 +23,6 @@ export class AppController {
   @Post('post')
   indexPsot(@Body() appDto: AppDto): string {
     console.log(appDto);
-    return `{ post: '2122' }`
+    return `{ post: '222' }`
   }
 }
