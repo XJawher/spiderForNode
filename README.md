@@ -1,340 +1,80 @@
-# 重构项目
-使用 nest 将爬虫进行重构，参见 [Nest README](./nest-spider/README.md)
-
-## 项目结构
-
-### 后端的主要结构
-
-后端主要由 node + koa + MongoDB 组成,先用 node 爬下数据,然后再存到 MongoDB 中,后续再从数据集中获取然后再传给前端,再用前端进行展示.
-
-#### 函数及其作用
-
-* [x] `/api/lianjia/xian` 获取西安的所有二手房数据,包括页面中的 3000 条数据
-* [x] `/api/lianjia/chengdu` 获取成都的二手房数据,包括页面中的 3000 条数据
-* [x] `/api/lianjia/city` 获取以省份为单位的二手房总数据,这里的数据结构是这样的 `{ *province: '四川', cityEN: 'cd', cityCH: '成都',total:'23445', time:'Date'}`, 这样的数据结构只是为了做每日的图表用,基本上就是以日线和周线为主,月线到时候再看下吧,暂时不做为主要的进攻方向,基本上这里的展示角度会以每日的增长量,人口的数据维度下的比对,经济的数据维度下的比对,以及房的数据下的比对.
-* [x] `/api/getxian` 获取已经存好的西安二手房数据
-* [x] `/api/getchengdu` 获取已经存好的成都二手房数据
-* [x] `/api/city` 获取已经存好的所有二手房数据,返回给前端做数据的展示用
-
-### 将全国所有的省会城市的二手房 3000 条数据全部拉下来
-
-* [x] 安徽 合肥hf
-* [ ] 北京 北京bj
-* [ ] 重庆 重庆cq
-* [ ] 福建 福州fz
-* [ ] 广东 广州 gz深圳sz 珠海zh
-* [ ] 贵州 贵阳gy
-* [ ] 广西 南宁nn
-* [ ] 甘肃 兰州lz
-* [ ] 湖北 武汉wh
-* [ ] 湖南 长沙cs
-* [ ] 河北 石家庄sjz
-* [ ] 海南 海口hk
-* [ ] 河南 郑州 zz
-* [ ] 黑龙江 哈尔滨hrb
-* [ ] 江苏 南京nj
-* [ ] 吉林 长春cc
-* [ ] 江西 南昌nc
-* [ ] 辽宁 沈阳sy
-* [ ] 内蒙古 呼和浩特hhht
-* [ ] 宁夏 银川yinchuan
-* [ ] 上海 上海sh
-* [ ] 四川 成都cd
-* [ ] 山东 济南jn
-* [ ] 陕西 西安xa
-* [ ] 山西 太原ty
-* [ ] 天津 天津tj
-* [ ] 云南 昆明km
-* [ ] 浙江  杭州hz
-
-#### 定时任务
-
-这里的定时任务就用Node Schedule 来做,
-
-    *    *    *    *    *    *
-    ┬    ┬    ┬    ┬    ┬    ┬
-    │    │    │    │    │    │
-    │    │    │    │    │    └ day of week (0 - 7) (0 or 7 is Sun)
-    │    │    │    │    └───── month (1 - 12)
-    │    │    │    └────────── day of month (1 - 31)
-    │    │    └─────────────── hour (0 - 23)
-    │    └──────────────────── minute (0 - 59)
-    └───────────────────────── second (0 - 59, OPTIONAL)
-
-Node Schedule 及其强大的一点就是这个,可以通过 * 号位置的不同来设置不同等级的时间维度参数,这是非常强大的一点,我很喜欢,简单直白以及强大.这是官方的链接 [https://github.com/node-schedule/node-schedule](https://github.com/node-schedule/node-schedule)
-
-### 前端主要结构
-
-目前的想法是前端主要用 react 来实现,表格的部分用 antd 来做,基本上就是目前的这一套,只不过想用 TS 来实现前端的代码,这样的话用 ts 来练练手.至于数据的管理目前的想法是暂时不用 redux ,redux 太重了,暂时用自带的 hooks 来试试
-
-* [x] 前端框架 react + antd
-* [ ] 数据管理使用 redux
-* [ ] 主要玩一下 hooks
-* [ ] TS 能玩一下最好不过了
-* [ ] 数据的可视化使用自己封装的 echart 来做
-
-#### app.js
-
-     <HashRouter>
-        <Switch>
-            <Route path={routerPath.Main} component={Main} />
-
-            <Redirect from={routerPath.Root} to={this.state.defaultPath} />
-        </Switch>
-    </HashRouter>
-
-前端的 App.js 结构基本如下,首先使用 HashRouter 来做路由的分发,前端将路由控制在自己的手里.然后接下来一层就是语言层,当然需要的话就做,我感觉这里是不需要的,因此我这里没有多做这一层.用 Switch 来做路由的切换,路由在切换的时候分为基础路由和组件路由,这里的基础路由为空,因为这里是用不到基础路由的,都是写到组件路由中去.数据的管理暂时不用 redux ,先用自己的数据控制来做
-
-#### routerPath
-
-路由的文件位置,这里的路由是要给后续的左边栏点击的时候高亮做准备的地方,分为 index 和 pathToMenu 两部分,index 是基础的路由,而 pathToMenu 是后期在侧边栏的时候导航高亮等需要的东西基础的结构如下:
-
-    const index = {
-        Root: '/',
-
-        Main: '/main',
-
-        Dashboard: '/dashboard',
-    };
-
-    export default index;
-
-    export const pathToMenu = {
-        Dashboard: [index.Dashboard],
-    };
-
-#### 数据的展示
-
-在这里数据的展示基本上就是以省为主,以城市的相互比对,经济的比对,以及房产的数据比对为主
-
-* [x] 每日的全国增加量(列出详细的有统计的省份的数据,比如陕西增加多少,省会的占比是多少,**这里先暂时只做省会城市的,或者只做前20位的,具体看界面的展示情况,可以的话尽量的多放数据**)
-* [ ] 每日的增长冠军
-* [ ] 每日的全国排行
-* [ ] 每日的全国增长排行
-* [ ] 每个城市的日增长率
-* [ ] 每个城市的周增量以及周增长率
-* [ ] 在相同的平均房价下房产对比
-* [ ] 在相同的平均房价下的增量以及数量对比
-* [ ] 在平均工资下的数据对比
-* [ ] 在财政收入下的房产数据对比
-* [ ] 主要的市区面积下的对比
-* [ ] 城市 GDP 下的对比
-* [ ] 将主要的省会城市的二手房所有的房间除以面积得到平均的房价
-* [ ] 将已有的全部 3000 条数据进行详细的分析,将所有的房子的数据进行归类划分,将各个片区的数据进行规整,然后从链家下扒下每个行政区域的所有数据
-* [ ] 过滤一下有关毛坯的关键字,看下投机者的存在数据,占比是多少,以及这部分数据在哪个行政区划的数据是最多的.可以得到一个大概的炒房的数据
-* [ ] 将行政区划的数据进行饼图分析,看下这个区划在全部数量中的占比,以及区划的总价值在全部数据价值中的占比.
-* [ ] 计算一下出现在链家上的房产的价值,从字面数据来算,将所有的小区做一个正态分布的取值,做一次大概的数据分析,按照每周的数据进行全面的分析,分析出大概的价值范围,然后统计全部的价值数据.也可以这样,先统计出各个行政区划的单元房价,然后再全部相加,这样就是一个相对准确的全城数据.
-* [ ] 重点拉下北郊的几个小区的全部数据,然后做详细的比对,重点是找到几个单独的小区,进行对比分析
-* [ ] 重新写西安的数据,将行政区划的数据全部抓到,在整个西安的数据中只有未央和雁塔的数据是需要用一室二室三室做处理的,其余的区划都是直接就可以读取的,现在要写一新的架构获取当前的页面的页数
-* [ ] 把所有的小区名字做下清理,整理出一份全部小区的数据
-
-#### 前端的请求库 fetch
-
-首先是需要明白的地方就是 fetch 是不能直接被使用,要做个封装才可以,做成两个封装,一个是 post 和 get ,后续了看要不要加上 delete ,其实我个人是很不喜欢 delete ,这和用的不是很多有关系????具体的原因么可能和舒适区有关系,不喜欢用自己没怎么用的东西,今天把 fetch 先给做好,其余的先不说.
-这里的 fetch.js 会导出两个对象,一个是 POST 一个是 GET,通过这两个对象进行后端数据的查询和传输.对 JS 的导出有点生疏了,这里再复习一下.具体的 fetch 的详细使用指南可以看下下面的这篇文章 [fetch使用指南](https://segmentfault.com/a/1190000007019545),这里采用的是第三种解决方案也是我司目前采用的解决方案,使用 Promise 来做.
-这里的 fetch 结构是这样的
-
-    import { stringify } from 'querystring';
-
-    let httpServer = (url, options) => {
-        return new Promise(async (resolve, reject) => {
-            options.credentials = 'same-origin';
-            options.headers = { 'Content-Type': 'application/json; charset=utf-8' };
-            try {
-                let response = await fetch(url, options);
-                if (response.ok) {
-                    let { code, data, message } = await response.json();
-                    if (code === 0) {
-                        resolve({ code, data });
-                    } else {
-                        resolve({ code, message });
-                    }
-                } else {
-                    reject({ msg: response.statusText });
-                }
-            } catch (error) {
-                reject(error);
-            }
-        });
-    };
-
-    let initSearchUrl = (url, param) => (param ? url + '?' + stringify(param) : url);
-
-    export let fetchGet = (url, param) => (httpServer(initSearchUrl(url, param), { method: 'GET' }));
-
-    export let fetchPost = (url, param) => (httpServer(url, { method: 'POST', body: JSON.stringify(param) }));
-
-    export let fetchMock = (data) => new Promise(resolve => setTimeout(() => resolve(data || true), 500));// 这是为了 UT 做的准备
-
-基本上就是一个很简单的 fetch 的结构,这里只做了 post 和 get,至于说 delete 之类的暂时用不到就没再做了.fetchMock 是为了之后的 UT 所做的准备,看后续的时间吧,有时间了就继续做
-
-### 获取指定城市的数据
-
-#### 数据的传输
-
-明明在前端传递的数据是 POST 但是后端在获取的时候却得到的是 GET,不知道这是啥原因,
-
-    {
-        request: {
-            method: "GET",
-            url: "/api/city/condition",
-            header: {
-                host: "localhost:3456",
-                connection: "keep-alive",
-                cache-control: "max-age=0",
-                upgrade-insecure-requests: "1",
-                user-agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36",
-                accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
-                accept-encoding: "gzip, deflate, br",
-                accept-language: "zh-CN,zh;q=0.9,en;q=0.8",
-            }
-        },
-        response: {
-            status: 200,
-            message: "OK",
-            header: {
-                content-type: "application/json; charset=utf-8"
-            }
-        },
-        app: {
-            subdomainOffset: 2,
-            proxy: false,
-            env: "development"
-        },
-        originalUrl: "/api/city/condition",
-        req: "<original node req>",
-        res: "<original node res>",
-        socket: "<original node socket>"
-    }
-
-具体的请求返回数据如上,原因暂时未知
-
-错误的原因有可能是我没有对前端传递的 HTTP 请求做二次封装,做了二次封装以后才能和正常的一样进行数据的获取.现在需要做一次新的数据封装,在路由之前在 index.js 中进行请求的拦截,然后把请求做一次封装,对于 POST 和 GET 请求要分开做封装.
-
-错误原因:是没有做中间件的封装,做完中间件的封装以后,就可以用基础的 parma 来做数据的获取.
-
-    const modal = {
-        initRequest() {
-            return async (ctx, next) => {
-                ctx.parma = ctx.request.method.toLowerCase() === 'post' ? ctx.request.body : ctx.query;
-                await next();
-            };
-        }
-    };
-
-    export default modal;
-在中间件中我们可以做很多的事情,比如检测用户的状态,检测指定的一个请求等等,可以对指定的需求进行完美的开发
-
-现在有个问题,就是在后端的 index.js 中
-
-    const Koa = require('koa');
-    const app = new Koa();
-    const router = require('./router/router');
-    const middleware = require('./middleware/middleware');
-    const bodyParser = require('koa-bodyparser');
-    require('./schedule/index');
-    app.use(bodyParser());
-    app.use(middleware.initRequest());
-    app.use(router.routes());
-    app.use(router.allowedMethods());
-    app.listen(3456);
-    console.log('server is running on 3456');
-
-app.use() 他的执行顺序是怎么设定的,将 **app.use(middleware.initRequest());** 移动到路由的下部分的时候就会出现中间件的不起作用现象,说明该执行的顺序是按照 promise 链式调用进行执行的,如果将其移动到 **app.use(bodyParser());** 之前的话中间件的执行也是不起作用的,因为在数据 JSON 化之前就去取值的话是取不到这个值的,再次说明了 koa 的执行是链式的,是按照 promise 的要求进行的
-
-#### 需求每日的全国增加量
-
-数据的处理暂时交给前端来处理,还是选择输入进行获取数据,日期选择用 antd .这里先把所有的数据都返回发给前端,这里获取全部的数据,然后进行排序,如果出现没有的数据那就暂时留空,因为有好久是数据不存在的先置空
-
-基本上数据和图都完成了写入和读取操作,现在有个问题就是 4-1 号的数据是多写入了一条,我们这里直接对数据集进行修改,直接删除一条数据,现在的需求就是怎么写语句进行删除操作,先用选择语句 `db.cities.find({"time" : {"$gte":ISODate("2019-04-01"),"$lte":ISODate("2019-04-02")},cityEN:'xa'})` 选择出所有的数据,然后进行删除操作,这时候会出现两条数据,我们的需求是删除第一条数据,现在有个方案是这样的使用 update 来做,如果只是删除第一条的数据我们可以只修改这个数据的 name 这样的话数据就只是会把名字变成我们修改的名字,目前我需要再添加一条数据
-
-做数据的删除 `db.cities.find({"time" : {"$gte":ISODate("2019-04-01"),"$lte":ISODate("2019-04-02")},cityEN:'xa'})`,然后通过 `db.cities.update({"time" : {"$gte":ISODate("2019-04-01"),"$lte":ISODate("2019-04-02")},cityEN:'xa'})`
-
-### 写更新的脚本,添加 **datasSring** 字段
-
-先给数据集 db.xiantotals.find 做字段的添加
-第一步先获取全部的数据,做个判断,如果是有 datasSring 字段的就不做更新,如果是没有这个字段的,或者这个字段为空的就从 time 字段中获取数据,添加到 dataString 中去,让数据全部是一致的,不会出现错位的情况
-
-`database.xianUpdateOne({ '_id': element._id }, { '$set': { datasSring: '2019-4-22' } }, { multi: 1 });` 更新语句
-
-### 遇到的数据过大和查询时间过长的问题
-
-现在的全部数据大概是 6w+ 查询的时间是大概 6S,怎么才能更加快速的将数据下发?===>>>
-这种情况可以分页传输,不过要一次处理全部的数据,暂时也没有更好的方案去快速下发数据,毕竟数据非常大,再怎么切分,再怎么分页数据还是要通过 http 协议发送过来
-
-茶馆中的老板,一生都在做改良,但是最后还是被人欺压,他只是想老实赚钱,但是大环境却不允许,现在也是一样,我们都想着自己转圈去买房,不依靠别人,但是你有没有想过,自己赚到钱了,同样的有更多的你也在赚钱,他们也会去买,所以这是一个悖论
-
-### 将 xiandatas 中的数据全部 insert 到 xiantotals 中
-
-这里需要注意的事情是要给全部的数据加上 datasSring,
-
-* 首先是获取全部的数据
-* 然后遍历,将数据 insert 到目标数据集
-
-## 性能差的问题
-
-当同时调用 8 个 echart 图的时候会出现一个问题就是帧数会很低,直接是就是有一部分会卡死,这是一个很严重的问题,通过性能分析可以得出整个的图是挂了的
-
-解决的方案是使用 requestIdleCallBack 方法,在浏览器空闲的时候依次去调用
-
-出现卡顿的原因是 useEffect 函数在一直的调用,所以会很卡.现在要解决的是为啥这玩意会一直去调用.
-
-卡顿的原因还有一个就是渲染了十二个 canvas ,造成了浏览器的卡顿
-
-如何封装:
-
-    _chartInstanceRef.current.setOptionInIdle = (option) => requestIdleCallback(() => {
-        _chartInstanceRef.current.setOption(generateOption(option));
-    });
-
-这个方法是在外面包了一层,这样的话就可以让新的函数去取代旧的函数,尽量的减少代码量.
-这里还有一个问题,就是要及时检查 hook 方式的代码,因为在 hook 中很容易会出现代码死循环的现象,有可能会溢出的
-
-## 重构后端代码,修复出现的大量报错问题
-
-重构的原因是链家更新了数据结构,在扒数据的时候出现了大量的报错,设计一个新的爬虫架构,需要更加的合理
-
-### 数据异步问题
-
-在爬取数据的时候会出现这样的情况,我需要的是同步的获取数据,但是爬去的时候往往是异步的,现在就是要求我要同步的进行获取数据的过程,不能异步,怎么办?
-
-例子: 要爬当前页面的最大值,然后将最大值返回给当前的爬虫,让他去爬 0-最大值的页数
-解决方案: 这里是直接去按照 100 页去抓取,然后当出现空白页面的时候直接就返回空白的 key,这时候不再去继续抓取,这样就解决了一直报错的问题
-
-### 全局增加 新上字段
-
-经过重构以后的代码结构复用性更加的优秀,把爬虫逻辑全部抽出来放到一个组件之中,然后通过别的组件去传入不同的城市参数去爬取数据
-
-## 指定日期获取某个城市的全部数据
-
-设计一个通用的组件,获取传入的城市的加工模板数据
-首先要设计一个接口,参数是城市,日期,返回的结果是这个城市的当日的全部数据,然后再返回这个城市的全部新上数量,不过也可以把全部的数据返回以后在前端处理,
-还是要在后端处理,因为在后端可以直接去调用数据集的数据,直接返回一个 number,前端的话还要通过计算,这样就会造成不必要的数据浪费
-
-## 分析上海还有深圳的数据
-
-听闻说深圳开始不公布均价了,我这里有一部分的数据,先坐下分析,看深圳的数据是啥情况
-深圳的数据已经分析完毕,目前发现有个问题,就是超大城市的数据是分的很零散的,如果还是按照之前的人工写入的话会很慢,现在想个办法用 node 自带的 FS 进行自己写入一个指定的文件
-
-## 将加工好的数据自动写入文件中
-
-现在因为上海的商圈过于庞大,足足有快两百个,如果按照之前的手动添加的话会非常的耗时间,而且很 low.现在需要将数据直接写到文件里去,正好也做一下 FS 读写的操作.
-貌似在前端做这部分的工作是不行的,会出问题,这部分代码需要放到后端去做,让我想想办法
-
-[]先确保 mongo 是不再跑的,用 ps aux|grep mongo 来杀掉相关的进程
-[]cd /usr/local/Cellar/mongodb/4.0.3_1/bin
-[]./mongod
-打开新的窗口然后 mongo (这里的前提是已经将路径设置到全局的)
-## 开始做一键启动的工作
-预先设定的系统是 mac 和 win，要求是执行一个命令然后一键就启动后端的爬虫，前端的不用管。
-* 先检查是不是有正在进行中的任务 `ps aux|grep mongo`
-* 如果有就kill这个任务，然后再启动，没有就直接启动
-* 然后 `cd /usr/local/Cellar/mongodb/4.0.3_1/bin` 这里的路径是你安装 mongo 的路径
-* 开新的窗口执行 `mongo`
-
-现在需求是很明确的，我们一步一步来。
-第一步先编写检查是不是有正在进行中的任务。
-
-目前已经完成的：
-当 mongod 的服务不论是启动的或者是关闭的情况下都可一键启动，启动以后再到 term 中手动打开 mongo server ，因为 mongo 的 server 是需要查询数据的因此就手动去打开它，反正已经是配了全局的了，因此就手动开。
-开启方法：在本地的项目目录下执行  **`node oneButtonStart/index.js`** 补充 supplement
+## 起服务
+
+## 踩坑
+### import 错误
+在 vscode 中，import 语法会出现错误，因为 tsconfig.json 中的 "module": "commonjs"
+将 eslint 中的   // project: 'tsconfig.json', 注释就可以了。
+
+### 空大括号 eslint 报错
+在 .vscode 中的 setting.json 中添加下面的这句
+```json
+ "typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false
+```
+
+### 添加新的路由
+给项目增加新的路由，在 app.module.ts 的 controllers 中增加需要添加的新路由，这一点和 angular 很相似。
+
+```ts
+import { Module } from '@nestjs/common';
+import { AppController } from './controller/app.controller';
+import { AppService } from './app.service';
+import { CitysController } from './controller/citys/citys.controller'; // 新的路由
+
+@Module({
+  imports: [],
+  controllers: [AppController, CitysController],
+  providers: [AppService],
+})
+export class AppModule {}
+
+```
+### Delete `␍`eslint
+强类型的这个 nest 好麻烦啊，到处是检测报错的地方，真的是麻烦的一批。
+在 eslintrc.js 中直接将 prettie 的东西直接注释掉。只留下 eslint 的。
+
+```js
+ extends: [
+    'plugin:@typescript-eslint/recommended',
+    // 'plugin:prettier/recommended',  prettier 的错误麻烦的很，这里就直接注释了
+  ],
+```
+暂时未知会不会有其他的错误，因为这个报错是关于 Linux 和 windows 的格式的，可能在服务器上可能会出现这个啥异常错误，这里先不管，做个备注吧。
+
+### 新增加路由
+删除了 app.controller 以后，再新增一个 tags 的 controller 发现一直是 404 。
+
+### get 方法获取参数
+按照下面的方法，一直是获取不到参数。
+```js
+ @Get('test')
+  name2(@Param() params: string): string {
+    console.log(params);
+    return 'test'
+  }
+
+// 使用这个方案就可以拿到 get 的参数了。
+  @Get('test')
+  name2(@Request() req): string {
+    const { params, query } = req;
+    console.log(params, query);
+    return 'test'
+  }
+  // 下面的这个是更简单的方案
+  @Get('get2')
+  get2(@Query() query) {
+    console.log(query);
+    return 'test'
+  }
+```
+### post 方法获取参数
+```ts
+  @Post('post')
+  indexPsot(@Body() appDto: AppDto): string {
+    console.log(appDto);
+    return `{ post: '2122' }`
+  }
+```
+使用上面的方法获取参数的时候，发现有个问题，就是我设置的 AppDto 的格式并没有起作用，目前原因未知，要获取到参数，还需要在 postman 里设置 Content-Type ： application/json。才可以实现获取 json 格式的参数目的。
+
+### 校验参数
+参数在校验的时候，按照官方的推荐，使用 class-validator 编写校验策略，然后再写一个管道，将校验的参数经过管道去校验。
