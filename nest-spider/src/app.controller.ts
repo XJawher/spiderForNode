@@ -1,8 +1,8 @@
-import { Post } from '@nestjs/common';
+import { Body, Post } from '@nestjs/common';
 import { Query } from '@nestjs/common';
 import { Controller, Get, Param, Request } from '@nestjs/common';
 import { AppService } from './app.service';
-
+import { AppDto } from "./dto/app-dto"
 @Controller({ path: 'app' })
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -21,9 +21,8 @@ export class AppController {
   }
 
   @Post('post')
-  indexPsot(@Request() req): string {
-    const { parma, query } = req;
-    console.log(req);
+  indexPsot(@Body() appDto: AppDto): string {
+    console.log(appDto);
     return `{ post: '2122' }`
   }
 }

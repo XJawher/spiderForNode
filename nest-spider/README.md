@@ -66,3 +66,15 @@ export class AppModule {}
     return 'test'
   }
 ```
+### post 方法获取参数
+```ts
+  @Post('post')
+  indexPsot(@Body() appDto: AppDto): string {
+    console.log(appDto);
+    return `{ post: '2122' }`
+  }
+```
+使用上面的方法获取参数的时候，发现有个问题，就是我设置的 AppDto 的格式并没有起作用，目前原因未知，要获取到参数，还需要在 postman 里设置 Content-Type ： application/json。才可以实现获取 json 格式的参数目的。
+
+### 校验参数
+参数在校验的时候，按照官方的推荐，使用 class-validator 编写校验策略，然后再写一个管道，将校验的参数经过管道去校验。
