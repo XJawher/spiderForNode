@@ -1,3 +1,21 @@
+## 快捷键
+application		在 monorepo 中生成一个新应用程序(如果它是一个标准结构，则转换为 monorepo)。
+library	lib	在 monorepo 中生成一个新库(如果是标准结构，则转换为 monorepo )。
+class	cl	生成一个新类。
+controller	co	生成控制器声明
+decorator	d	生成自定义装饰器。
+filter	f	生成过滤器声明。
+gateway	ga	生成网关声明。
+guard	gu	生成守卫声明。
+interface		生成一个接口。
+interceptor	in	生成一个拦截器声明。
+middleware	mi	生成中间件声明。
+module	mo	生成模块声明。
+pipe	pi	生成管道声明。
+provider	pr	生成提供者声明。
+resolver	r	生成解析器声明。
+service	s	生成服务声明。
+
 ## 起服务
 
 ## 踩坑
@@ -88,3 +106,18 @@ path
 updatetime
 useclientmsg
 ```
+
+## 爬虫计划
+
+## 文章结构
+
+每日的新闻结构是这样的：
+
+* xxx 和 xxx
+* xxx
+* 【xxx 标题】
+* 国内快讯
+* 国际 xxx
+* 国际 xxx
+
+在提取数据的时候，需要注意的是带有 【】 中括弧的数据，这说明是一个新的栏目的开始和上一个栏目的结束。
