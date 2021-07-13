@@ -1,5 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
-import { SpiderService } from "../../service/spider/spider.service"
+import { getDaysByYearMonth } from 'src/utils/utils';
+import { SpiderService } from "src/service/spider/spider.service"
 /**
  * @description
  * @author lipc
@@ -19,8 +20,34 @@ export class SpiderController {
 
   @Get("axios")
   getByAxios() {
+    const title = '2021年7月11日新闻联播文字版';
+    const yearsList = [2016, 2017, 2018, 2019, 2020, 2021];
+    const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    const dateLists = [];
+    const dateMapList = {};
 
-    const url = "http://mrxwlb.com/2021%e5%b9%b47%e6%9c%8811%e6%97%a5%e6%96%b0%e9%97%bb%e8%81%94%e6%92%ad%e6%96%87%e5%ad%97%e7%89%88/";
-    return this.spiderService.getByAxios(url)
+
+    for (let index = 0; index < yearsList.length; index++) {
+      const year = yearsList[index];
+      for (let j = 0; j < months.length; j++) {
+        const month = months[j];
+        const day = getDaysByYearMonth(year, month);
+        dateLists.push({ year: year, month: month, days: day })
+      }
+    }
+
+
+    for (let index = 0; index < dateLists.length; index++) {
+      const date = dateLists[index];
+      for (let j = 0; j < date.days; j++) {
+        const title = `${date.year}年${date.month}月${j + 1}日新闻联播文字版`;
+        dateMapList[`${date.year}_${date.month}_${j + 1}`] = { title, year: date.year, month: date.month, monthDays: date.days, today: j + 1 };
+      }
+    }
+
+    // console.log(dateMapList);
+
+    const url = `http://mrxwlb.com/${encodeURIComponent(title)}/`;
+    return this.spiderService.getByAxios(url, '2021_7_11')
   }
 }

@@ -16,6 +16,8 @@ provider	pr	生成提供者声明。
 resolver	r	生成解析器声明。
 service	s	生成服务声明。
 
+
+nest g co testController
 ## 起服务
 
 ## 踩坑
@@ -107,6 +109,38 @@ updatetime
 useclientmsg
 ```
 
+### URL 中文解析
+因为这次爬的 url 是带有中文的，浏览器中会自动转码
+使用 encodeURIComponent 就可以直接转码。[encodeURIComponent 文档](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent)
+
+```js
+const title = '2021年7月11日新闻联播文字版'
+const url = `http://mrxwlb.com/${encodeURIComponent(title)}/`;
+return this.spiderService.getByAxios(url)
+```
+
+### vscode debug
+1 设置 launch.json
+```json
+{
+  // 使用 IntelliSense 了解相关属性。
+  // 悬停以查看现有属性的描述。
+  // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "spider for news",
+      "type": "node",
+      "request": "attach",
+      "restart": true,
+      "processId": "${command:PickProcess}"
+    }
+  ]
+}
+```
+2 点击 JavaScript Debug Terminal
+3 然后在打开的 Terminal 中 yarn start:debug
+按照上面的操作，就可以实现debug模式。
 ## 爬虫计划
 
 ## 文章结构
