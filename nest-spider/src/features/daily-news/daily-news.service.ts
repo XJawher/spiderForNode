@@ -1,4 +1,5 @@
 import { HttpService, Injectable } from '@nestjs/common';
+import { DailyTitleContentMap } from './interfaces/daily-news.interface';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cheerio = require('cheerio');
 
@@ -56,7 +57,7 @@ export class DailyNewsService {
    * @param {Array<any>} arr
    * @memberof SpiderService
    */
-  private contentFactory(arr: Array<any>) {
+  private contentFactory(arr: Array<any>): Map<string, string> {
     const hashTitleContent = new Map();
     let titleTags = ''
     for (let index = 0; index < arr.length; index++) {
@@ -71,6 +72,8 @@ export class DailyNewsService {
       }
     }
     console.log(hashTitleContent);
+
+    return hashTitleContent;
   }
 }
 
