@@ -18,6 +18,23 @@ service	s	生成服务声明。
 
 
 nest g co testController
+## 官方结构
+官方推荐的结构是下面这样的
+```
+src
+├── cats
+│    ├──dto
+│    │   └──create-cat.dto.ts
+│    ├── interfaces
+│    │       └──cat.interface.ts
+│    ├──cats.service.ts
+│    └──cats.controller.ts
+├──app.module.ts
+└──main.ts
+```
+
+每日新闻 Daily news
+也就是在一个 功能的 class 下，去声明这个 class 的相关 dto interface serveice controller 等等
 ## 起服务
 
 ## 踩坑

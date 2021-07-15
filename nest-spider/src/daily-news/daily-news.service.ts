@@ -4,7 +4,7 @@ const cheerio = require('cheerio');
 
 
 @Injectable()
-export class SpiderService {
+export class DailyNewsService {
 
   constructor(
     private readonly httpService: HttpService,
@@ -73,3 +73,4 @@ export class SpiderService {
     console.log(hashTitleContent);
   }
 }
+

@@ -1,21 +1,11 @@
 import { Controller, Get } from '@nestjs/common';
 import { getDaysByYearMonth } from 'src/utils/utils';
-import { SpiderService } from "src/service/spider/spider.service"
-/**
- * @description
- * @author lipc
- * @date 12/07/2021
- * @export
- * @class SpiderController
- *
- * 这里处理爬虫相关的代码
- * we handle code of spider on this ts file
- * 这里发起请求，将请求获取到的代码传入到 spider.server.ts 里。
- */
-@Controller({ path: 'spider' })
-export class SpiderController {
+import { DailyNewsService } from './daily-news.service';
 
-  constructor(private readonly spiderService: SpiderService) {
+@Controller({ path: 'daily_news' })
+export class DailyNewsController {
+
+  constructor(private readonly dailyNewsService: DailyNewsService) {
   }
 
   @Get("axios")
@@ -48,9 +38,7 @@ export class SpiderController {
       }
     }
 
-    // console.log(dateMapList);
-
     const url = `http://mrxwlb.com/${encodeURIComponent(title)}/`;
-    return this.spiderService.getByAxios(url, '2021_7_11')
+    return this.dailyNewsService.getByAxios(url, '2021_7_11')
   }
 }
