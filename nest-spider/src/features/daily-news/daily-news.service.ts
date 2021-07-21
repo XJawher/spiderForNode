@@ -63,15 +63,20 @@ export class DailyNewsService {
       const element = arr[index];
       if (element.name === 'strong' && element.children?.length && !element.next) {
         titleTags = element.children[0]?.data;
-        hashTitleContent.set(titleTags, []);
-      } else if (!element.name && element.data) {
+        if (titleTags !== undefined) {
+          hashTitleContent.set(titleTags, []);
+        }
+      } else if (!element.name && element.data && titleTags !== undefined) {
         const hashContent = hashTitleContent.get(`${titleTags}`);
         hashContent.push(element.data)
         hashTitleContent.set(titleTags, hashContent);
       }
     }
-    console.log(hashTitleContent);
-
+    // console.log(hashTitleContent);
+    for (const [key, value] of hashTitleContent.entries()) {
+      console.log(`标题 ${key}`);
+      console.log(`${value.join()} \n`);
+    }
     return hashTitleContent;
   }
 }

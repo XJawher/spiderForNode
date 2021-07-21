@@ -10,7 +10,7 @@ export class DailyNewsController {
 
   @Get("axios")
   getByAxios() {
-    const title = '2020年11月22日新闻联播文字版';
+    const title = '2021年7月20日新闻联播文字版';
     const yearsList = [2016, 2017, 2018, 2019, 2020, 2021];
     const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     const dateLists = [];
