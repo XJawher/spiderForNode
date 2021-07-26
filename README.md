@@ -194,6 +194,13 @@ C:\Program Files\MongoDB\Server\5.0 这是我的 MongoDB 安装位置。
 
 ### 启动
 配置好开机自启动以后，每次开机就会自己启动了。后面就不用管了。检查是不是启动了在 windows 上使用 `http://localhost:27017/` 看是不是 `It looks like you are trying to access MongoDB over HTTP on the native driver port.`。
+
+### 连接 MongoDB
+```
+cnpm install --save @nestjs/mongoose mongoose
+cnpm install --save-dev @types/mongoose
+```
+
  ## 文章结构
 
 每日的新闻结构是这样的：
