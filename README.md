@@ -35,9 +35,7 @@ src
 
 每日新闻 Daily news
 也就是在一个 功能的 class 下，去声明这个 class 的相关 dto interface serveice controller 等等
-## 起服务
-
-## 踩坑
+## Nest 踩坑
 ### import 错误
 在 vscode 中，import 语法会出现错误，因为 tsconfig.json 中的 "module": "commonjs"
 将 eslint 中的   // project: 'tsconfig.json', 注释就可以了。
@@ -163,7 +161,40 @@ return this.spiderService.getByAxios(url)
 
 补充前端和后端的需求
 
-## 文章结构
+## 数据库
+这里数据库选择是 MongoDB ，[MongoDB 对比 mysql](https://cloud.tencent.com/developer/article/1055372)；
+### mongod 安装
+在官网下载，并按照官网的指示进行安装。
+### 数据位置
+在 D 盘中新建 mongodb 文件夹，里面新建两个目录 data log 结构如下图
+
+```
+mongodb
+├── data
+│    ├── xxx.db 数据集的存放位置
+├── logs
+│    ├── mongodb.log 日志的存放位置
+├──mongodb.conf 配置文件
+```
+
+mongodb.conf 内容
+```conf
+logpath=D:\GITHUB\mongodb\logs\mongodb.log
+logappend=true
+dbpath=D:\GITHUB\mongodb\data
+directoryperdb=true
+```
+然后在打开 cmd 打开 MongoDB 安装目录。这是我的安装目录 C:\Program Files\MongoDB\Server\5.0\bin
+
+执行：`mongod --config "C:\Program Files\MongoDB\Server\5.0\bin\mongo.conf" --install --serviceName "MongoDB"`
+
+C:\Program Files\MongoDB\Server\5.0 这是我的 MongoDB 安装位置。
+
+ mongod --config "D:\GITHUB\mongodb\mongodb.conf" --install --serviceName "MongoDB"
+
+### 启动
+配置好开机自启动以后，每次开机就会自己启动了。后面就不用管了。检查是不是启动了在 windows 上使用 `http://localhost:27017/` 看是不是 `It looks like you are trying to access MongoDB over HTTP on the native driver port.`。
+ ## 文章结构
 
 每日的新闻结构是这样的：
 
