@@ -115,6 +115,9 @@ export class AppModule {}
 参数在校验的时候，按照官方的推荐，使用 class-validator 编写校验策略，然后再写一个管道，将校验的参数经过管道去校验。
 说实话，这个参数的校验，用管道的话，是真的方便
 
+### web 安全
+增加 Authorization ，每次请求都需要校验、请求一次更新一个 token，使用动态 token。
+
 ### 自动的 log
 需要做一个自动的 log ，将每次的请求操作都记录到数据库中，而且要自动，不能手动填充，目前能想到的需要进去的东西是
 ```
@@ -244,7 +247,8 @@ cnpm install --save-dev @types/mongoose
       times:223444555  标题内容出现的时间，这个时间也是上一个标题的结束时间,
       message: ['xxx','yyy'] 内容，视情况进行补充，是以抓取的文本为基底,
       personNames: ['xxx','yyy'] 已经出现的人名称,
-      comp
+      companyNames:['xxx'] 出现的公司名称，这个是需要重点去做的，后续的分析很大程度上就是依赖这个,
+      citys:['xx'] 城市，地区等等,
     }
   ]
 }
