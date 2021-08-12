@@ -159,6 +159,20 @@ return this.spiderService.getByAxios(url)
 2 点击 JavaScript Debug Terminal
 3 然后在打开的 Terminal 中 yarn start:debug
 按照上面的操作，就可以实现debug模式。
+
+### nest 同步
+在数据库等操作中，需要
+## Nest 知识点
+```ts
+@Module({
+  imports: [],
+  controllers: [],
+  providers: [],
+})
+```
+每个 module 中都会存在上面的 imports controllers providers 这三个，他们的具体作用是
+
+
 ## 项目计划
 [项目需求](./ProjectRequirements.md)
 
