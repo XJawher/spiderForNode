@@ -19,7 +19,7 @@ export class CatsController {
       const url = 'mongodb://localhost:27017';
       const dbName = 'test';
 
-      const client = new MongoClient(url);
+      const client = new MongoClient(url, { useUnifiedTopology: true });
       let msg = '';
 
       client.connect(async function (err) {
@@ -28,7 +28,7 @@ export class CatsController {
         console.log('connect is success');
         msg = 'connect is success success success'
         const db = client.db(dbName);
-        const data = await db.addUser('lipcs12', 'pass', { roles: [{ role: "readWrite", db: dbName }] })
+        const data = await db.addUser('lipcs121', 'pass', { roles: [{ role: "readWrite", db: dbName }] })
         console.log(data);
         client.close()
         resolve(msg)

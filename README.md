@@ -182,6 +182,8 @@ return this.spiderService.getByAxios(url)
 这里数据库选择是 MongoDB ，[MongoDB 对比 mysql](https://cloud.tencent.com/developer/article/1055372)；
 ### mongo 报错
 **(node:8800) [MONGODB DRIVER] Warning: Current Server Discovery and Monitoring engine is deprecated, and will be removed in a future version. To use the new Server Discover and Monitoring engine, pass option { useUnifiedTopology: true } to the MongoClient constructor.**
+解决办法，添加 MongoClientOptions 。
+` const client = new MongoClient(url, { useUnifiedTopology: true });`
 
 #### role 错误
 **(node:21708) [MONGODB DRIVER] Warning: Creating a user without roles is deprecated in MongoDB >= 2.6**
