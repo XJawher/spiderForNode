@@ -180,6 +180,30 @@ return this.spiderService.getByAxios(url)
 
 ## 数据库
 这里数据库选择是 MongoDB ，[MongoDB 对比 mysql](https://cloud.tencent.com/developer/article/1055372)；
+### mongo 报错
+**(node:8800) [MONGODB DRIVER] Warning: Current Server Discovery and Monitoring engine is deprecated, and will be removed in a future version. To use the new Server Discover and Monitoring engine, pass option { useUnifiedTopology: true } to the MongoClient constructor.**
+
+#### role 错误
+**(node:21708) [MONGODB DRIVER] Warning: Creating a user without roles is deprecated in MongoDB >= 2.6**
+创建用户的时候，没有指定用户的角色，这时候就会报告警，在源码里可以查到可以添加第三个参数解决
+```ts
+/**
+ * Optional settings for adding a user to the database
+ *
+ * @see https://mongodb.github.io/node-mongodb-native/3.6/api/Db.html#addUser
+ */
+export interface DbAddUserOptions extends CommonOptions {
+    customData?: object | undefined;
+    roles?: object[] | undefined;
+}
+
+const data = await db.addUser('lipcs12', 'pass', { roles: [{ role: "readWrite", db: dbName }] })
+
+DbAddUserOptions 就是传入的第三个参数，这时候可以在源码里看的到。
+
+```
+在官方的文档里 roles 有很多的属性，具体的链接参见 [mongoDB 角色](https://mongoing.com/archives/26710)
+
 ### mongod 安装
 在官网下载，并按照官网的指示进行安装。
 ### 数据位置
@@ -231,6 +255,16 @@ cnpm install --save-dev @types/mongoose
 * 安全
 * 创建 document
 * 数据的增删改查
+### 创建用户
+先测试创建一个用户
+```ts
+const db = client.db(dbName);
+const data = await db.addUser('lipcs12', 'pass', { roles: [{ role: "readWrite", db: dbName }] })
+console.log(data);
+```
+### 获取用户
+获取全部的用户数据，怎么用 node 去操作，目前未知。
+
 
  ## 文章结构
 
