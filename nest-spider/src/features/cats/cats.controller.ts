@@ -9,10 +9,10 @@ export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
   @Post("create")
-  insertCatData(@Body() createCatDto: CreateCatDto) {
-    const data = this.catsService.create(createCatDto);
-    console.log(data);
-    return { test: 'ss' }
+  async insertCatData(@Body() createCatDto: CreateCatDto) {
+    const data = await this.catsService.create(createCatDto);
+    console.log(createCatDto);
+    return { test: data }
   }
 
   @Get('get')

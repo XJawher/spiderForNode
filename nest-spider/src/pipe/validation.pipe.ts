@@ -27,6 +27,7 @@ export class ValidationPipe implements PipeTransform {
       // 把错误请求的来源，path，接口，客户端信息，用户信息等等都可以存到数据库里。
       const className = target.constructor.name;
       const errorMsg = Object.values(constraints)[0]
+      console.log(errorMsg);
       throw new ApiException(errorMsg, ApiCode.PARAMS_ERROR, 400)
     }
 
