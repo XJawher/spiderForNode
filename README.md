@@ -35,6 +35,8 @@ src
 
 每日新闻 Daily news
 也就是在一个 功能的 class 下，去声明这个 class 的相关 dto interface serveice controller 等等
+### 数据库 database
+我选择把数据库放在 src/data-base 下面，因为这是一个全局的模块，需要将这部分的代码作为全局的数据进行处理，封装好数据库的链接，增删改查，还有用户的新建和删除
 ## Nest 踩坑
 ### import 错误
 在 vscode 中，import 语法会出现错误，因为 tsconfig.json 中的 "module": "commonjs"
