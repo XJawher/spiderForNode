@@ -9,7 +9,7 @@ export class DailyNewsController {
   }
 
   @Get("axios")
-  getByAxios() {
+  async getByAxios() {
     // this.
     const title = '2019年3月12日新闻联播文字版';
     const yearsList = [2016, 2017, 2018, 2019, 2020, 2021];
@@ -40,6 +40,14 @@ export class DailyNewsController {
     }
 
     const url = `http://mrxwlb.com/${encodeURIComponent(title)}/`;
-    return this.dailyNewsService.getByAxios(url, '2021_7_11')
+    const data = await this.dailyNewsService.getByAxios(url, '2021_7_11')
+    const returnData = [];
+    for (const [key, value] of data.entries()) {
+      returnData.push({
+        title: key,
+        content: value
+      })
+    }
+    return returnData;
   }
 }

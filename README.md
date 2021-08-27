@@ -42,6 +42,20 @@ src
 在 vscode 中，import 语法会出现错误，因为 tsconfig.json 中的 "module": "commonjs"
 将 eslint 中的   // project: 'tsconfig.json', 注释就可以了。
 
+### httpModule 报错
+```
+[Nest] 18308   - 2021-08-27 5:24:40 ├F10: PM┤   [ExceptionHandler] Nest can't resolve dependencies of the DailyNewsService (?). Please make sure that the argument Object at index [0] is available in the DailyNewsModule context.
+- If Object is a provider, is it part of the current DailyNewsModule?
+- If Object is exported from a separate @Module, is that module imported within
+DailyNewsModule?
+  @Module({
+    imports: [ /* the Module containing Object */ ]
+  })
+```
+错误原因：我将 httpModule 作为全局的module在 main.ts 中导入了，就没有在 daily-news.module 中导入，但是在后面的操作中发现是有问题的，导入的 HttpService 不能被使用。
+
+问题的解决办法是将 httpModule 不作为全局的模块，而是那个 module 使用，就在哪个 module 中引用，然后拥有 httpModule 的这个模块中再去使用 HttpService 的时候，就可以正常使用了。
+
 ### 空大括号 eslint 报错
 在 .vscode 中的 setting.json 中添加下面的这句
 ```json

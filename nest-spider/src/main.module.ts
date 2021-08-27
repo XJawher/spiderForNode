@@ -1,14 +1,14 @@
-import { HttpModule, Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 
-import { DailyNewsController } from './features/daily-news/daily-news.controller';
-import { DailyNewsService } from './features/daily-news/daily-news.service';
 import { CatsModule } from './features/cats/cats.module';
 import { DatabaseModule } from './database/database.module';
 import { CoreModule } from './core/core.module';
+import { DailyNewsModule } from './features/daily-news/daily-news.module';
+import { APP_PIPE } from '@nestjs/core';
 @Module({
-  imports: [HttpModule, CatsModule, DatabaseModule, CoreModule],
-  controllers: [DailyNewsController],
-  providers: [DailyNewsService],
+  imports: [CatsModule, DatabaseModule, CoreModule, DailyNewsModule],
+  controllers: [],
+  providers: [{ provide: APP_PIPE, useClass: ValidationPipe }],
 })
 export class MainModule {}
 

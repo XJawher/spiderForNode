@@ -12,36 +12,39 @@ export class DailyNewsService {
   ) {
   }
 
-  getByAxios(url: string, newsDate: string) {
-    this.httpService.get(url).subscribe(
-      (response) => {
-        try {
-          const $ = cheerio.load(response.data)
-          const daliyTitle = $("article")?.find("header")?.find("h1")?.text()?.trim();
-          const entryContentSubTitle = $(".entry-content ul li")
-          const entryContentDetail = $(".entry-content p")
-          const titleMap = new Map();
-          entryContentSubTitle.each(function () {
-            titleMap.set(this.firstChild.data, {});
-          })
+  getByAxios(url: string, newsDate: string): Promise<HashContentTitle> {
+    return new Promise((resolve, reject) => {
+      this.httpService.get(url).subscribe(
+        (response) => {
+          try {
+            const $ = cheerio.load(response.data)
+            const daliyTitle = $("article")?.find("header")?.find("h1")?.text()?.trim();
+            const entryContentSubTitle = $(".entry-content ul li")
+            const entryContentDetail = $(".entry-content p")
+            const titleMap = new Map();
+            entryContentSubTitle.each(function () {
+              titleMap.set(this.firstChild.data, {});
+            })
 
-          const contentList = [];
-          entryContentDetail.each(function () {
-            for (let index = 0; index < this.children.length; index++) {
-              const element = this.children[index];
-              contentList.push(element)
-            }
-          })
-          this.contentFactory(contentList);
-        } catch (error) {
-          console.log(error);
+            const contentList = [];
+            entryContentDetail.each(function () {
+              for (let index = 0; index < this.children.length; index++) {
+                const element = this.children[index];
+                contentList.push(element)
+              }
+            })
+            resolve(this.contentFactory(contentList));
+          } catch (error) {
+            console.log(error);
+            reject(error);
+          }
+        },
+        (err) => {
+          console.log(err);
+          reject(err);
         }
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-    return { aaa: 11 };
+      );
+    })
   }
 
 
@@ -73,10 +76,10 @@ export class DailyNewsService {
       }
     }
     // console.log(hashTitleContent);
-    for (const [key, value] of hashTitleContent.entries()) {
-      console.log(`标题 ${key}`);
-      console.log(`${value.join()} \n`);
-    }
+    // for (const [key, value] of hashTitleContent.entries()) {
+    //   console.log(`标题 ${key}`);
+    //   console.log(`${value.join()} \n`);
+    // }
     return hashTitleContent;
   }
 }
