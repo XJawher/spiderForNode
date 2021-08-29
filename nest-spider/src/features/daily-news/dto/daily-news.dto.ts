@@ -30,7 +30,7 @@ class TitleHashContent {
   title: string;
 
   // 上面标题对应的内容，可能为空
-  content?: Content[];
+  content?: string[];
 }
 
 class Content {

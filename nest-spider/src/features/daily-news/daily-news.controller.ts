@@ -1,6 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { getDaysByYearMonth } from 'src/utils/utils';
 import { DailyNewsService } from './daily-news.service';
+import { CreateDailyNewsDto } from './dto/daily-news.dto';
 
 @Controller({ path: 'daily_news' })
 export class DailyNewsController {
@@ -48,6 +49,27 @@ export class DailyNewsController {
         content: value
       })
     }
-    return returnData;
+    const param: CreateDailyNewsDto = {
+      timestampString: '2021_7_11',
+      timestamp: new Date('2021-7-11').getTime(),
+      titleHashContent: [],
+    };
+
+    for (const iterator of returnData) {
+      param.titleHashContent.push({
+        title: iterator.title,
+        content: iterator.content
+      })
+    }
+    console.log(param);
+
+    const createResult = await this.dailyNewsService.create(param);
+    return createResult;
+  }
+
+  @Post("create")
+  async insertData(@Body() createDailyNewsDto: CreateDailyNewsDto) {
+    const data = await this.dailyNewsService.create(createDailyNewsDto);
+    return { test: data }
   }
 }

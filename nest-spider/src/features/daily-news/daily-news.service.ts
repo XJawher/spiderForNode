@@ -1,4 +1,7 @@
-import { HttpService, Injectable } from '@nestjs/common';
+import { HttpService, Inject, Injectable } from '@nestjs/common';
+import { Model } from 'mongoose';
+import { DailyNewsInterface } from './interfaces/daily-news.interface';
+import { CreateDailyNewsDto } from './dto/daily-news.dto';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cheerio = require('cheerio');
 
@@ -8,7 +11,7 @@ export class DailyNewsService {
 
   constructor(
     private readonly httpService: HttpService,
-
+    @Inject('DAILY_NEWS_MODEL') private readonly dailyNewsModel: Model<DailyNewsInterface>
   ) {
   }
 
@@ -82,5 +85,11 @@ export class DailyNewsService {
     // }
     return hashTitleContent;
   }
+
+  async create(createDailyNewsDto: CreateDailyNewsDto): Promise<DailyNewsInterface> {
+    const createdCat = new this.dailyNewsModel(createDailyNewsDto);
+    return createdCat.save();
+  }
+
 }
 

@@ -11,7 +11,6 @@ export class CatsController {
   @Post("create")
   async insertCatData(@Body() createCatDto: CreateCatDto) {
     const data = await this.catsService.create(createCatDto);
-    console.log(createCatDto);
     return { test: data }
   }
 
