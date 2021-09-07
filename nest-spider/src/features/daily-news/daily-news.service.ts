@@ -1,7 +1,7 @@
 import { HttpService, Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { DailyNewsInterface } from './interfaces/daily-news.interface';
-import { CreateDailyNewsDto } from './dto/daily-news.dto';
+import { CreateDailyNewsDto, IdDto } from './dto/daily-news.dto';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cheerio = require('cheerio');
 
@@ -91,5 +91,10 @@ export class DailyNewsService {
     return createdCat.save();
   }
 
+
+  async delete(idDto: IdDto): Promise<IdDto> {
+    const createdCat = new this.dailyNewsModel();
+    return createdCat.delete()
+  }
 }
 

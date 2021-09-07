@@ -1,7 +1,8 @@
 import * as mongoose from 'mongoose';
 
-export const DailyNewsSchema = new mongoose.Schema({
-  timestampString: String,
-  timestamp: Number,
-  titleHashContent: [{}],
-});
+import { DailyNewsInterface } from "../interfaces/daily-news.interface";
+
+import { CreateDailyNewsDto } from "../dto/daily-news.dto"
+
+
+export const DailyNewsSchema = new mongoose.Schema<DailyNewsInterface>(() => CreateDailyNewsDto);

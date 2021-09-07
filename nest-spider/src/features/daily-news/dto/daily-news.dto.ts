@@ -1,6 +1,9 @@
-import { IsNumber, IsString, } from "class-validator";
+import { IsNumber, IsString } from "class-validator";
 
-
+export class IdDto {
+  @IsString()
+  id?: string
+}
 
 /**
  * @description
@@ -31,10 +34,24 @@ class TitleHashContent {
 
   // 上面标题对应的内容，可能为空
   content?: string[];
+
+  tags?: Tags[]
+
+  @IsNumber()
+  startTime?: number;
+
+  @IsNumber()
+  endTime?: number;
+
+  commit?: any
 }
 
-class Content {
+class Tags {
 
   @IsString()
-  content: string;
+  type?: string;
+
+
+  @IsString()
+  value?: string;
 }

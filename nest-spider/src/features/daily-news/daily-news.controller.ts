@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
 import { getDaysByYearMonth } from 'src/utils/utils';
 import { DailyNewsService } from './daily-news.service';
-import { CreateDailyNewsDto } from './dto/daily-news.dto';
+import { CreateDailyNewsDto, IdDto } from './dto/daily-news.dto';
 
 @Controller({ path: 'daily_news' })
 export class DailyNewsController {
@@ -12,7 +12,7 @@ export class DailyNewsController {
   @Get("axios")
   async getByAxios() {
     // this.
-    const title = '2019年3月12日新闻联播文字版';
+    const title = '2021年9月2日新闻联播文字版';
     const yearsList = [2016, 2017, 2018, 2019, 2020, 2021];
     const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     const dateLists = [];
@@ -41,7 +41,7 @@ export class DailyNewsController {
     }
 
     const url = `http://mrxwlb.com/${encodeURIComponent(title)}/`;
-    const data = await this.dailyNewsService.getByAxios(url, '2021_7_11')
+    const data = await this.dailyNewsService.getByAxios(url, '2020-9-2')
     const returnData = [];
     for (const [key, value] of data.entries()) {
       returnData.push({
@@ -50,8 +50,8 @@ export class DailyNewsController {
       })
     }
     const param: CreateDailyNewsDto = {
-      timestampString: '2021_7_11',
-      timestamp: new Date('2021-7-11').getTime(),
+      timestampString: '2021-9-2',
+      timestamp: new Date('2021-9-2').getTime(),
       titleHashContent: [],
     };
 
@@ -70,6 +70,12 @@ export class DailyNewsController {
   @Post("create")
   async insertData(@Body() createDailyNewsDto: CreateDailyNewsDto) {
     const data = await this.dailyNewsService.create(createDailyNewsDto);
+    return { test: data }
+  }
+
+  @Delete('delete')
+  async deleteData(@Body() idDto: IdDto) {
+    const data = await this.dailyNewsService.delete(idDto);
     return { test: data }
   }
 }
